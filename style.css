@@ -1,0 +1,33 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #8B0000; /* Dark red */
+  color: #fff;
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  text-align: center;
+}
+
+h1 {
+  font-size: 4rem;
+  margin-bottom: 3rem;
+  letter-spacing: 5px;
+}
+
+nav a {
+  color: #FFD700; /* Gold accents */
+  text-decoration: none;
+  margin: 0 1.5rem;
+  font-size: 1.5rem;
+  transition: color 0.3s ease;
+}
+
+nav a:hover {
+  color: #fff;
+}
