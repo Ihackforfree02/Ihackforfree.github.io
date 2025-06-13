@@ -26,6 +26,8 @@
       box-shadow: 0 6px 24px rgba(0,0,0,0.3);
       animation: fadeIn 2s ease-out forwards;
       opacity: 0;
+      position: relative;
+      z-index: 10; /* On top of rain */
     }
 
     @keyframes fadeIn {
@@ -72,63 +74,28 @@
       cursor: pointer;
     }
 
-    /* Dragon container to circle the border */
-    .dragon-wrapper {
-      pointer-events: none; /* Allow clicks through */
+    /* Raindrop styling */
+    .rain-wrapper {
+      pointer-events: none; /* So rain doesn’t block clicks */
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      z-index: 9999;
+      top: 0; left: 0; width: 100vw; height: 100vh;
       overflow: visible;
+      z-index: 5; /* Behind container */
     }
 
-    /* Animation: circle around the viewport border */
-    @keyframes dragon-spin {
-      0%   { transform: rotate(0deg) translateX(calc(50vw - 40px)) rotate(0deg); }
-      100% { transform: rotate(360deg) translateX(calc(50vw - 40px)) rotate(-360deg); }
-    }
-
-    .dragon {
+    .raindrop {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 80px;
-      height: 80px;
-      transform-origin: center center;
-      animation: dragon-spin 25s linear infinite;
-      filter: drop-shadow(0 0 3px #f0db4f);
+      bottom: 100%;
+      width: 2px;
+      height: 20px;
+      background: linear-gradient(180deg, #00ffff, #0077aa);
+      border-radius: 50% / 40%;
+      opacity: 0.6;
+      animation-name: fall;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
     }
 
-    .dragon svg {
-      width: 100%;
-      height: 100%;
-      fill: #f0db4f;
-      stroke: #00ffff;
-      stroke-width: 3;
-      filter: drop-shadow(0 0 5px #00ffff);
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>MR GAMES</h1>
-    <nav>
-      <a href="Games.html">Play</a>
-      <a href="leaderboard.html">Leaderboard</a>
-      <a href="about_us.html">About</a>
-    </nav>
-  </div>
-
-  <!-- Dragon animation -->
-  <div class="dragon-wrapper" aria-hidden="true">
-    <div class="dragon" role="img" aria-label="Cartoony dragon">
-      <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" >
-        <!-- Stylized dragon head/body -->
-        <path d="M10 32c4-10 20-10 24 0s-4 18-4 18-8-4-12-8-4-10-8-10z"/>
-        <circle cx="28" cy="28" r="4" fill="#00ffff"/>
-        <path d="M30 32c2 4 6 4 8 0" stroke="#00ffff" stroke-width="2" fill="none" />
-        <path d="M22 38c2 2 10 2 12 0" stroke="#00ffff" stroke-width="2" fill="none" />
-      </svg>
-    </div>
-  </div>
-</body>
-</html>
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
