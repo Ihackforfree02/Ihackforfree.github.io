@@ -2,11 +2,134 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>About the Creator</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Reset & base */
+    * {
+      box-sizing: border-box;
+    }
+    body, html {
+      margin: 0; padding: 0;
+      height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0f2027; /* dark background */
+      color: #00ffff; /* neon cyan */
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .about-container {
+      max-width: 700px;
+      margin: 80px auto;
+      padding: 40px 30px;
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 16px;
+      box-shadow:
+        0 0 20px #00ffff,
+        inset 0 0 30px #00ffff;
+      text-align: center;
+      position: relative;
+      z-index: 10; /* on top of border effect */
+      line-height: 1.6;
+      font-size: 1.2rem;
+      user-select: text;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 30px;
+      text-shadow:
+        0 0 8px #00ffff,
+        0 0 20px #00ffff;
+      letter-spacing: 3px;
+    }
+
+    p {
+      margin-bottom: 24px;
+      text-shadow: 0 0 8px #00ffff;
+    }
+
+    /* Techno border effect */
+    .border-top, .border-right, .border-bottom, .border-left {
+      content: "";
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        #00ffff,
+        transparent
+      );
+      animation: technoGlow 3s linear infinite;
+    }
+
+    .border-top {
+      top: 0; left: 0;
+      width: 100vw;
+      height: 4px;
+      animation-delay: 0s;
+      box-shadow: 0 0 10px #00ffff;
+    }
+
+    .border-right {
+      top: 0; right: 0;
+      width: 4px;
+      height: 100vh;
+      animation-delay: 0.75s;
+      background: linear-gradient(
+        180deg,
+        transparent,
+        #00ffff,
+        transparent
+      );
+      box-shadow: 0 0 10px #00ffff;
+    }
+
+    .border-bottom {
+      bottom: 0; left: 0;
+      width: 100vw;
+      height: 4px;
+      animation-delay: 1.5s;
+      box-shadow: 0 0 10px #00ffff;
+    }
+
+    .border-left {
+      top: 0; left: 0;
+      width: 4px;
+      height: 100vh;
+      animation-delay: 2.25s;
+      background: linear-gradient(
+        0deg,
+        transparent,
+        #00ffff,
+        transparent
+      );
+      box-shadow: 0 0 10px #00ffff;
+    }
+
+    @keyframes technoGlow {
+      0% {
+        background-position: 0% 50%;
+        opacity: 0.4;
+        box-shadow: 0 0 5px #00ffff;
+      }
+      50% {
+        background-position: 100% 50%;
+        opacity: 1;
+        box-shadow: 0 0 20px #00ffff;
+      }
+      100% {
+        background-position: 0% 50%;
+        opacity: 0.4;
+        box-shadow: 0 0 5px #00ffff;
+      }
+    }
+  </style>
 </head>
 <body>
-  <div class="about-container">
+  <div class="about-container" role="main">
     <h1>About This Project</h1>
     <p>Hi there! I'm a student who built this website in my spare time, just for fun and to learn more about web development. I love games, design, and creating cool things people can interact with online.</p>
     
@@ -14,5 +137,11 @@
     
     <p>Thanks for stopping by and supporting my journey. ✌️</p>
   </div>
+
+  <!-- Techno border elements -->
+  <div class="border-top"></div>
+  <div class="border-right"></div>
+  <div class="border-bottom"></div>
+  <div class="border-left"></div>
 </body>
 </html>
