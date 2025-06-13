@@ -2,17 +2,255 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>MR GAMES</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🏆 Game Leaderboard Portal 🏆</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: #ffffff;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Water flowing sides */
+    .water {
+      position: fixed;
+      top: 0;
+      width: 10vw;
+      height: 100vh;
+      background: repeating-linear-gradient(
+        180deg,
+        #00bfff 0%,
+        #00bfff 5%,
+        #1e90ff 10%,
+        #00bfff 15%
+      );
+      background-size: 100% 50px;
+      animation: flow 3s linear infinite;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    .water.left {
+      left: 0;
+    }
+
+    .water.right {
+      right: 0;
+    }
+
+    @keyframes flow {
+      0% {
+        background-position-y: 0%;
+      }
+      100% {
+        background-position-y: 100%;
+      }
+    }
+
+    header {
+      text-align: center;
+      padding: 30px 20px;
+      background-color: #000000aa;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+      position: relative;
+      z-index: 1;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      color: #00ffff;
+      text-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff;
+      animation: wave 2s infinite ease-in-out;
+    }
+
+    @keyframes wave {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-5px);
+      }
+    }
+
+    .leaderboard {
+      margin: 60px auto;
+      background-color: rgba(0, 0, 0, 0.6);
+      border-radius: 12px;
+      padding: 30px;
+      width: 90%;
+      max-width: 600px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.3);
+      animation: fadeIn 2s ease-out forwards;
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    .leaderboard-heading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      font-size: 2rem;
+      color: #00ffff;
+      text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+      animation: glow 1.5s infinite alternate;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 5px #00ffff;
+      }
+      to {
+        text-shadow: 0 0 20px #00ffff, 0 0 30px #00ffff;
+      }
+    }
+
+    .trophy {
+      display: inline-block;
+      animation: bounce 1.5s infinite ease-in-out;
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    ol {
+      padding-left: 20px;
+      list-style: decimal;
+    }
+
+    li {
+      margin: 12px 0;
+      font-size: 1.3rem;
+      border-bottom: 1px solid #555;
+      padding-bottom: 5px;
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.75;
+      }
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 12px 24px;
+      font-size: 1rem;
+      color: #fff;
+      background: linear-gradient(45deg, #00c6ff, #0072ff);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 4px 12px rgba(0, 198, 255, 0.4);
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(0, 198, 255, 0.7);
+    }
+
+    footer {
+      margin-top: 40px;
+      padding: 20px;
+      font-size: 0.9rem;
+      color: #ccc;
+      text-align: center;
+      z-index: 1;
+      position: relative;
+    }
+
+    /* Confetti */
+    .confetti {
+      position: fixed;
+      top: -10px;
+      width: 10px;
+      height: 10px;
+      background-color: red;
+      opacity: 0.8;
+      z-index: 999;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotateZ(360deg);
+      }
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>MR GAMES</h1>
-    <nav>
-      <a href="Games.html">Play</a>
-      <a href="leaderboard.html">Leaderboard</a>
-      <a href="about_us.html">About</a>
-    </nav>
+
+  <!-- Animated Water Sides -->
+  <div class="water left"></div>
+  <div class="water right"></div>
+
+  <header>
+    <h1>🏆 Game Leaderboard Portal 🏆</h1>
+  </header>
+
+  <div class="leaderboard">
+    <div class="leaderboard-heading">
+      <span class="trophy">🏆</span>
+      <span>Top Players Leaderboard</span>
+      <span class="trophy">🏆</span>
+    </div>
+    <ol>
+      <li>Louis & Gabie</li>
+      <li>Robine & Zach</li>
+      <li>Ashton</li>
+      <li>MR GAMES</li>
+      <li>Jimmy</li>
+      <li>Only the real one know</li>
+    </ol>
+
+    <!-- Example Button -->
+    <a href="#" class="btn">Play a Game</a>
   </div>
+
+  <footer>
+    &copy; 2025 Game Portal. All rights reserved.
+  </footer>
+
+  <!-- Confetti JS -->
+  <script>
+    const colors = ['#f0db4f', '#ff5e57', '#00d2ff', '#00ff9d', '#ff00d4'];
+    const numConfetti = 100;
+
+    for (let i = 0; i < numConfetti; i++) {
+      const confetti = document.createElement('div');
+      confetti.classList.add('confetti');
+      confetti.style.left = Math.random() * 100 + 'vw';
+      confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+      confetti.style.animationDelay = Math.random() + 's';
+      document.body.appendChild(confetti);
+    }
+  </script>
 </body>
 </html>
