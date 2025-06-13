@@ -1,22 +1,32 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Game Launcher</title>
   <style>
-    /* Reset & base */
     * {
       box-sizing: border-box;
     }
-    body, html {
-      margin: 0; padding: 0;
+
+    html, body {
+      margin: 0;
+      padding: 0;
       height: 100%;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #0f2027; /* dark background */
-      color: #00ffff; /* neon cyan */
       overflow-x: hidden;
       position: relative;
+      background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAMAAACahl6sAAAAMFBMVEUAAAD///////////////////////////////////////////////////////////////////9yPfctAAAADnRSTlMA9a7mJQe5ysbpWb9GlRgBIhP/AADUSUlEQVR4nO2di3aiMBCGKWANBbT8/09TmJjSwmk8nqkpct8rqx6ZQsAkAIFAEQIECBAgAABAgQIECBAgACB34HeUVP7vAfMcuyMn0GyZ1ta1tfhvGHc8nDlhf5MZIRvX6FPOGz2mb9YwGey17NqxiwQEnANMPHFifByvxMB7cnSgZ3UisfV39SKwj5cp1+7vdZweqhnTRCyOcq4T7RHk/RLdbS7o6PU9QTYVuJAt84uhYx92bsWkNkefPLK0qRm8u50aJW65Fc8XmE7OfXxGmUexjXkbzbsEvQK6RZZg+UQLRm7MzSCgTbrKrW6RYG7Rx+39lRBa7pVUg8nOzevN6+aIb2bVW1zUEOJWzDb1URRxZh2yQzmMGuqqKH6r5M2W3coamfydAcG6AxZkPbzgvhxCqr5L69Yp5XPYZs+meXHNmAPk6f9TErBcbwGZGcPvtQhULbXrXBFOMMZqa7V1H3XQdq6EmrCLtRNVchGGVmn0NDGrC6M0Y0j2MH2KUds2ffVjOHiIbE9UcfXELHXlF1y4ZaAZM0jqCLXR5qRzbhSdfAGsqLY5ke04yynHPqFspj4F1R1cEbqW0b1sMPHIGpUWYYX3i0Il9n4FeYxa4J7rzf2r3UPO+65Z3TRg0QK+Ax9+PbSpc43D3q+YQ8sRBc6F+Ac2ATvnYJY0XdBHKYjcbMgNLkB0s0esGZK5Pq5TyAw8eq8ZYQfdqsnW6GhBF7kvd+WNEEDsmpFv5t9uKZ7FNDJ9u3F4kh3DYpxu64WWrf2FB4FdUt+e8uTeFtNcLrz+ctkzG0fwSx3bU6KzXdfZT6dvuRQFQDsPB3o79dbLBo2t09vGfOGnrs3Xcr0rfLV1mqspnmwPuXD41kJ9mFjjVKwVMTSl9e0U2mpfcb6dls25MlA8zqN1l5ddYrBlQd2Sr7VaxGoB+ZlHJ6zU/VmQuqeZvvusKAFhND+JkW7djDrGka59X7kA95n7UWBtyxg91Wc5QQZee0KML4/3eLR6/bo8+wJ4ImbswDs9nfsLBbze1pXrbz5w4YrZK8kzGg95CME72ESvexfY5nQwewN21i7IdnbGdd3AGJwve1slnt48pPUAxR5EyTgDPlSnkQ7P3Ndr6etM6D3mmDC+iwEXj6RmmsrqqZnDK25rUpX7m4roBNXLcXmKlgQHBj7z0GPcQXyDBohKfz4Hc5Lt10FbDWjHXWSbLGgQIECBAgAABAgQIECBAgAABAgQIECBA4MQf8QIeoDYbZZ68RwAAAABJRU5ErkJggg==");
+      background-size: 300px;
+      background-repeat: repeat;
+      animation: moveBG 30s linear infinite;
+      filter: hue-rotate(270deg) brightness(1.2);
+      color: #00ffff;
+    }
+
+    @keyframes moveBG {
+      0% { background-position: 0 0; }
+      100% { background-position: 1000px 1000px; }
     }
 
     .container {
@@ -25,24 +35,19 @@
       padding: 40px 30px;
       background: rgba(0, 0, 0, 0.7);
       border-radius: 16px;
-      box-shadow:
-        0 0 20px #00ffff,
-        inset 0 0 30px #00ffff;
+      box-shadow: 0 0 20px #00ffff, inset 0 0 30px #00ffff;
       text-align: center;
       position: relative;
-      z-index: 10; /* on top of border effect */
+      z-index: 10;
     }
 
     h1 {
       font-size: 3rem;
       margin-bottom: 40px;
-      text-shadow:
-        0 0 8px #00ffff,
-        0 0 20px #00ffff;
+      text-shadow: 0 0 8px #00ffff, 0 0 20px #00ffff;
       letter-spacing: 3px;
     }
 
-    /* Grid for games and buttons */
     .button-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -50,7 +55,6 @@
       justify-items: center;
     }
 
-    /* Game link styling */
     .button-grid a {
       text-decoration: none;
       font-size: 1.4rem;
@@ -66,83 +70,55 @@
       text-align: center;
       user-select: none;
       font-weight: 600;
-      position: relative;
-      overflow: hidden;
     }
 
-    /* Hover effect */
-    .button-grid a:hover, .button-grid a:focus {
+    .button-grid a:hover {
       background: #00ffff;
       color: #0f2027;
-      box-shadow:
-        0 0 20px #00ffff,
-        inset 0 0 30px #00ffff;
+      box-shadow: 0 0 20px #00ffff, inset 0 0 30px #00ffff;
       cursor: pointer;
     }
 
-    /* Techno border effect */
+    /* Techno border animation */
     body::before, body::after,
     .border-top, .border-right, .border-bottom, .border-left {
       content: "";
       position: fixed;
       pointer-events: none;
       z-index: 9999;
-      background: linear-gradient(
-        90deg,
-        transparent,
-        #00ffff,
-        transparent
-      );
+      background: linear-gradient(90deg, transparent, #00ffff, transparent);
       animation: technoGlow 3s linear infinite;
     }
 
-    /* Create 4 sides as fixed elements */
     .border-top {
       top: 0; left: 0;
-      width: 100vw;
-      height: 4px;
+      width: 100vw; height: 4px;
       animation-delay: 0s;
       box-shadow: 0 0 10px #00ffff;
     }
 
     .border-right {
       top: 0; right: 0;
-      width: 4px;
-      height: 100vh;
+      width: 4px; height: 100vh;
       animation-delay: 0.75s;
-      background: linear-gradient(
-        180deg,
-        transparent,
-        #00ffff,
-        transparent
-      );
-      box-shadow: 0 0 10px #00ffff;
+      background: linear-gradient(180deg, transparent, #00ffff, transparent);
     }
 
     .border-bottom {
       bottom: 0; left: 0;
-      width: 100vw;
-      height: 4px;
+      width: 100vw; height: 4px;
       animation-delay: 1.5s;
-      box-shadow: 0 0 10px #00ffff;
     }
 
     .border-left {
       top: 0; left: 0;
-      width: 4px;
-      height: 100vh;
+      width: 4px; height: 100vh;
       animation-delay: 2.25s;
-      background: linear-gradient(
-        0deg,
-        transparent,
-        #00ffff,
-        transparent
-      );
-      box-shadow: 0 0 10px #00ffff;
+      background: linear-gradient(0deg, transparent, #00ffff, transparent);
     }
 
     @keyframes technoGlow {
-      0% {
+      0%, 100% {
         background-position: 0% 50%;
         opacity: 0.4;
         box-shadow: 0 0 5px #00ffff;
@@ -152,10 +128,29 @@
         opacity: 1;
         box-shadow: 0 0 20px #00ffff;
       }
+    }
+
+    /* Click Pulse Effect */
+    .click-pulse {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: rgba(0, 255, 255, 0.4);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      animation: pulse 0.6s ease-out;
+      z-index: 1000;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: translate(-50%, -50%) scale(0.4);
+        opacity: 1;
+      }
       100% {
-        background-position: 0% 50%;
-        opacity: 0.4;
-        box-shadow: 0 0 5px #00ffff;
+        transform: translate(-50%, -50%) scale(1.8);
+        opacity: 0;
       }
     }
   </style>
@@ -166,16 +161,14 @@
     <div class="button-grid" role="list">
       <a href="https://ihackforfree02.github.io/Precision-Client-For-EaglerCraft/" role="listitem">Minecraft</a>
       <a href="https://schoolaccountforme.github.io/Time-Shooter-3-SWAT/" role="listitem">Time Shooter</a>
-
       <a href="https://ihackforfree02.github.io/1v1.lol/" role="listitem">1v1.LOL</a>
       <a href="https://schoolaccountforme.github.io/2048/" role="listitem">2048</a>
-
-      <a href="#" role="listitem">Play</a>
-      <a href="#" role="listitem">Play</a>
-      <a href="#" role="listitem">Play</a>
-      <a href="#" role="listitem">Play</a>
-      <a href="#" role="listitem">Play</a>
-      <a href="#" role="listitem">Play</a>
+      <a href="#">Play</a>
+      <a href="#">Play</a>
+      <a href="#">Play</a>
+      <a href="#">Play</a>
+      <a href="#">Play</a>
+      <a href="#">Play</a>
     </div>
   </div>
 
@@ -184,5 +177,17 @@
   <div class="border-right"></div>
   <div class="border-bottom"></div>
   <div class="border-left"></div>
+
+  <!-- Click pulse script -->
+  <script>
+    document.addEventListener('click', function(e) {
+      const pulse = document.createElement('div');
+      pulse.className = 'click-pulse';
+      pulse.style.left = e.pageX + 'px';
+      pulse.style.top = e.pageY + 'px';
+      document.body.appendChild(pulse);
+      setTimeout(() => pulse.remove(), 600);
+    });
+  </script>
 </body>
 </html>
