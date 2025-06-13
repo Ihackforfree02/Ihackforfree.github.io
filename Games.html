@@ -2,41 +2,187 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Game Launcher</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Reset & base */
+    * {
+      box-sizing: border-box;
+    }
+    body, html {
+      margin: 0; padding: 0;
+      height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0f2027; /* dark background */
+      color: #00ffff; /* neon cyan */
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 80px auto;
+      padding: 40px 30px;
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 16px;
+      box-shadow:
+        0 0 20px #00ffff,
+        inset 0 0 30px #00ffff;
+      text-align: center;
+      position: relative;
+      z-index: 10; /* on top of border effect */
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 40px;
+      text-shadow:
+        0 0 8px #00ffff,
+        0 0 20px #00ffff;
+      letter-spacing: 3px;
+    }
+
+    /* Grid for games and buttons */
+    .button-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 25px 40px;
+      justify-items: center;
+    }
+
+    /* Game link styling */
+    .button-grid a {
+      text-decoration: none;
+      font-size: 1.4rem;
+      padding: 12px 28px;
+      border-radius: 30px;
+      color: #00ffff;
+      border: 2px solid #00ffff;
+      box-shadow: 0 0 8px #00ffff;
+      background: transparent;
+      transition: all 0.3s ease;
+      display: inline-block;
+      width: 150px;
+      text-align: center;
+      user-select: none;
+      font-weight: 600;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Hover effect */
+    .button-grid a:hover, .button-grid a:focus {
+      background: #00ffff;
+      color: #0f2027;
+      box-shadow:
+        0 0 20px #00ffff,
+        inset 0 0 30px #00ffff;
+      cursor: pointer;
+    }
+
+    /* Techno border effect */
+    body::before, body::after,
+    .border-top, .border-right, .border-bottom, .border-left {
+      content: "";
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        #00ffff,
+        transparent
+      );
+      animation: technoGlow 3s linear infinite;
+    }
+
+    /* Create 4 sides as fixed elements */
+    .border-top {
+      top: 0; left: 0;
+      width: 100vw;
+      height: 4px;
+      animation-delay: 0s;
+      box-shadow: 0 0 10px #00ffff;
+    }
+
+    .border-right {
+      top: 0; right: 0;
+      width: 4px;
+      height: 100vh;
+      animation-delay: 0.75s;
+      background: linear-gradient(
+        180deg,
+        transparent,
+        #00ffff,
+        transparent
+      );
+      box-shadow: 0 0 10px #00ffff;
+    }
+
+    .border-bottom {
+      bottom: 0; left: 0;
+      width: 100vw;
+      height: 4px;
+      animation-delay: 1.5s;
+      box-shadow: 0 0 10px #00ffff;
+    }
+
+    .border-left {
+      top: 0; left: 0;
+      width: 4px;
+      height: 100vh;
+      animation-delay: 2.25s;
+      background: linear-gradient(
+        0deg,
+        transparent,
+        #00ffff,
+        transparent
+      );
+      box-shadow: 0 0 10px #00ffff;
+    }
+
+    @keyframes technoGlow {
+      0% {
+        background-position: 0% 50%;
+        opacity: 0.4;
+        box-shadow: 0 0 5px #00ffff;
+      }
+      50% {
+        background-position: 100% 50%;
+        opacity: 1;
+        box-shadow: 0 0 20px #00ffff;
+      }
+      100% {
+        background-position: 0% 50%;
+        opacity: 0.4;
+        box-shadow: 0 0 5px #00ffff;
+      }
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
+  <div class="container" role="main">
     <h1>Games</h1>
-    <div class="button-grid">
-      <a href="https://ihackforfree02.github.io/Precision-Client-For-EaglerCraft/">Minecraft</a>
-      
-      <a href="#">Play</a>
-      
-      
-      <a href="https://ihackforfree02.github.io/1v1.lol/">1v1.LOL</a>
-      
-      
-      <a href="#">Play</a>
-      
-      
-      <a href="#">Play</a>
-      
-      
-      <a href="#">Play</a>
-      
-      
-      <a href="#">Play</a>
-      
-      
-      <a href="#">Play</a>
-      
-      
-      <a href="#">Play</a>
-      
-      
-      <a href="#">Play</a>
+    <div class="button-grid" role="list">
+      <a href="https://ihackforfree02.github.io/Precision-Client-For-EaglerCraft/" role="listitem">Minecraft</a>
+      <a href="#" role="listitem">Play</a>
+
+      <a href="https://ihackforfree02.github.io/1v1.lol/" role="listitem">1v1.LOL</a>
+      <a href="#" role="listitem">Play</a>
+
+      <a href="#" role="listitem">Play</a>
+      <a href="#" role="listitem">Play</a>
+      <a href="#" role="listitem">Play</a>
+      <a href="#" role="listitem">Play</a>
+      <a href="#" role="listitem">Play</a>
+      <a href="#" role="listitem">Play</a>
     </div>
   </div>
+
+  <!-- Techno border elements -->
+  <div class="border-top"></div>
+  <div class="border-right"></div>
+  <div class="border-bottom"></div>
+  <div class="border-left"></div>
 </body>
 </html>
