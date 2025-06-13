@@ -30,7 +30,7 @@
         inset 0 0 30px #00ffff;
       text-align: center;
       position: relative;
-      z-index: 10; /* on top of border effect */
+      z-index: 10; /* on top of effects */
       line-height: 1.6;
       font-size: 1.2rem;
       user-select: text;
@@ -50,9 +50,8 @@
       text-shadow: 0 0 8px #00ffff;
     }
 
-    /* Techno border effect */
+    /* Techno border effect - visible animated borders */
     .border-top, .border-right, .border-bottom, .border-left {
-      content: "";
       position: fixed;
       pointer-events: none;
       z-index: 9999;
@@ -63,6 +62,7 @@
         transparent
       );
       animation: technoGlow 3s linear infinite;
+      box-shadow: 0 0 10px #00ffff;
     }
 
     .border-top {
@@ -70,7 +70,6 @@
       width: 100vw;
       height: 4px;
       animation-delay: 0s;
-      box-shadow: 0 0 10px #00ffff;
     }
 
     .border-right {
@@ -84,7 +83,6 @@
         #00ffff,
         transparent
       );
-      box-shadow: 0 0 10px #00ffff;
     }
 
     .border-bottom {
@@ -92,7 +90,6 @@
       width: 100vw;
       height: 4px;
       animation-delay: 1.5s;
-      box-shadow: 0 0 10px #00ffff;
     }
 
     .border-left {
@@ -106,7 +103,6 @@
         #00ffff,
         transparent
       );
-      box-shadow: 0 0 10px #00ffff;
     }
 
     @keyframes technoGlow {
@@ -126,6 +122,49 @@
         box-shadow: 0 0 5px #00ffff;
       }
     }
+
+    /* Falling blue love hearts */
+    .heart {
+      position: fixed;
+      top: -20px;
+      width: 20px;
+      height: 18px;
+      background-color: transparent;
+      pointer-events: none;
+      z-index: 9998;
+      animation: fall linear forwards;
+      filter: drop-shadow(0 0 2px #00cfff);
+    }
+
+    .heart:before,
+    .heart:after {
+      content: "";
+      position: absolute;
+      width: 12px;
+      height: 18px;
+      background-color: #00cfff;
+      border-radius: 12px 12px 0 0;
+      top: 0;
+      left: 4px;
+    }
+
+    .heart:after {
+      left: 0;
+      transform: rotate(-45deg);
+      transform-origin: 12px 18px;
+    }
+
+    .heart:before {
+      transform: rotate(45deg);
+      transform-origin: 0 18px;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
   </style>
 </head>
 <body>
@@ -143,5 +182,21 @@
   <div class="border-right"></div>
   <div class="border-bottom"></div>
   <div class="border-left"></div>
+
+  <script>
+    // Generate falling blue hearts like rain
+    const numHearts = 30;
+    for(let i = 0; i < numHearts; i++) {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      // Random horizontal start position across viewport width
+      heart.style.left = Math.random() * 100 + 'vw';
+      // Random animation duration between 5s and 10s
+      heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+      // Random delay so they don’t fall all at once
+      heart.style.animationDelay = (Math.random() * 10) + 's';
+      document.body.appendChild(heart);
+    }
+  </script>
 </body>
 </html>
