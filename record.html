@@ -93,21 +93,30 @@
       trophy.style.animationDelay = (Math.random() * 5) + 's';
       wrapper.appendChild(trophy);
     }
+const records = [
+  { name: "Owner: Cameron", achievement: "For making this website", email: "cameron.dev@webverse.io" },
+  { name: "Jimmy", achievement: "For best in gunspin", email: "jimmy.gunspin@arcadechamp.net" },
+  { name: "Louise", achievement: "For fastest completion of Time Shooter", email: "louise.time@speedshot.org" },
+  { name: "Elliot", achievement: "For teaching me code", email: "elliot.codes@devmentor.io" },
+  { name: "Copilot", achievement: "For making this easy", email: "copilot@aiassistant.tools" }
+];
 
-    const records = [
-      { name: "Owner:Cameron", Achivement:For making this website },
-      { name: "Jimmy", Achivement:For best in gunspin },
-      { name: "Louise", Achivement:For fastest completion of Time Shooter},
-      { name: "Elliot", Achivement:For teaching me code},
-      { name: "Copilot", Achivement:For making this easy }
-    ];
+const listContainer = document.getElementById('record-list');
+records.forEach(record => {
+  const recordElement = document.createElement('div');
+  recordElement.style.marginBottom = '20px';
 
-    const listContainer = document.getElementById('record-list');
-    records.forEach(record => {
-      const recordElement = document.createElement('p');
-      recordElement.textContent = `${record.name} – ${record.score}`;
-      listContainer.appendChild(recordElement);
-    });
-  </script>
-</body>
-</html>
+  const mainText = document.createElement('p');
+  mainText.textContent = `${record.name} – ${record.achievement}`;
+  mainText.style.fontSize = '1.25rem';
+  mainText.style.textShadow = '0 0 8px #ffd700';
+
+  const emailText = document.createElement('p');
+  emailText.textContent = record.email;
+  emailText.style.fontSize = '1rem';
+  emailText.style.color = '#ccc';
+
+  recordElement.appendChild(mainText);
+  recordElement.appendChild(emailText);
+  listContainer.appendChild(recordElement);
+});
