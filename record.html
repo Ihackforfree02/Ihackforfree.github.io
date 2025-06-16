@@ -1,25 +1,113 @@
-<div class="container">
-  <h1>Records</h1>
-  <div id="record-list"></div>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Records</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #1a1a2e, #16213e, #0f3460);
+      color: #fff;
+      overflow-x: hidden;
+      position: relative;
+    }
 
-<script>
-  const records = [
-    { name: "Ella Vortex", score: 9821 },
-    { name: "Kai Nebula", score: 9645 },
-    { name: "Zara Phoenix", score: 9520 },
-    { name: "Dex Stellar", score: 9377 },
-    { name: "Nova Orion", score: 9210 }
-  ];
+    .container {
+      text-align: center;
+      padding: 80px 20px;
+      max-width: 600px;
+      margin: auto;
+      background-color: rgba(0, 0, 0, 0.6);
+      border-radius: 12px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.3);
+      z-index: 10;
+      position: relative;
+    }
 
-  const listContainer = document.getElementById('record-list');
+    h1 {
+      font-size: 3.5rem;
+      color: gold;
+      text-shadow: 0 0 15px gold, 0 0 30px orange;
+      margin-bottom: 40px;
+      animation: pulse 2s infinite alternate;
+    }
 
-  records.forEach(record => {
-    const recordElement = document.createElement('p');
-    recordElement.textContent = `${record.name} – ${record.score}`;
-    recordElement.style.fontSize = '1.25rem';
-    recordElement.style.margin = '10px 0';
-    recordElement.style.textShadow = '0 0 8px #ffd700';
-    listContainer.appendChild(recordElement);
-  });
-</script>
+    #record-list p {
+      font-size: 1.25rem;
+      margin: 10px 0;
+      text-shadow: 0 0 8px #ffd700;
+    }
+
+    @keyframes pulse {
+      from { transform: scale(1); }
+      to { transform: scale(1.05); }
+    }
+
+    .trophy-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .trophy {
+      position: absolute;
+      top: -50px;
+      font-size: 2rem;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Records</h1>
+    <div id="record-list"></div>
+  </div>
+
+  <div class="trophy-wrapper" aria-hidden="true"></div>
+
+  <script>
+    const wrapper = document.querySelector('.trophy-wrapper');
+    const trophyCount = 50;
+
+    for (let i = 0; i < trophyCount; i++) {
+      const trophy = document.createElement('div');
+      trophy.className = 'trophy';
+      trophy.textContent = '🏆';
+      trophy.style.left = Math.random() * 100 + 'vw';
+      trophy.style.animationDuration = (1 + Math.random() * 2) + 's';
+      trophy.style.animationDelay = (Math.random() * 5) + 's';
+      wrapper.appendChild(trophy);
+    }
+
+    const records = [
+      { name: "Ella Vortex", score: 9821 },
+      { name: "Kai Nebula", score: 9645 },
+      { name: "Zara Phoenix", score: 9520 },
+      { name: "Dex Stellar", score: 9377 },
+      { name: "Nova Orion", score: 9210 }
+    ];
+
+    const listContainer = document.getElementById('record-list');
+    records.forEach(record => {
+      const recordElement = document.createElement('p');
+      recordElement.textContent = `${record.name} – ${record.score}`;
+      listContainer.appendChild(recordElement);
+    });
+  </script>
+</body>
+</html>
