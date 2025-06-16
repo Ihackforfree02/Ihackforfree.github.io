@@ -3,15 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Records</title>
+  <title>MR GAMES</title>
   <style>
+    /* Base styling */
     body, html {
       margin: 0;
       padding: 0;
       height: 100%;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to right, #1a1a2e, #16213e, #0f3460);
-      color: #fff;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: #ffffff;
       overflow-x: hidden;
       position: relative;
     }
@@ -24,38 +25,81 @@
       background-color: rgba(0, 0, 0, 0.6);
       border-radius: 12px;
       box-shadow: 0 6px 24px rgba(0,0,0,0.3);
-      z-index: 10;
+      animation: fadeIn 2s ease-out forwards;
+      opacity: 0;
       position: relative;
+      z-index: 10; /* On top of rain */
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
     }
 
     h1 {
       font-size: 3.5rem;
-      color: gold;
-      text-shadow: 0 0 15px gold, 0 0 30px orange;
       margin-bottom: 40px;
-      animation: pulse 2s infinite alternate;
+      color: #f0db4f;
+      text-shadow: 0 0 10px #f0db4f, 0 0 20px #f0db4f;
+      animation: glow 1.5s ease-in-out infinite alternate;
     }
 
-    @keyframes pulse {
-      from { transform: scale(1); }
-      to { transform: scale(1.05); }
+    @keyframes glow {
+      from { text-shadow: 0 0 5px #f0db4f; }
+      to { text-shadow: 0 0 20px #f0db4f, 0 0 30px #f0db4f; }
     }
 
-    .trophy-wrapper {
+    nav {
+      display: flex;
+      justify-content: space-evenly;
+      flex-wrap: wrap;
+      gap: 15px;
+      padding: 0 10px;
+    }
+
+    nav a {
+      display: inline-block;
+      padding: 12px 28px;
+      font-size: 1.4rem;
+      color: #00ffff;
+      text-decoration: none;
+      border: 2px solid #00ffff;
+      border-radius: 30px;
+      box-shadow: 0 0 8px #00ffff;
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+
+    nav a:hover,
+    nav a:focus {
+      background: #00ffff;
+      color: #0f2027;
+      box-shadow: 0 0 20px #00ffff;
+      cursor: pointer;
+    }
+
+    /* Raindrop styling */
+    .rain-wrapper {
+      pointer-events: none; /* So rain doesn’t block clicks */
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
-      pointer-events: none;
-      z-index: 1;
+      overflow: visible;
+      z-index: 5; /* Behind container */
     }
 
-    .trophy {
+    .raindrop {
       position: absolute;
-      top: -50px;
-      font-size: 2rem;
-      animation: fall linear infinite;
+      top: -20px; /* start just above viewport */
+      width: 2px;
+      background: linear-gradient(180deg, #00ffff, #0077aa);
+      border-radius: 50% / 40%;
+      opacity: 0.6;
+      animation-name: fall;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      will-change: transform;
     }
 
     @keyframes fall {
@@ -68,24 +112,30 @@
 </head>
 <body>
   <div class="container">
-    <h1>Records</h1>
-    <!-- Your content here -->
+    <h1>MR GAMES</h1>
+    <nav>
+      <a href="Games.html">Play</a>
+      <a href="leaderboard.html">Leaderboard</a>
+      <a href="about_us.html">About</a>
+      <a href="records.html">Records</a>
+    </nav>
   </div>
 
-  <div class="trophy-wrapper" aria-hidden="true"></div>
+  <!-- Rain effect container -->
+  <div class="rain-wrapper" aria-hidden="true"></div>
 
   <script>
-    const wrapper = document.querySelector('.trophy-wrapper');
-    const trophyCount = 50;
+    const rainWrapper = document.querySelector('.rain-wrapper');
+    const numRaindrops = 100;
 
-    for (let i = 0; i < trophyCount; i++) {
-      const trophy = document.createElement('div');
-      trophy.className = 'trophy';
-      trophy.textContent = '🏆';
-      trophy.style.left = Math.random() * 100 + 'vw';
-      trophy.style.animationDuration = (1 + Math.random() * 2) + 's';
-      trophy.style.animationDelay = (Math.random() * 5) + 's';
-      wrapper.appendChild(trophy);
+    for (let i = 0; i < numRaindrops; i++) {
+      const drop = document.createElement('div');
+      drop.classList.add('raindrop');
+      drop.style.left = Math.random() * 100 + 'vw';
+      drop.style.height = (10 + Math.random() * 20) + 'px';
+      drop.style.animationDuration = (Math.random() * 1 + 0.7) + 's';
+      drop.style.animationDelay = (Math.random() * 5) + 's';
+      rainWrapper.appendChild(drop);
     }
   </script>
 </body>
