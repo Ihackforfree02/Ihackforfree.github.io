@@ -1,11 +1,90 @@
-const drop = document.createElement('div');
-      drop.classList.add('raindrop');
-      drop.style.left = Math.random() * 100 + 'vw';
-      drop.style.height = (10 + Math.random() * 20) + 'px';
-      drop.style.animationDuration = (Math.random() * 1 + 0.7) + 's';
-      drop.style.animationDelay = (Math.random() * 5) + 's';
-      rainWrapper.appendChild(drop);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Leaderboard</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #1a1a2e, #16213e, #0f3460);
+      color: #fff;
+      overflow: hidden;
+      position: relative;
     }
-  </script>
-</body>
-</html>
+
+    .container {
+      text-align: center;
+      padding: 80px 20px;
+      max-width: 600px;
+      margin: auto;
+      background-color: rgba(0, 0, 0, 0.6);
+      border-radius: 12px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.3);
+      z-index: 10;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      color: gold;
+      text-shadow: 0 0 15px gold, 0 0 30px orange;
+      margin-bottom: 40px;
+      animation: pulse 2s infinite alternate;
+    }
+
+    @keyframes pulse {
+      from { transform: scale(1); }
+      to { transform: scale(1.05); }
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 1.2rem;
+      color: #fff;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+
+    th {
+      color: #00ffff;
+      background-color: rgba(255,255,255,0.05);
+    }
+
+    .confetti-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: hsl(var(--hue), 100%, 60%);
+      border-radius: 50%;
+      animation: confettiFall linear infinite;
+    }
+
+    @keyframes confettiFall {
+      to {
+        transform: translateY(120vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="confetti-wrapper" aria-hidden="true
