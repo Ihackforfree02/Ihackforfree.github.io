@@ -9,30 +9,29 @@
       margin: 0;
       padding: 0;
       height: 100%;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: linear-gradient(to right, #1a1a2e, #16213e, #0f3460);
-      color: #fff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       overflow: hidden;
-      position: relative;
+      color: #fff;
     }
 
     .container {
+      position: relative;
       text-align: center;
-      padding: 80px 20px;
+      padding: 60px 20px;
       max-width: 600px;
       margin: auto;
-      background-color: rgba(0, 0, 0, 0.6);
+      background-color: rgba(0, 0, 0, 0.65);
       border-radius: 12px;
       box-shadow: 0 6px 24px rgba(0,0,0,0.3);
       z-index: 10;
-      position: relative;
     }
 
     h1 {
       font-size: 3.5rem;
       color: gold;
       text-shadow: 0 0 15px gold, 0 0 30px orange;
-      margin-bottom: 40px;
+      margin-bottom: 30px;
       animation: pulse 2s infinite alternate;
     }
 
@@ -45,8 +44,6 @@
       width: 100%;
       border-collapse: collapse;
       font-size: 1.2rem;
-      color: #fff;
-      margin-top: 20px;
     }
 
     th, td {
@@ -55,36 +52,45 @@
     }
 
     th {
+      background-color: rgba(255, 255, 255, 0.1);
       color: #00ffff;
-      background-color: rgba(255,255,255,0.05);
     }
 
     .confetti-wrapper {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
+      width: 100%;
+      height: 100%;
       z-index: 1;
+      pointer-events: none;
     }
 
     .confetti {
       position: absolute;
       width: 10px;
       height: 10px;
-      background-color: hsl(var(--hue), 100%, 60%);
       border-radius: 50%;
+      background-color: hsl(var(--hue), 100%, 60%);
       animation: confettiFall linear infinite;
     }
 
     @keyframes confettiFall {
       to {
-        transform: translateY(120vh) rotate(360deg);
+        transform: translateY(120vh) rotate(720deg);
         opacity: 0;
       }
     }
   </style>
 </head>
 <body>
-  <div class="confetti-wrapper" aria-hidden="true
+  <div class="confetti-wrapper" aria-hidden="true"></div>
+
+  <div class="container">
+    <h1>Leaderboard</h1>
+    <table>
+      <thead>
+        <tr><th>Rank</th><th>Player</th><th>Score</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>Shadow
