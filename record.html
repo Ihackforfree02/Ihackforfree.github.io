@@ -42,6 +42,12 @@
       text-shadow: 0 0 8px #ffd700;
     }
 
+    .email {
+      font-size: 1rem;
+      color: #ccc;
+      margin-top: -5px;
+    }
+
     @keyframes pulse {
       from { transform: scale(1); }
       to { transform: scale(1.05); }
@@ -95,18 +101,50 @@
     }
 
     const records = [
-      { name: "Owner:Cameron", Achivement:For making this website },
-      { name: "Jimmy", Achivement:For best in gunspin },
-      { name: "Louise", Achivement:For fastest completion of Time Shooter},
-      { name: "Elliot", Achivement:For teaching me code},
-      { name: "Copilot", Achivement:For making this easy }
+      {
+        name: "Owner: Cameron",
+        achievement: "For making this website",
+        email: "cameron.dev@webverse.io"
+      },
+      {
+        name: "Jimmy",
+        achievement: "For best in gunspin",
+        email: "jimmy.gunspin@arcadechamp.net"
+      },
+      {
+        name: "Louise",
+        achievement: "For fastest completion of Time Shooter",
+        email: "louise.time@speedshot.org"
+      },
+      {
+        name: "Elliot",
+        achievement: "For teaching me code",
+        email: "elliot.codes@devmentor.io"
+      },
+      {
+        name: "Copilot",
+        achievement: "For making this easy",
+        email: "copilot@aiassistant.tools"
+      }
     ];
 
     const listContainer = document.getElementById('record-list');
     records.forEach(record => {
-      const recordElement = document.createElement('p');
-      recordElement.textContent = `${record.name} – ${record.score}`;
-      listContainer.appendChild(recordElement);
+      const block = document.createElement('div');
+      block.style.marginBottom = '20px';
+
+      const mainText = document.createElement('p');
+      mainText.textContent = `${record.name} – ${record.achievement}`;
+      mainText.style.fontSize = '1.25rem';
+      mainText.style.textShadow = '0 0 8px #ffd700';
+
+      const emailTextElement('p');
+      emailText.textContent = record.email;
+      emailText.className = 'email';
+
+      block.appendChild(mainText);
+      block.appendChild(emailText);
+      listContainer.appendChild(block);
     });
   </script>
 </body>
