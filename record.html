@@ -71,9 +71,7 @@
       }
     }
   </style>
-</head>
-<body>
-  <div class="container">
+</div class="container">
     <h1>Records</h1>
     <div id="record-list"></div>
   </div>
@@ -89,24 +87,4 @@
       trophy.className = 'trophy';
       trophy.textContent = '🏆';
       trophy.style.left = Math.random() * 100 + 'vw';
-      trophy.style.animationDuration = (1 + Math.random() * 2) + 's';
-      trophy.style.animationDelay = (Math.random() * 5) + 's';
-      wrapper.appendChild(trophy);
-    }
-
-    const records = [
-      { name: "Owner:Cameron", score: For being the best owner },
-      { name: "Jimmy", score: best at gunspin },
-      { name: "Rowan", score: Loves game website },
-      { name: "Zac", score: good at stuff i guess },
-      { name: "Louie", score: Because he ask }
-    ];
-    const listContainer = document.getElementById('record-list');
-    records.forEach(record => {
-      const recordElement = document.createElement('p');
-      recordElement.textContent = `${record.name} – ${record.score}`;
-      listContainer.appendChild(recordElement);
-    });
-  </script>
-</body>
-</html>
+      trophy.style.animationDuration
