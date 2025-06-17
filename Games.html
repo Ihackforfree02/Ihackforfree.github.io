@@ -20,7 +20,7 @@
     }
 
     .container {
-      max-width: 700px;
+      max-width: 900px;
       margin: 80px auto;
       padding: 40px 30px;
       background: rgba(0, 0, 0, 0.7);
@@ -40,31 +40,27 @@
 
     .button-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 25px 40px;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 20px 30px;
+      align-items: center;
       justify-items: center;
     }
 
-    .button-grid a {
+    .play-button, .button-grid a {
       text-decoration: none;
-      font-size: 1.4rem;
-      padding: 12px 28px;
-      border-radius: 30px;
+      font-size: 1rem;
+      padding: 10px 20px;
+      border-radius: 20px;
       color: #00ffff;
       border: 2px solid #00ffff;
       box-shadow: 0 0 8px #00ffff;
       background: transparent;
       transition: all 0.3s ease;
-      display: inline-block;
-      width: 150px;
-      text-align: center;
-      user-select: none;
       font-weight: 600;
-      position: relative;
-      overflow: hidden;
+      text-align: center;
     }
 
-    .button-grid a:hover {
+    .play-button:hover, .button-grid a:hover {
       background: #00ffff;
       color: #0f2027;
       box-shadow: 0 0 20px #00ffff, inset 0 0 30px #00ffff;
@@ -140,16 +136,45 @@
   <div class="container" role="main">
     <h1>Games</h1>
     <div class="button-grid" role="list">
-      <a href="https://ihackforfree02.github.io/Precision-Client-For-EaglerCraft/" role="listitem">Minecraft</a>
-      <a href="https://schoolaccountforme.github.io/Time-Shooter-3-SWAT/" role="listitem">Time Shooter</a>
-      <a href="https://ihackforfree02.github.io/1v1.lol/" role="listitem">1v1.LOL</a>
-      <a href="https://schoolaccountforme.github.io/2048/" role="listitem">2048</a>
-      <a href="https://ihackforfree02.github.io/GunSpin/" role="listitem">Gun Spin</a>
-      <a href="https://ihackforfree02.github.io/polytrack.3/" role="listitem">Polytrack</a>
-      <a href="https://ihackforfree02.github.io/Stickman-Hook/" role="listitem">Stickman Hook</a>
-      <a href="https://ihackforfree02.github.io/cluster/" role="listitem">Cluster Rush</a>
-      <a href="https://ihackforfree02.github.io/cookie-clicker/" role="listitem">Cookie Clicker</a>
-      <a href="https://ihackforfree02.github.io/Case-clicker/" role="listitem">CSGO Clicker</a>
+      <div>Minecraft</div>
+      <a class="play-button" href="https://ihackforfree02.github.io/Precision-Client-For-EaglerCraft/">Play</a>
+      <a href="https://ihackforfree02.github.io/Precision-Client-For-EaglerCraft/">Link</a>
+
+      <div>Time Shooter</div>
+      <a class="play-button" href="https://schoolaccountforme.github.io/Time-Shooter-3-SWAT/">Play</a>
+      <a href="https://schoolaccountforme.github.io/Time-Shooter-3-SWAT/">Link</a>
+
+      <div>1v1.LOL</div>
+      <a class="play-button" href="https://ihackforfree02.github.io/1v1.lol/">Play</a>
+      <a href="https://ihackforfree02.github.io/1v1.lol/">Link</a>
+
+      <div>2048</div>
+      <a class="play-button" href="https://schoolaccountforme.github.io/2048/">Play</a>
+      <a href="https://schoolaccountforme.github.io/2048/">Link</a>
+
+      <div>Gun Spin</div>
+      <a class="play-button" href="https://ihackforfree02.github.io/GunSpin/">Play</a>
+      <a href="https://ihackforfree02.github.io/GunSpin/">Link</a>
+
+      <div>Polytrack</div>
+      <a class="play-button" href="https://ihackforfree02.github.io/polytrack.3/">Play</a>
+      <a href="https://ihackforfree02.github.io/polytrack.3/">Link</a>
+
+      <div>Stickman Hook</div>
+      <a class="play-button" href="https://ihackforfree02.github.io/Stickman-Hook/">Play</a>
+      <a href="https://ihackforfree02.github.io/Stickman-Hook/">Link</a>
+
+      <div>Cluster Rush</div>
+      <a class="play-button" href="https://ihackforfree02.github.io/cluster/">Play</a>
+      <a href="https://ihackforfree02.github.io/cluster/">Link</a>
+
+      <div>Cookie Clicker</div>
+      <a class="play-button" href="https://ihackforfree02.github.io/cookie-clicker/">Play</a>
+      <a href="https://ihackforfree02.github.io/cookie-clicker/">Link</a>
+
+      <div>CSGO Clicker</div>
+      <a class="play-button" href="https://ihackforfree02.github.io/Case-clicker/">Play</a>
+      <a href="https://ihackforfree02.github.io/Case-clicker/">Link</a>
     </div>
   </div>
 
@@ -158,23 +183,25 @@
   <div class="border-right"></div>
   <div class="border-bottom"></div>
   <div class="border-left"></div>
-<audio autoplay loop> <source src="https://github.com/davidrobertwriter/davidrobertwriter.github.io/raw/refs/heads/main/Playground%20Rizz.mp3" type="audio/mpeg" /> </audio>
+
+  <!-- Music -->
+  <audio autoplay loop>
+    <source src="https://github.com/davidrobertwriter/davidrobertwriter.github.io/raw/refs/heads/main/Playground%20Rizz.mp3" type="audio/mpeg" />
+  </audio>
+
   <!-- Controller Rain Script -->
   <script>
     const createController = () => {
       const controller = document.createElement('div');
       controller.classList.add('controller');
       controller.textContent = '🎮';
-      controller.style.left = ${Math.random() * 100}vw;
-      controller.style.animationDuration = ${3 + Math.random() * 2}s;
-      controller.style.fontSize = ${1.5 + Math.random() * 2}rem;
+      controller.style.left = `${Math.random() * 100}vw`;
+      controller.style.animationDuration = `${3 + Math.random() * 2}s`;
+      controller.style.fontSize = `${1.5 + Math.random() * 2}rem`;
       document.body.appendChild(controller);
       setTimeout(() => controller.remove(), 6000);
     };
-
     setInterval(createController, 250);
   </script>
 </body>
 </html>
-
-
