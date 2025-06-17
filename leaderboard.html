@@ -81,6 +81,49 @@
         opacity: 0;
       }
     }
+
+    .snake {
+      width: 200px;
+      height: 200px;
+      background-color: #1e3a8a; /* darkish blue */
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 99;
+      border-radius: 50%;
+      animation: crawl 20s linear infinite;
+    }
+
+    .snake::before, .snake::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: #000;
+      border-radius: 50%;
+      top: 50px;
+    }
+
+    .snake::before { left: 40px; }
+    .snake::after { right: 40px; }
+
+    .snake-tongue {
+      position: absolute;
+      width: 8px;
+      height: 60px;
+      background: red;
+      top: 160px;
+      left: 96px;
+      clip-path: polygon(0 0, 100% 0, 50% 30%, 100% 60%, 0 60%, 50% 30%);
+    }
+
+    @keyframes crawl {
+      0% { top: 0; left: 0; }
+      25% { top: 0; left: calc(100vw - 200px); }
+      50% { top: calc(100vh - 200px); left: calc(100vw - 200px); }
+      75% { top: calc(100vh - 200px); left: 0; }
+      100% { top: 0; left: 0; }
+    }
   </style>
 </head>
 <body>
@@ -102,6 +145,14 @@
     </table>
   </div>
 
+  <div class="snake">
+    <div class="snake-tongue"></div>
+  </div>
+
+  <audio autoplay loop>
+    <source src="https://github.com/davidrobertwriter/davidrobertwriter.github.io/raw/refs/heads/main/Playground%20Rizz.mp3" type="audio/mpeg" />
+  </audio>
+
   <script>
     const wrapper = document.querySelector('.confetti-wrapper');
     const confettiCount = 100;
@@ -119,25 +170,3 @@
   </script>
 </body>
 </html>
-<style>
-  .snake {
-    width: 20px;
-    height: 20px;
-    background-color: #00ff00;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 99;
-    animation: crawl 20s linear infinite;
-  }
-<audio autoplay loop> <source src="https://github.com/davidrobertwriter/davidrobertwriter.github.io/raw/refs/heads/main/Playground%20Rizz.mp3" type="audio/mpeg" /> </audio>
-  @keyframes crawl {
-    0% { top: 0; left: 0; }
-    25% { top: 0; left: calc(100vw - 20px); }
-    50% { top: calc(100vh - 20px); left: calc(100vw - 20px); }
-    75% { top: calc(100vh - 20px); left: 0; }
-    100% { top: 0; left: 0; }
-  }
-</style>
-
-<div class="snake"></div>
