@@ -158,16 +158,21 @@
   <div class="border-right"></div>
   <div class="border-bottom"></div>
   <div class="border-left"></div>
-<audio autoplay loop> <source src="https://github.com/davidrobertwriter/davidrobertwriter.github.io/raw/refs/heads/main/Playground%20Rizz.mp3" type="audio/mpeg" /> </audio>
-  <!-- Controller Rain Script -->
+
+  <!-- Background music -->
+  <audio autoplay loop>
+    <source src="https://github.com/davidrobertwriter/davidrobertwriter.github.io/raw/refs/heads/main/Playground%20Rizz.mp3" type="audio/mpeg" />
+  </audio>
+
+  <!-- 🎮 Controller Rain Script (FIXED) -->
   <script>
     const createController = () => {
       const controller = document.createElement('div');
       controller.classList.add('controller');
       controller.textContent = '🎮';
-      controller.style.left = ${Math.random() * 100}vw;
-      controller.style.animationDuration = ${3 + Math.random() * 2}s;
-      controller.style.fontSize = ${1.5 + Math.random() * 2}rem;
+      controller.style.left = `${Math.random() * 100}vw`;
+      controller.style.animationDuration = `${3 + Math.random() * 2}s`;
+      controller.style.fontSize = `${1.5 + Math.random() * 2}rem`;
       document.body.appendChild(controller);
       setTimeout(() => controller.remove(), 6000);
     };
@@ -176,5 +181,3 @@
   </script>
 </body>
 </html>
-
-
