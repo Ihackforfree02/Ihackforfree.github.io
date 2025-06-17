@@ -5,16 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>About the Creator</title>
   <style>
-    /* Reset & base */
     * {
       box-sizing: border-box;
     }
     body, html {
-      margin: 0; padding: 0;
+      margin: 0;
+      padding: 0;
       height: 100%;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #0f2027; /* dark background */
-      color: #00ffff; /* neon cyan */
+      background: #0f2027;
+      color: #00ffff;
       overflow-x: hidden;
       position: relative;
     }
@@ -25,12 +25,10 @@
       padding: 40px 30px;
       background: rgba(0, 0, 0, 0.7);
       border-radius: 16px;
-      box-shadow:
-        0 0 20px #00ffff,
-        inset 0 0 30px #00ffff;
+      box-shadow: 0 0 20px #00ffff, inset 0 0 30px #00ffff;
       text-align: center;
       position: relative;
-      z-index: 10; /* on top of effects */
+      z-index: 10;
       line-height: 1.6;
       font-size: 1.2rem;
       user-select: text;
@@ -39,9 +37,7 @@
     h1 {
       font-size: 3rem;
       margin-bottom: 30px;
-      text-shadow:
-        0 0 8px #00ffff,
-        0 0 20px #00ffff;
+      text-shadow: 0 0 8px #00ffff, 0 0 20px #00ffff;
       letter-spacing: 3px;
     }
 
@@ -50,113 +46,55 @@
       text-shadow: 0 0 8px #00ffff;
     }
 
-    /* Techno border effect - visible animated borders */
     .border-top, .border-right, .border-bottom, .border-left {
       position: fixed;
       pointer-events: none;
       z-index: 9999;
-      background: linear-gradient(
-        90deg,
-        transparent,
-        #00ffff,
-        transparent
-      );
+      background: linear-gradient(90deg, transparent, #00ffff, transparent);
       animation: technoGlow 3s linear infinite;
       box-shadow: 0 0 10px #00ffff;
     }
 
     .border-top {
       top: 0; left: 0;
-      width: 100vw;
-      height: 4px;
+      width: 100vw; height: 4px;
       animation-delay: 0s;
     }
-
     .border-right {
       top: 0; right: 0;
-      width: 4px;
-      height: 100vh;
+      width: 4px; height: 100vh;
       animation-delay: 0.75s;
-      background: linear-gradient(
-        180deg,
-        transparent,
-        #00ffff,
-        transparent
-      );
+      background: linear-gradient(180deg, transparent, #00ffff, transparent);
     }
-
     .border-bottom {
       bottom: 0; left: 0;
-      width: 100vw;
-      height: 4px;
+      width: 100vw; height: 4px;
       animation-delay: 1.5s;
     }
-
     .border-left {
       top: 0; left: 0;
-      width: 4px;
-      height: 100vh;
+      width: 4px; height: 100vh;
       animation-delay: 2.25s;
-      background: linear-gradient(
-        0deg,
-        transparent,
-        #00ffff,
-        transparent
-      );
+      background: linear-gradient(0deg, transparent, #00ffff, transparent);
     }
 
     @keyframes technoGlow {
-      0% {
-        background-position: 0% 50%;
-        opacity: 0.4;
-        box-shadow: 0 0 5px #00ffff;
-      }
-      50% {
-        background-position: 100% 50%;
-        opacity: 1;
-        box-shadow: 0 0 20px #00ffff;
-      }
-      100% {
-        background-position: 0% 50%;
-        opacity: 0.4;
-        box-shadow: 0 0 5px #00ffff;
-      }
+      0% { background-position: 0% 50%; opacity: 0.4; box-shadow: 0 0 5px #00ffff; }
+      50% { background-position: 100% 50%; opacity: 1; box-shadow: 0 0 20px #00ffff; }
+      100% { background-position: 0% 50%; opacity: 0.4; box-shadow: 0 0 5px #00ffff; }
     }
 
-    /* Falling blue love hearts */
-    .heart {
+    /* Falling smiley emoji styling */
+    .emoji {
       position: fixed;
       top: -20px;
       width: 20px;
-      height: 18px;
-      background-color: transparent;
+      height: 20px;
+      font-size: 20px;
       pointer-events: none;
       z-index: 9998;
       animation: fall linear forwards;
-      filter: drop-shadow(0 0 2px #00cfff);
-    }
-
-    .heart:before,
-    .heart:after {
-      content: "";
-      position: absolute;
-      width: 12px;
-      height: 18px;
-      background-color: #00cfff;
-      border-radius: 12px 12px 0 0;
-      top: 0;
-      left: 4px;
-    }
-
-    .heart:after {
-      left: 0;
-      transform: rotate(-45deg);
-      transform-origin: 12px 18px;
-    }
-
-    .heart:before {
-      transform: rotate(45deg);
-      transform-origin: 0 18px;
+      filter: drop-shadow(0 0 3px #00cfff);
     }
 
     @keyframes fall {
@@ -171,33 +109,33 @@
   <div class="about-container" role="main">
     <h1>About This Project</h1>
     <p>Hi there! I'm a student who built this website in my spare time, just for fun and to learn more about web development. I love games, design, and creating cool things people can interact with online.</p>
-    
     <p>I'm always open to including tributes to other amazing players or community members who inspire me. If you’ve got ideas or want to be a part of it—I'd love to hear from you!</p>
-    
     <p>Thanks for stopping by and supporting my journey. ✌️</p>
   </div>
 
-  <!-- Techno border elements -->
+  <!-- Techno borders -->
   <div class="border-top"></div>
   <div class="border-right"></div>
   <div class="border-bottom"></div>
   <div class="border-left"></div>
 
+  <!-- Music -->
+  <audio autoplay loop>
+    <source src="https://github.com/davidrobertwriter/davidrobertwriter.github.io/raw/refs/heads/main/Playground%20Rizz.mp3" type="audio/mpeg" />
+  </audio>
+
+  <!-- Falling emojis -->
   <script>
-    // Generate falling blue hearts like rain
-    const numHearts = 30;
-    for(let i = 0; i < numHearts; i++) {
-      const heart = document.createElement('div');
-      heart.classList.add('heart');
-      // Random horizontal start position across viewport width
-      heart.style.left = Math.random() * 100 + 'vw';
-      // Random animation duration between 5s and 10s
-      heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
-      // Random delay so they don’t fall all at once
-      heart.style.animationDelay = (Math.random() * 10) + 's';
-      document.body.appendChild(heart);
+    const numEmojis = 30;
+    for (let i = 0; i < numEmojis; i++) {
+      const emoji = document.createElement('div');
+      emoji.classList.add('emoji');
+      emoji.textContent = '😊';
+      emoji.style.left = Math.random() * 100 + 'vw';
+      emoji.style.animationDuration = (Math.random() * 5 + 5) + 's';
+      emoji.style.animationDelay = (Math.random() * 10) + 's';
+      document.body.appendChild(emoji);
     }
-    <audio autoplay loop> <source src="https://github.com/davidrobertwriter/davidrobertwriter.github.io/raw/refs/heads/main/Playground%20Rizz.mp3" type="audio/mpeg" /> </audio>
   </script>
 </body>
 </html>
