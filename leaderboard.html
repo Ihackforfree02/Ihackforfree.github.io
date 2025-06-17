@@ -82,34 +82,39 @@
       }
     }
 
-    /* Tetris Blocks */
     .tetris-wrapper {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
+      z-index: 0;
       pointer-events: none;
-      z-index: 2;
     }
 
-    .tetris-block {
+    .tetris-piece {
       position: absolute;
-      width: 30px;
-      height: 30px;
-      background-color: red;
-      animation: fall linear;
+      display: grid;
+      grid-template-columns: repeat(4, 20px);
+      grid-template-rows: repeat(4, 20px);
+      gap: 2px;
+      animation: fall linear forwards;
+    }
+
+    .block {
+      width: 20px;
+      height: 20px;
+      background-color: #00f;
     }
 
     @keyframes fall {
-      from { transform: translateY(-40px); opacity: 1; }
-      to { transform: translateY(110vh); opacity: 0.8; }
+      0% { transform: translateY(-50px); opacity: 1; }
+      100% { transform: translateY(110vh); opacity: 0.9; }
     }
   </style>
 </head>
 <body>
   <div class="confetti-wrapper" aria-hidden="true"></div>
-
   <div class="tetris-wrapper" aria-hidden="true"></div>
 
   <div class="container">
@@ -135,11 +140,10 @@
   <script>
     const wrapper = document.querySelector('.confetti-wrapper');
     const tetrisWrapper = document.querySelector('.tetris-wrapper');
-    const confettiCount = 100;
-    const tetrisColors = ['#e74c3c', '#f1c40f', '#2ecc71', '#9b59b6', '#3498db', '#1abc9c'];
+    const colors = ['#f39c12', '#e74c3c', '#8e44ad', '#3498db', '#2ecc71', '#1abc9c'];
 
-    // Confetti setup
-    for (let i = 0; i < confettiCount; i++) {
+    // Confetti Setup
+    for (let i = 0; i < 100; i++) {
       const confetti = document.createElement('div');
       confetti.className = 'confetti';
       confetti.style.left = Math.random() * 100 + 'vw';
@@ -150,30 +154,55 @@
       wrapper.appendChild(confetti);
     }
 
-    // Tetris block spawner
-    function spawnTetrisBlock() {
-      const block = document.createElement('div');
-      block.className = 'tetris-block';
+    // Tetris Shapes (4x4 grid, coords)
+    const shapes = {
+      I: [1, 5, 9, 13],
+      O: [5, 6, 9, 10],
+      T: [1, 4, 5, 6],
+      L: [1, 5, 9, 10],
+      J: [2, 6, 10, 9],
+      S: [2, 3, 5, 6],
+      Z: [1, 2, 6, 7]
+    };
 
-      // Exclude center 600px where container is centered
+    function spawnTetrisPiece() {
+      const piece = document.createElement('div');
+      piece.className = 'tetris-piece';
+
+      const keys = Object.keys(shapes);
+      const shape = shapes[keys[Math.floor(Math.random() * keys.length)]];
+      const color = colors[Math.floor(Math.random() * colors.length)];
+
+      // Populate blocks
+      for (let i = 0; i < 16; i++) {
+        const block = document.createElement('div');
+        block.className = 'block';
+        block.style.backgroundColor = color;
+        if (!shape.includes(i)) block.style.opacity = 0;
+        piece.appendChild(block);
+      }
+
+      const leftEdge = 50;
+      const rightEdge = window.innerWidth - 100;
+
+      // Avoid leaderboard middle section
       let left;
       do {
         left = Math.random() * window.innerWidth;
-      } while (left > window.innerWidth / 2 - 320 && left < window.innerWidth / 2 + 320);
+      } while (left > window.innerWidth / 2 - 340 && left < window.innerWidth / 2 + 340);
 
-      block.style.left = `${left}px`;
-      block.style.backgroundColor = tetrisColors[Math.floor(Math.random() * tetrisColors.length)];
-      block.style.animationDuration = (5 + Math.random() * 3) + 's';
-      tetrisWrapper.appendChild(block);
+      piece.style.left = `${left}px`;
+      piece.style.top = `-60px`;
+      piece.style.animationDuration = (6 + Math.random() * 3) + 's';
 
-      // Clean up when animation ends
-      block.addEventListener('animationend', () => {
-        tetrisWrapper.removeChild(block);
+      tetrisWrapper.appendChild(piece);
+
+      piece.addEventListener('animationend', () => {
+        piece.remove();
       });
     }
 
-    // Launch falling blocks repeatedly
-    setInterval(spawnTetrisBlock, 300);
+    setInterval(spawnTetrisPiece, 400);
   </script>
 </body>
 </html>
