@@ -55,23 +55,32 @@
       height: 100vh;
       pointer-events: none;
       z-index: 1;
+      overflow: hidden;
     }
 
     .trophy {
       position: absolute;
       top: -50px;
       font-size: 2rem;
-      animation: fall linear infinite;
+      animation-name: fall;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
     }
 
     @keyframes fall {
-      to {
+      0% {
+        transform: translateY(-50px);
+        opacity: 1;
+      }
+      100% {
         transform: translateY(110vh);
         opacity: 0;
       }
     }
   </style>
-</div class="container">
+</head>
+<body>
+  <div class="container">
     <h1>Records</h1>
     <div id="record-list"></div>
   </div>
@@ -87,4 +96,23 @@
       trophy.className = 'trophy';
       trophy.textContent = '🏆';
       trophy.style.left = Math.random() * 100 + 'vw';
-      trophy.style.animationDuration
+      const fallDuration = 3 + Math.random() * 3;
+      trophy.style.animationDuration = `${fallDuration}s`;
+      trophy.style.animationDelay = `${Math.random() * 5}s`;
+      wrapper.appendChild(trophy);
+    }
+
+    const records = [
+      { name: "Owner: Cameron", score: "For being the best owner" },
+      { name: "Jimmy", score: "Best at gunspin" },
+      { name: "Rowan", score: "Loves game website" },
+      { name: "Zac", score: "Good at stuff I guess" },
+      { name: "Louie", score: "Because he asked" }
+    ];
+
+    const listContainer = document.getElementById('record-list');
+    records.forEach(record => {
+      const p = document.createElement('p');
+      p.textContent = `${record.name} – ${record.score}`;
+      listContainer.appendChild(p);
+    });
