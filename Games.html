@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Game Launcher</title>
   <style>
+    /* Reset & base */
     * {
       box-sizing: border-box;
     }
@@ -19,7 +20,7 @@
     }
 
     .container {
-      max-width: 900px;
+      max-width: 700px;
       margin: 80px auto;
       padding: 40px 30px;
       background: rgba(0, 0, 0, 0.7);
@@ -37,43 +38,40 @@
       letter-spacing: 3px;
     }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
+    .button-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 25px 40px;
+      justify-items: center;
     }
 
-    th, td {
-      padding: 12px;
-      text-align: center;
-      font-size: 1.2rem;
-      border-bottom: 1px solid #00ffff33;
-    }
-
-    th {
-      text-shadow: 0 0 5px #00ffff;
-    }
-
-    .play-button {
+    .button-grid a {
       text-decoration: none;
-      font-size: 1rem;
-      padding: 8px 16px;
-      border-radius: 20px;
+      font-size: 1.4rem;
+      padding: 12px 28px;
+      border-radius: 30px;
       color: #00ffff;
       border: 2px solid #00ffff;
       box-shadow: 0 0 8px #00ffff;
       background: transparent;
       transition: all 0.3s ease;
-      font-weight: 600;
       display: inline-block;
+      width: 150px;
+      text-align: center;
+      user-select: none;
+      font-weight: 600;
+      position: relative;
+      overflow: hidden;
     }
 
-    .play-button:hover {
+    .button-grid a:hover {
       background: #00ffff;
       color: #0f2027;
       box-shadow: 0 0 20px #00ffff, inset 0 0 30px #00ffff;
       cursor: pointer;
     }
 
+    /* Techno border effect */
     .border-top, .border-right, .border-bottom, .border-left {
       content: "";
       position: fixed;
@@ -119,6 +117,7 @@
       100% { background-position: 0% 50%; opacity: 0.4; box-shadow: 0 0 5px #00ffff; }
     }
 
+    /* Controller rain */
     .controller {
       position: fixed;
       top: -50px;
@@ -140,86 +139,35 @@
 <body>
   <div class="container" role="main">
     <h1>Games</h1>
-    <table role="list">
-      <thead>
-        <tr>
-          <th>Game</th>
-          <th>Link</th>
-          <th>Play</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Minecraft</td>
-          <td><a href="https://ihackforfree02.github.io/Precision-Client-For-EaglerCraft/">Visit</a></td>
-          <td><a class="play-button" href="https://ihackforfree02.github.io/Precision-Client-For-EaglerCraft/">Play</a></td>
-        </tr>
-        <tr>
-          <td>Time Shooter</td>
-          <td><a href="https://schoolaccountforme.github.io/Time-Shooter-3-SWAT/">Visit</a></td>
-          <td><a class="play-button" href="https://schoolaccountforme.github.io/Time-Shooter-3-SWAT/">Play</a></td>
-        </tr>
-        <tr>
-          <td>1v1.LOL</td>
-          <td><a href="https://ihackforfree02.github.io/1v1.lol/">Visit</a></td>
-          <td><a class="play-button" href="https://ihackforfree02.github.io/1v1.lol/">Play</a></td>
-        </tr>
-        <tr>
-          <td>2048</td>
-          <td><a href="https://schoolaccountforme.github.io/2048/">Visit</a></td>
-          <td><a class="play-button" href="https://schoolaccountforme.github.io/2048/">Play</a></td>
-        </tr>
-        <tr>
-          <td>Gun Spin</td>
-          <td><a href="https://ihackforfree02.github.io/GunSpin/">Visit</a></td>
-          <td><a class="play-button" href="https://ihackforfree02.github.io/GunSpin/">Play</a></td>
-        </tr>
-        <tr>
-          <td>Polytrack</td>
-          <td><a href="https://ihackforfree02.github.io/polytrack.3/">Visit</a></td>
-          <td><a class="play-button" href="https://ihackforfree02.github.io/polytrack.3/">Play</a></td>
-        </tr>
-        <tr>
-          <td>Stickman Hook</td>
-          <td><a href="https://ihackforfree02.github.io/Stickman-Hook/">Visit</a></td>
-          <td><a class="play-button" href="https://ihackforfree02.github.io/Stickman-Hook/">Play</a></td>
-        </tr>
-        <tr>
-          <td>Cluster Rush</td>
-          <td><a href="https://ihackforfree02.github.io/cluster/">Visit</a></td>
-          <td><a class="play-button" href="https://ihackforfree02.github.io/cluster/">Play</a></td>
-        </tr>
-        <tr>
-          <td>Cookie Clicker</td>
-          <td><a href="https://ihackforfree02.github.io/cookie-clicker/">Visit</a></td>
-          <td><a class="play-button" href="https://ihackforfree02.github.io/cookie-clicker/">Play</a></td>
-        </tr>
-        <tr>
-          <td>CSGO Clicker</td>
-          <td><a href="https://ihackforfree02.github.io/Case-clicker/">Visit</a></td>
-          <td><a class="play-button" href="https://ihackforfree02.github.io/Case-clicker/">Play</a></td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="button-grid" role="list">
+      <a href="https://ihackforfree02.github.io/Precision-Client-For-EaglerCraft/" role="listitem">Minecraft</a>
+      <a href="https://schoolaccountforme.github.io/Time-Shooter-3-SWAT/" role="listitem">Time Shooter</a>
+      <a href="https://ihackforfree02.github.io/1v1.lol/" role="listitem">1v1.LOL</a>
+      <a href="https://schoolaccountforme.github.io/2048/" role="listitem">2048</a>
+      <a href="https://ihackforfree02.github.io/GunSpin/" role="listitem">Gun Spin</a>
+      <a href="https://ihackforfree02.github.io/polytrack.3/" role="listitem">Polytrack</a>
+      <a href="https://ihackforfree02.github.io/Stickman-Hook/" role="listitem">Stickman Hook</a>
+      <a href="https://ihackforfree02.github.io/cluster/" role="listitem">Cluster Rush</a>
+      <a href="https://ihackforfree02.github.io/cookie-clicker/" role="listitem">Cookie Clicker</a>
+      <a href="https://ihackforfree02.github.io/Case-clicker/" role="listitem">CSGO Clicker</a>
+    </div>
   </div>
 
+  <!-- Techno border elements -->
   <div class="border-top"></div>
   <div class="border-right"></div>
   <div class="border-bottom"></div>
   <div class="border-left"></div>
-
-  <audio autoplay loop>
-    <source src="https://github.com/davidrobertwriter/davidrobertwriter.github.io/raw/refs/heads/main/Playground%20Rizz.mp3" type="audio/mpeg" />
-  </audio>
-
+<audio autoplay loop> <source src="https://github.com/davidrobertwriter/davidrobertwriter.github.io/raw/refs/heads/main/Playground%20Rizz.mp3" type="audio/mpeg" /> </audio>
+  <!-- Controller Rain Script -->
   <script>
     const createController = () => {
       const controller = document.createElement('div');
       controller.classList.add('controller');
       controller.textContent = '🎮';
-      controller.style.left = `${Math.random() * 100}vw`;
-      controller.style.animationDuration = `${3 + Math.random() * 2}s`;
-      controller.style.fontSize = `${1.5 + Math.random() * 2}rem`;
+      controller.style.left = ${Math.random() * 100}vw;
+      controller.style.animationDuration = ${3 + Math.random() * 2}s;
+      controller.style.fontSize = ${1.5 + Math.random() * 2}rem;
       document.body.appendChild(controller);
       setTimeout(() => controller.remove(), 6000);
     };
@@ -228,3 +176,5 @@
   </script>
 </body>
 </html>
+
+
