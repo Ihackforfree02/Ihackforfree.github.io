@@ -3,23 +3,129 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Links - MR GAMES</title>
+  <title>Useful Links - MR GAMES</title>
   <style>
-    /* (Same CSS as your original for full consistency) */
-    /* ... you can reuse the entire <style> block from your original code above ... */
+    /* Reuse exact styles from homepage */
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: #ffffff;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .container {
+      text-align: center;
+      padding: 80px 20px;
+      max-width: 600px;
+      margin: auto;
+      background-color: rgba(0, 0, 0, 0.6);
+      border-radius: 12px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.3);
+      animation: fadeIn 2s ease-out forwards;
+      opacity: 0;
+      position: relative;
+      z-index: 10;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      color: #f0db4f;
+      text-shadow: 0 0 10px #f0db4f, 0 0 20px #f0db4f;
+      animation: glow 1.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 5px #f0db4f; }
+      to { text-shadow: 0 0 20px #f0db4f, 0 0 30px #f0db4f; }
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-evenly;
+      flex-wrap: wrap;
+      gap: 15px;
+      padding: 0 10px;
+    }
+
+    nav a {
+      display: inline-block;
+      padding: 12px 28px;
+      font-size: 1.4rem;
+      color: #00ffff;
+      text-decoration: none;
+      border: 2px solid #00ffff;
+      border-radius: 30px;
+      box-shadow: 0 0 8px #00ffff;
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+
+    nav a:hover,
+    nav a:focus {
+      background: #00ffff;
+      color: #0f2027;
+      box-shadow: 0 0 20px #00ffff;
+      cursor: pointer;
+    }
+
+    p.subtitle {
+      margin-top: 40px;
+      font-size: 1.2rem;
+      color: #00ffff;
+    }
+
+    .rain-wrapper {
+      pointer-events: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: visible;
+      z-index: 5;
+    }
+
+    .raindrop {
+      position: absolute;
+      top: -20px;
+      width: 2px;
+      background: linear-gradient(180deg, #00ffff, #0077aa);
+      border-radius: 50% / 40%;
+      opacity: 0.6;
+      animation-name: fall;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      will-change: transform;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+        opacity: 0;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Useful Links</h1>
     <nav>
-      <a href="https://discord.gg/yourcommunity">Join Discord</a>
-      <a href="https://github.com/yourrepo">Game Source Code</a>
-      <a href="https://itch.io/profile/yourgames">Play More on Itch.io</a>
-      <a href="mailto:contact@mrgames.com">Contact Us</a>
+      <a href="https://discord.gg/your-server">Join Discord</a>
+      <a href="https://github.com/your-repo">GitHub</a>
+      <a href="https://itch.io/profile/mr-games">Itch.io Games</a>
+      <a href="mailto:contact@mrgames.com">Email Us</a>
       <a href="https://forms.gle/z2X1Zjx4rrLfTMqc7">Submit a Game</a>
     </nav>
-    <p class="subtitle">Stay connected and help us grow the MR GAMES community!</p>
+    <p class="subtitle">Thanks for supporting the MR GAMES community!</p>
   </div>
 
   <audio autoplay loop>
@@ -29,7 +135,20 @@
   <div class="rain-wrapper" aria-hidden="true"></div>
 
   <script>
-    // Reuse the raindrop script as-is
+    const rainWrapper = document.querySelector('.rain-wrapper');
+    const numRaindrops = 100;
+
+    for (let i = 0; i < numRaindrops; i++) {
+      const drop = document.createElement('div');
+      drop.className = 'raindrop';
+      drop.style.left = Math.random() * 100 + 'vw';
+      const fallDuration = 2 + Math.random() * 3;
+      const dropHeight = 10 + Math.random() * 20;
+      drop.style.height = dropHeight + 'px';
+      drop.style.animationDuration = `${fallDuration}s`;
+      drop.style.animationDelay = `${Math.random() * 5}s`;
+      rainWrapper.appendChild(drop);
+    }
   </script>
 </body>
 </html>
