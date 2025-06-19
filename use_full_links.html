@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Useful Links - MR GAMES</title>
   <style>
-    /* Reuse exact styles from homepage */
     body, html {
       margin: 0;
       padding: 0;
@@ -101,9 +100,7 @@
       background: linear-gradient(180deg, #00ffff, #0077aa);
       border-radius: 50% / 40%;
       opacity: 0.6;
-      animation-name: fall;
-      animation-timing-function: linear;
-      animation-iteration-count: infinite;
+      animation: fall linear infinite;
       will-change: transform;
     }
 
@@ -112,6 +109,32 @@
         transform: translateY(110vh);
         opacity: 0;
       }
+    }
+
+    .city-train {
+      position: fixed;
+      bottom: 20px;
+      width: 200%;
+      height: 40px;
+      background: repeating-linear-gradient(to right, #333 0px, #333 20px, #222 20px, #222 40px);
+      animation: moveTrain 10s linear infinite;
+      z-index: 3;
+    }
+
+    .train {
+      position: absolute;
+      top: -20px;
+      left: 0;
+      width: 80px;
+      height: 20px;
+      background: #00ffff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px #00ffff;
+    }
+
+    @keyframes moveTrain {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
     }
   </style>
 </head>
@@ -125,12 +148,20 @@
       <a href="mailto:contact@mrgames.com">Email Us</a>
       <a href="https://forms.gle/z2X1Zjx4rrLfTMqc7">Submit a Game</a>
     </nav>
-    <p class="subtitle">Thanks for supporting the MR GAMES community!</p>
+    <p class="subtitle">Thunder rolls. The train glows. Welcome to the future of MR GAMES.</p>
   </div>
 
   <audio autoplay loop>
     <source src="https://github.com/davidrobertwriter/davidrobertwriter.github.io/raw/refs/heads/main/Playground%20Rizz.mp3" type="audio/mpeg" />
   </audio>
+
+  <audio autoplay loop>
+    <source src="your-thunder-sound.mp3" type="audio/mpeg" />
+  </audio>
+
+  <div class="city-train">
+    <div class="train"></div>
+  </div>
 
   <div class="rain-wrapper" aria-hidden="true"></div>
 
