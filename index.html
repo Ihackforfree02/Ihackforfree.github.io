@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MR GAMES</title>
+  <link rel="icon" href="favicon.ico" />
   <style>
     /* Base styling */
     body, html {
@@ -120,11 +121,43 @@
         opacity: 0;
       }
     }
+
+    /* Tab cloak controls */
+    .cloak-controls {
+      margin-bottom: 30px;
+      font-size: 1.2rem;
+      color: #00ffff;
+    }
+
+    .cloak-controls select {
+      margin-top: 10px;
+      padding: 8px;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: none;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>MR GAMES</h1>
+
+    <!-- Tab Cloak Controls -->
+    <div class="cloak-controls">
+      <label>
+        <input type="checkbox" id="cloakToggle" />
+        Enable Tab Cloak
+      </label>
+      <br />
+      <select id="cloakSelector">
+        <option value="">-- Select Tab Cloak --</option>
+        <option value="Google Docs">Google Docs</option>
+        <option value="Google Classroom">Google Classroom</option>
+        <option value="Khan Academy">Khan Academy</option>
+        <option value="MR GAMES">MR GAMES (Default)</option>
+      </select>
+    </div>
+
     <nav>
       <a href="Games.html">Play</a>
       <a href="leaderboard.html">Leaderboard</a>
@@ -133,7 +166,7 @@
       <a href="use_full_links.html">Useful Links</a>
       <a href="https://hentai.com">Szvy Central V2 not working</a>
       <a href="https://sigmasigmatoiletedge.github.io/">Nettle Web</a>
-      </nav>
+    </nav>
   </div>
 
   <audio autoplay loop>
@@ -149,18 +182,56 @@
     for (let i = 0; i < numRaindrops; i++) {
       const drop = document.createElement('div');
       drop.className = 'raindrop';
-
-      // Random horizontal position
       drop.style.left = Math.random() * 100 + 'vw';
-
-      // Random height and speed
       const fallDuration = 2 + Math.random() * 3;
       const dropHeight = 10 + Math.random() * 20;
       drop.style.height = dropHeight + 'px';
       drop.style.animationDuration = `${fallDuration}s`;
       drop.style.animationDelay = `${Math.random() * 5}s`;
-
       rainWrapper.appendChild(drop);
+    }
+
+    // Tab Cloak Logic
+    const cloakToggle = document.getElementById('cloakToggle');
+    const cloakSelector = document.getElementById('cloakSelector');
+
+    const favicons = {
+      "Google Docs": "https://ssl.gstatic.com/docs/doclist/images/mediatype/icon_1_document_x32.png",
+      "Google Classroom": "https://ssl.gstatic.com/classroom/favicon.png",
+      "Khan Academy": "https://www.khanacademy.org/favicon.ico",
+      "MR GAMES": "favicon.ico"
+    };
+
+    cloakToggle.addEventListener('change', () => {
+      if (cloakToggle.checked) {
+        applyCloak(cloakSelector.value);
+      } else {
+        resetCloak();
+      }
+    });
+
+    cloakSelector.addEventListener('change', () => {
+      if (cloakToggle.checked) {
+        applyCloak(cloakSelector.value);
+      }
+    });
+
+    function applyCloak(name) {
+      if (!name) return;
+      document.title = name;
+      let link = document.querySelector("link[rel~='icon']");
+      if (!link) {
+        link = document.createElement('link');
+        link.rel = 'icon';
+        document.head.appendChild(link);
+      }
+      link.href = favicons[name] || favicons["MR GAMES"];
+    }
+
+    function resetCloak() {
+      document.title = "MR GAMES";
+      let link = document.querySelector("link[rel~='icon']");
+      if (link) link.href = favicons["MR GAMES"];
     }
   </script>
 </body>
