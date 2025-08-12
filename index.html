@@ -6,7 +6,6 @@
   <title>MR GAMES</title>
   <link rel="icon" href="favicon.ico" />
   <style>
-    /* Base styling */
     body, html {
       margin: 0;
       padding: 0;
@@ -33,9 +32,7 @@
     }
 
     @keyframes fadeIn {
-      to {
-        opacity: 1;
-      }
+      to { opacity: 1; }
     }
 
     h1 {
@@ -53,12 +50,8 @@
     }
 
     @keyframes glow {
-      from {
-        text-shadow: 0 0 5px #f0db4f;
-      }
-      to {
-        text-shadow: 0 0 20px #f0db4f, 0 0 30px #f0db4f;
-      }
+      from { text-shadow: 0 0 5px #f0db4f; }
+      to { text-shadow: 0 0 20px #f0db4f, 0 0 30px #f0db4f; }
     }
 
     nav {
@@ -82,15 +75,13 @@
       user-select: none;
     }
 
-    nav a:hover,
-    nav a:focus {
+    nav a:hover {
       background: #00ffff;
       color: #0f2027;
       box-shadow: 0 0 20px #00ffff;
       cursor: pointer;
     }
 
-    /* Raindrop styling */
     .rain-wrapper {
       pointer-events: none;
       position: fixed;
@@ -112,7 +103,6 @@
       animation-name: fall;
       animation-timing-function: linear;
       animation-iteration-count: infinite;
-      will-change: transform;
     }
 
     @keyframes fall {
@@ -122,7 +112,6 @@
       }
     }
 
-    /* Tab cloak controls */
     .cloak-controls {
       margin-bottom: 30px;
       font-size: 1.2rem;
@@ -136,13 +125,35 @@
       border-radius: 8px;
       border: none;
     }
+
+    .settings-button {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      background-color: #00ffff;
+      color: #0f2027;
+      border: none;
+      border-radius: 50px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      font-weight: bold;
+      box-shadow: 0 0 12px #00ffff;
+      cursor: pointer;
+      z-index: 20;
+      text-decoration: none;
+    }
+
+    .settings-button:hover {
+      box-shadow: 0 0 20px #00ffff;
+    }
   </style>
 </head>
 <body>
+  <a href="big_gyatt.html" class="settings-button">⚙️ Settings</a>
+
   <div class="container">
     <h1>MR GAMES</h1>
 
-    <!-- Tab Cloak Controls -->
     <div class="cloak-controls">
       <label>
         <input type="checkbox" id="cloakToggle" />
@@ -153,7 +164,8 @@
         <option value="">-- Select Tab Cloak --</option>
         <option value="Google Docs">Google Docs</option>
         <option value="Google Classroom">Google Classroom</option>
-        <option value="Khan Academy">Khan Academy</option>
+        <option value="Google Slides">Google Slides</option>
+        <option value="Gmail">Gmail</option>
         <option value="MR GAMES">MR GAMES (Default)</option>
       </select>
     </div>
@@ -173,7 +185,7 @@
     <source src="https://github.com/davidrobertwriter/davidrobertwriter.github.io/raw/refs/heads/main/Playground%20Rizz.mp3" type="audio/mpeg" />
   </audio>
 
-  <div class="rain-wrapper" aria-hidden="true"></div>
+  <div class="rain-wrapper"></div>
 
   <script>
     const rainWrapper = document.querySelector('.rain-wrapper');
@@ -191,14 +203,14 @@
       rainWrapper.appendChild(drop);
     }
 
-    // Tab Cloak Logic
     const cloakToggle = document.getElementById('cloakToggle');
     const cloakSelector = document.getElementById('cloakSelector');
 
     const favicons = {
       "Google Docs": "https://ssl.gstatic.com/docs/doclist/images/mediatype/icon_1_document_x32.png",
       "Google Classroom": "https://ssl.gstatic.com/classroom/favicon.png",
-      "Khan Academy": "https://www.khanacademy.org/favicon.ico",
+      "Google Slides": "https://ssl.gstatic.com/docs/doclist/images/mediatype/icon_10_presentation_x32.png",
+      "Gmail": "https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico",
       "MR GAMES": "favicon.ico"
     };
 
