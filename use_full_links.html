@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Useful Links - MR GAMES</title>
+  <link rel="icon" href="favicon.ico" />
   <style>
-    /* Reuse exact styles from homepage */
     body, html {
       margin: 0;
       padding: 0;
@@ -129,54 +129,28 @@
     <p class="subtitle">Thanks for supporting the MR GAMES community!</p>
   </div>
 
+  <!-- Shared Cloak + Panic script -->
   <script src="cloak_panic.js"></script>
 
+  <!-- Background music -->
   <audio autoplay loop>
     <source src="https://github.com/davidrobertwriter/davidrobertwriter.github.io/raw/refs/heads/main/Playground%20Rizz.mp3" type="audio/mpeg" />
   </audio>
 
+  <!-- Rain animation -->
   <div class="rain-wrapper" aria-hidden="true"></div>
-<script>
-  const favicons = {
-    "Google Docs": "https://ssl.gstatic.com/docs/doclist/images/mediatype/icon_1_document_x32.png",
-    "Google Classroom": "https://ssl.gstatic.com/classroom/favicon.png",
-    "Google Slides": "https://ssl.gstatic.com/docs/doclist/images/mediatype/icon_10_presentation_x32.png",
-    "Gmail": "https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico",
-    "MR GAMES": "favicon.ico"
-  };
-
-  window.addEventListener("DOMContentLoaded", () => {
-    const cloakEnabled = localStorage.getItem("cloakEnabled") === "true";
-    const cloakName = localStorage.getItem("cloakName");
-
-    if (cloakEnabled && cloakName) {
-      document.title = cloakName;
-      let link = document.querySelector("link[rel~='icon']");
-      if (!link) {
-        link = document.createElement("link");
-        link.rel = "icon";
-        document.head.appendChild(link);
-      }
-      link.href = favicons[cloakName] || favicons["MR GAMES"];
-    }
-  });
-</script>
   <script>
     const rainWrapper = document.querySelector('.rain-wrapper');
     const numRaindrops = 100;
-
     for (let i = 0; i < numRaindrops; i++) {
       const drop = document.createElement('div');
       drop.className = 'raindrop';
       drop.style.left = Math.random() * 100 + 'vw';
-      const fallDuration = 2 + Math.random() * 3;
-      const dropHeight = 10 + Math.random() * 20;
-      drop.style.height = dropHeight + 'px';
-      drop.style.animationDuration = `${fallDuration}s`;
-      drop.style.animationDelay = `${Math.random() * 5}s`;
+      drop.style.height = (10 + Math.random() * 20) + 'px';
+      drop.style.animationDuration = (2 + Math.random() * 3) + 's';
+      drop.style.animationDelay = (Math.random() * 5) + 's';
       rainWrapper.appendChild(drop);
     }
-</script>
   </script>
 </body>
 </html>
