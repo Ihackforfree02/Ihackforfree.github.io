@@ -111,22 +111,255 @@
         opacity: 0;
       }
     }
+
+    /* small helper text */
+    .muted {
+      color: rgba(0,255,255,0.8);
+      font-size: 0.95rem;
+      margin-top: 8px;
+    }
+
+    .inline-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .key-display {
+      display: inline-block;
+      min-width: 140px;
+      text-align: center;
+      padding: 10px;
+      border-radius: 8px;
+      border: 2px solid rgba(0,255,255,0.2);
+      background: rgba(0,0,0,0.6);
+      color: #00ffff;
+      box-shadow: 0 0 8px rgba(0,255,255,0.06);
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Settings</h1>
 
+    <!-- Tab Cloak -->
+    <label for="cloakSelect">Tab cloak (choose a Google service)</label>
+    <div class="inline-row">
+      <select id="cloakSelect" aria-label="Tab cloak select">
+        <option value="classroom">Google Classroom</option>
+        <option value="gmail">Gmail</option>
+        <option value="docs">Google Docs</option>
+        <option value="slides">Google Slides</option>
+      </select>
+      <button id="openCloakBtn" type="button">Open Cloak</button>
+    </div>
+    <div class="muted">Selecting and opening will navigate the current tab to the chosen service to hide this site.</div>
+
+    <!-- Panic Button -->
+    <label for="panicUrl">Panic URL</label>
+    <input id="panicUrl" type="url" placeholder="https://www.example.com" />
+
+    <label style="margin-top:18px;">Panic key (press the button below, then press a key to set)</label>
+    <div class="inline-row">
+      <div id="keyDisplay" class="key-display">Not set</div>
+      <button id="setKeyBtn" type="button">Set Panic Key</button>
+      <button id="clearKeyBtn" type="button">Clear Key</button>
+    </div>
+    <div class="muted">When the panic key is pressed, the page will immediately go to your Panic URL. The key is saved.</div>
+
+    <!-- Extra control -->
+    <div style="margin-top:16px;">
+      <button id="saveBtn" type="button">Save Settings</button>
+      <button id="testPanicBtn" type="button">Test Panic (opens in same tab)</button>
+    </div>
+  </div>
+
+  <!-- rain wrapper -->
+  <div class="rain-wrapper"></div>
+
   <script>
     // Rain animation
-    const rainWrapper = document.querySelector('.rain-wrapper');
-    const numRaindrops = 100;
-    for (let i = 0; i < numRaindrops; i++) {
-      const drop = document.createElement('div');
-      drop.className = 'raindrop';
-      drop.style.left = Math.random() * 100 + 'vw';
-      drop.style.height = (10 + Math.random() * 20) + 'px';
-      drop.style.animationDuration = (2 + Math.random() * 3) + 's';
-      drop.style.animationDelay = (Math.random() * 5) + 's';
-      rainWrapper.appendChild(drop);
+    (function generateRain(){
+      const rainWrapper = document.querySelector('.rain-wrapper');
+      const numRaindrops = 100;
+      for (let i = 0; i < numRaindrops; i++) {
+        const drop = document.createElement('div');
+        drop.className = 'raindrop';
+        drop.style.left = Math.random() * 100 + 'vw';
+        drop.style.height = (10 + Math.random() * 20) + 'px';
+        drop.style.animationDuration = (2 + Math.random() * 3) + 's';
+        drop.style.animationDelay = (Math.random() * 5) + 's';
+        rainWrapper.appendChild(drop);
+      }
+    })();
+
+    // Helper keys for localStorage
+    const LS_KEYS = {
+      PANIC_KEY: 'settings_panic_key',    // stores e.key string
+      PANIC_URL: 'settings_panic_url',
+      CLOAK_CHOICE: 'settings_cloak_choice'
+    };
+
+    // DOM refs
+    const cloakSelect = document.getElementById('cloakSelect');
+    const openCloakBtn = document.getElementById('openCloakBtn');
+    const panicUrlInput = document.getElementById('panicUrl');
+    const setKeyBtn = document.getElementById('setKeyBtn');
+    const clearKeyBtn = document.getElementById('clearKeyBtn');
+    const saveBtn = document.getElementById('saveBtn');
+    const testPanicBtn = document.getElementById('testPanicBtn');
+    const keyDisplay = document.getElementById('keyDisplay');
+
+    // State
+    let listeningForKey = false;
+    let panicKey = null; // string representing e.key
+
+    // Cloak URLs map
+    const CLOAK_URLS = {
+      classroom: 'https://classroom.google.com',
+      gmail: 'https://mail.google.com',
+      docs: 'https://docs.google.com/document/',
+      slides: 'https://docs.google.com/presentation/'
+    };
+
+    // Load saved settings from localStorage
+    function loadSettings() {
+      const storedKey = localStorage.getItem(LS_KEYS.PANIC_KEY);
+      const storedUrl = localStorage.getItem(LS_KEYS.PANIC_URL);
+      const storedCloak = localStorage.getItem(LS_KEYS.CLOAK_CHOICE);
+
+      if (storedKey) {
+        panicKey = storedKey;
+        keyDisplay.textContent = storedKey;
+      } else {
+        keyDisplay.textContent = 'Not set';
+      }
+
+      if (storedUrl) {
+        panicUrlInput.value = storedUrl;
+      } else {
+        panicUrlInput.value = ''; // user can set
+      }
+
+      if (storedCloak && CLOAK_URLS[storedCloak]) {
+        cloakSelect.value = storedCloak;
+      }
     }
+
+    // Save settings to localStorage
+    function saveSettings() {
+      if (panicKey) localStorage.setItem(LS_KEYS.PANIC_KEY, panicKey);
+      else localStorage.removeItem(LS_KEYS.PANIC_KEY);
+
+      const url = panicUrlInput.value ? panicUrlInput.value.trim() : '';
+      if (url) localStorage.setItem(LS_KEYS.PANIC_URL, url);
+      else localStorage.removeItem(LS_KEYS.PANIC_URL);
+
+      const cloak = cloakSelect.value;
+      if (cloak) localStorage.setItem(LS_KEYS.CLOAK_CHOICE, cloak);
+    }
+
+    // Open cloak (navigate current tab)
+    function openCloak() {
+      const choice = cloakSelect.value;
+      const url = CLOAK_URLS[choice] || 'https://www.google.com';
+      // Navigate current tab (cloaking)
+      window.location.href = url;
+    }
+
+    // Panic action: navigate to panic URL (immediately)
+    function doPanic() {
+      const storedUrl = localStorage.getItem(LS_KEYS.PANIC_URL) || panicUrlInput.value.trim();
+      const target = storedUrl && storedUrl.length ? storedUrl : 'https://www.google.com';
+      // Direct navigation
+      window.location.href = target;
+    }
+
+    // UI flows
+    openCloakBtn.addEventListener('click', () => {
+      saveSettings(); // persist cloak choice before navigation
+      openCloak();
+    });
+
+    // Start listening for a key press to set panic key
+    setKeyBtn.addEventListener('click', () => {
+      if (listeningForKey) return;
+      listeningForKey = true;
+      keyDisplay.textContent = 'Press any key...';
+      keyDisplay.style.opacity = '0.9';
+      // focus body so keypresses are captured
+      window.focus();
+      setTimeout(() => {
+        // In case someone clicked and then opened devtools etc, we keep listening until keydown captured
+      }, 50);
+    });
+
+    clearKeyBtn.addEventListener('click', () => {
+      listeningForKey = false;
+      panicKey = null;
+      keyDisplay.textContent = 'Not set';
+      saveSettings();
+    });
+
+    // Global keydown listener
+    window.addEventListener('keydown', (e) => {
+      // If we're currently setting key, capture the pressed key (avoid modifier-only keys)
+      if (listeningForKey) {
+        // prefer descriptive key (e.key)
+        const captured = e.key;
+        // Save the captured key name
+        panicKey = captured;
+        keyDisplay.textContent = panicKey;
+        listeningForKey = false;
+        saveSettings();
+        // don't allow the keypress to also trigger panic right away
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+      }
+
+      // if not typing into an input or textarea, and panicKey matches, trigger panic
+      const active = document.activeElement;
+      const isTyping = active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA' || active.isContentEditable);
+      if (isTyping) return;
+
+      if (panicKey && e.key === panicKey) {
+        // immediate panic
+        doPanic();
+      }
+    }, true);
+
+    // Save button saves current inputs
+    saveBtn.addEventListener('click', () => {
+      saveSettings();
+      // small visual confirmation (re-using keyDisplay briefly)
+      const prev = keyDisplay.textContent;
+      keyDisplay.textContent = (panicKey || 'Saved');
+      setTimeout(() => keyDisplay.textContent = (panicKey || 'Not set'), 900);
+    });
+
+    // Test panic button
+    testPanicBtn.addEventListener('click', () => {
+      saveSettings();
+      doPanic();
+    });
+
+    // Save on changes too
+    cloakSelect.addEventListener('change', () => {
+      localStorage.setItem(LS_KEYS.CLOAK_CHOICE, cloakSelect.value);
+    });
+    panicUrlInput.addEventListener('change', () => {
+      if (panicUrlInput.value.trim()) localStorage.setItem(LS_KEYS.PANIC_URL, panicUrlInput.value.trim());
+      else localStorage.removeItem(LS_KEYS.PANIC_URL);
+    });
+
+    // On load, populate
+    loadSettings();
+
+    // friendly tip: pressing Clear will remove stored panic key
+  </script>
+</body>
+</html>
