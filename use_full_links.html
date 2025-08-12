@@ -134,23 +134,7 @@
   </audio>
 
   <div class="rain-wrapper" aria-hidden="true"></div>
-
-  <script>
-    const rainWrapper = document.querySelector('.rain-wrapper');
-    const numRaindrops = 100;
-
-    for (let i = 0; i < numRaindrops; i++) {
-      const drop = document.createElement('div');
-      drop.className = 'raindrop';
-      drop.style.left = Math.random() * 100 + 'vw';
-      const fallDuration = 2 + Math.random() * 3;
-      const dropHeight = 10 + Math.random() * 20;
-      drop.style.height = dropHeight + 'px';
-      drop.style.animationDuration = `${fallDuration}s`;
-      drop.style.animationDelay = `${Math.random() * 5}s`;
-      rainWrapper.appendChild(drop);
-    }
-    <script>
+<script>
   const favicons = {
     "Google Docs": "https://ssl.gstatic.com/docs/doclist/images/mediatype/icon_1_document_x32.png",
     "Google Classroom": "https://ssl.gstatic.com/classroom/favicon.png",
@@ -174,6 +158,22 @@
       link.href = favicons[cloakName] || favicons["MR GAMES"];
     }
   });
+</script>
+  <script>
+    const rainWrapper = document.querySelector('.rain-wrapper');
+    const numRaindrops = 100;
+
+    for (let i = 0; i < numRaindrops; i++) {
+      const drop = document.createElement('div');
+      drop.className = 'raindrop';
+      drop.style.left = Math.random() * 100 + 'vw';
+      const fallDuration = 2 + Math.random() * 3;
+      const dropHeight = 10 + Math.random() * 20;
+      drop.style.height = dropHeight + 'px';
+      drop.style.animationDuration = `${fallDuration}s`;
+      drop.style.animationDelay = `${Math.random() * 5}s`;
+      rainWrapper.appendChild(drop);
+    }
 </script>
   </script>
 </body>
