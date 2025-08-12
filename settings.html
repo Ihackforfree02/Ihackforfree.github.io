@@ -56,13 +56,13 @@
 
     input, select {
       width: 80%;
-      padding: 10px;
+      padding: 12px;
       margin-top: 10px;
       background-color: #000;
       color: #00ffff;
       border: 2px solid #00ffff;
       border-radius: 8px;
-      font-size: 1rem;
+      font-size: 1.1rem;
       box-shadow: 0 0 10px #00ffff;
     }
 
@@ -118,10 +118,7 @@
     <h1>Settings</h1>
 
     <!-- Tab Cloak Controls -->
-    <label>
-      <input type="checkbox" id="cloakToggle" />
-      Enable Tab Cloak
-    </label>
+    <label for="cloakSelector">🕵️ Select Tab Cloak</label>
     <select id="cloakSelector">
       <option value="">-- Select Tab Cloak --</option>
       <option value="Google Docs">Google Docs</option>
@@ -130,6 +127,12 @@
       <option value="Gmail">Gmail</option>
       <option value="MR GAMES">MR GAMES (Default)</option>
     </select>
+
+    <label>
+      <input type="checkbox" id="cloakToggle" />
+      Enable Tab Cloak
+    </label>
+
     <button onclick="saveCloak()">Save Cloak</button>
 
     <!-- Panic Button Setup -->
@@ -243,10 +246,4 @@
 
     // Copy to clipboard
     function copyToClipboard() {
-      const copyInput = document.getElementById("copyText");
-      if (!copyInput.value) {
-        alert("Nothing to copy!");
-        return;
-      }
-
-      navigator.clipboard.writeText(copyInput[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://github.com/szerintedmi/roadmap-radar-chart/tree/45ee5f9f7a1d44100313358e369abb025b935cea/README.md?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "1")[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://github.com/doki-theme/doki-theme-web/tree/e04eae1635888ab138c872e64a91fb36ea2f6eab/firefoxThemes%2Fwaifus%2FthemeLoader.js?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "2")
+      const copyInput = document.getElement[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://github.com/szerintedmi/roadmap-radar-chart/tree/45ee5f9f7a1d44100313358e369abb025b935cea/README.md?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "1")[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://github.com/doki-theme/doki-theme-web/tree/e04eae1635888ab138c872e64a91fb36ea2f6eab/firefoxThemes%2Fwaifus%2FthemeLoader.js?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "2")
