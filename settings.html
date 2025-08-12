@@ -1,233 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
   <title>Settings</title>
-  <link rel="icon" href="favicon.ico" />
   <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-      color: #00ffff;
-      overflow-x: hidden;
-      position: relative;
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f4f4f4;
     }
-
-    .container {
-      text-align: center;
-      padding: 60px 20px;
-      max-width: 600px;
-      margin: auto;
-      background-color: rgba(0, 0, 0, 0.7);
-      border-radius: 12px;
-      box-shadow: 0 6px 24px rgba(0,0,0,0.3);
-      animation: fadeIn 2s ease-out forwards;
-      opacity: 0;
-      position: relative;
-      z-index: 10;
-    }
-
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
-
     h1 {
-      font-size: 3rem;
-      margin-bottom: 30px;
-      color: #f0db4f;
-      text-shadow: 0 0 10px #f0db4f, 0 0 20px #f0db4f;
-      animation: glow 1.5s ease-in-out infinite alternate;
+      color: #333;
     }
-
-    @keyframes glow {
-      from { text-shadow: 0 0 5px #f0db4f; }
-      to { text-shadow: 0 0 20px #f0db4f, 0 0 30px #f0db4f; }
-    }
-
     label {
       display: block;
-      margin-top: 20px;
-      font-size: 1.1rem;
+      margin-top: 15px;
+      font-weight: bold;
     }
-
-    input, select {
-      width: 80%;
-      padding: 12px;
-      margin-top: 10px;
-      background-color: #000;
-      color: #00ffff;
-      border: 2px solid #00ffff;
-      border-radius: 8px;
-      font-size: 1.1rem;
-      box-shadow: 0 0 10px #00ffff;
+    input {
+      width: 300px;
+      padding: 8px;
+      margin-top: 5px;
     }
-
     button {
       margin-top: 20px;
       padding: 10px 20px;
-      background-color: #00ffff;
-      color: #0f2027;
-      font-weight: bold;
-      border: none;
-      border-radius: 8px;
-      box-shadow: 0 0 12px #00ffff;
+      font-size: 16px;
       cursor: pointer;
-    }
-
-    button:hover {
-      box-shadow: 0 0 20px #00ffff;
-    }
-
-    .rain-wrapper {
-      pointer-events: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      overflow: visible;
-      z-index: 5;
-    }
-
-    .raindrop {
-      position: absolute;
-      top: -20px;
-      width: 2px;
-      background: linear-gradient(180deg, #00ffff, #0077aa);
-      border-radius: 50% / 40%;
-      opacity: 0.6;
-      animation-name: fall;
-      animation-timing-function: linear;
-      animation-iteration-count: infinite;
-    }
-
-    @keyframes fall {
-      to {
-        transform: translateY(110vh);
-        opacity: 0;
-      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Settings</h1>
+  <h1>⚙️ Settings</h1>
 
-    <!-- Tab Cloak Controls -->
-    <label for="cloakSelector">🕵️ Select Tab Cloak</label>
-    <select id="cloakSelector">
-      <option value="">-- Select Tab Cloak --</option>
-      <option value="Google Docs">Google Docs</option>
-      <option value="Google Classroom">Google Classroom</option>
-      <option value="Google Slides">Google Slides</option>
-      <option value="Gmail">Gmail</option>
-      <option value="MR GAMES">MR GAMES (Default)</option>
-    </select>
+  <!-- Panic Button Setup -->
+  <label for="panicURL">🚨 Panic Redirect URL</label>
+  <input type="text" id="panicURL" placeholder="https://example.com" />
 
-    <label>
-      <input type="checkbox" id="cloakToggle" />
-      Enable Tab Cloak
-    </label>
+  <label for="panicKey">⌨️ Panic Key (single letter)</label>
+  <input type="text" id="panicKey" maxlength="1" placeholder="e.g. P" />
 
-    <button onclick="saveCloak()">Save Cloak</button>
-
-    <!-- Panic Button Setup -->
-    <label for="panicURL">🚨 Panic Redirect URL</label>
-    <input type="text" id="panicURL" placeholder="https://example.com" />
-
-    <label for="panicKey">⌨️ Panic Key (single letter)</label>
-    <input type="text" id="panicKey" maxlength="1" placeholder="e.g. P" />
-
-    <button onclick="savePanic()">Save Panic Settings</button>
-
-    <!-- Copy to Clipboard -->
-    <label for="copyText">📋 Text to Copy</label>
-    <input type="text" id="copyText" placeholder="Type something..." />
-    <button onclick="copyToClipboard()">Copy</button>
-  </div>
-
-  <div class="rain-wrapper"></div>
+  <button onclick="savePanic()">Save Panic Settings</button>
 
   <script>
-    // Rain animation
-    const rainWrapper = document.querySelector('.rain-wrapper');
-    const numRaindrops = 100;
-
-    for (let i = 0; i < numRaindrops; i++) {
-      const drop = document.createElement('div');
-      drop.className = 'raindrop';
-      drop.style.left = Math.random() * 100 + 'vw';
-      const fallDuration = 2 + Math.random() * 3;
-      const dropHeight = 10 + Math.random() * 20;
-      drop.style.height = dropHeight + 'px';
-      drop.style.animationDuration = `${fallDuration}s`;
-      drop.style.animationDelay = `${Math.random() * 5}s`;
-      rainWrapper.appendChild(drop);
-    }
-
-    // Cloak logic
-    const cloakToggle = document.getElementById('cloakToggle');
-    const cloakSelector = document.getElementById('cloakSelector');
-
-    const favicons = {
-      "Google Docs": "https://ssl.gstatic.com/docs/doclist/images/mediatype/icon_1_document_x32.png",
-      "Google Classroom": "https://ssl.gstatic.com/classroom/favicon.png",
-      "Google Slides": "https://ssl.gstatic.com/docs/doclist/images/mediatype/icon_10_presentation_x32.png",
-      "Gmail": "https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico",
-      "MR GAMES": "favicon.ico"
-    };
-
-    function applyCloak(name) {
-      if (!name) return;
-      document.title = name;
-      let link = document.querySelector("link[rel~='icon']");
-      if (!link) {
-        link = document.createElement('link');
-        link.rel = 'icon';
-        document.head.appendChild(link);
-      }
-      link.href = favicons[name] || favicons["MR GAMES"];
-    }
-
-    function resetCloak() {
-      document.title = "Settings";
-      let link = document.querySelector("link[rel~='icon']");
-      if (link) link.href = favicons["MR GAMES"];
-    }
-
-    cloakToggle.addEventListener('change', () => {
-      if (cloakToggle.checked) {
-        applyCloak(cloakSelector.value);
-      } else {
-        resetCloak();
-      }
-    });
-
-    cloakSelector.addEventListener('change', () => {
-      if (cloakToggle.checked) {
-        applyCloak(cloakSelector.value);
-      }
-    });
-
-    function saveCloak() {
-      const cloakEnabled = cloakToggle.checked;
-      const cloakName = cloakSelector.value;
-      localStorage.setItem("cloakEnabled", cloakEnabled);
-      localStorage.setItem("cloakName", cloakName);
-      alert("Cloak settings saved!");
-    }
-
-    // Panic logic
     function savePanic() {
-      const panicLink = document.getElementById("panicURL").value;
-      const panicKey = document.getElementById("panicKey").value.toLowerCase();
+      const panicLink = document.getElementById("panicURL").value.trim();
+      const panicKey = document.getElementById("panicKey").value.trim().toLowerCase();
 
-      if (!panicLink || !panicKey) {
-        alert("Please enter both a URL and a key.");
+      if (!panicLink || !panicKey || panicKey.length !== 1) {
+        alert("Please enter a valid URL and a single key.");
         return;
       }
 
@@ -236,6 +57,7 @@
       alert("✅ Panic settings saved! Press '" + panicKey.toUpperCase() + "' to activate.");
     }
 
+    // Optional: Allow panic key to work on settings page too
     document.addEventListener("keydown", function(e) {
       const savedLink = localStorage.getItem("panicLink");
       const savedKey = localStorage.getItem("panicKey");
@@ -243,7 +65,6 @@
         window.location.href = savedLink;
       }
     });
-
-    // Copy to clipboard
-    function copyToClipboard() {
-      const copyInput = document.getElement[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://github.com/szerintedmi/roadmap-radar-chart/tree/45ee5f9f7a1d44100313358e369abb025b935cea/README.md?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "1")[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://github.com/doki-theme/doki-theme-web/tree/e04eae1635888ab138c872e64a91fb36ea2f6eab/firefoxThemes%2Fwaifus%2FthemeLoader.js?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "2")
+  </script>
+</body>
+</html>
