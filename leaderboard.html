@@ -132,7 +132,25 @@
       </tbody>
     </table>
   </div>
+<!-- Tab Cloak Controls -->
+<div class="cloak-controls">
+  <label for="cloakSelector">🕵️ Select Tab Cloak</label>
+  <select id="cloakSelector">
+    <option value="">-- Select Tab Cloak --</option>
+    <option value="Google Docs">Google Docs</option>
+    <option value="Google Classroom">Google Classroom</option>
+    <option value="Google Slides">Google Slides</option>
+    <option value="Gmail">Gmail</option>
+    <option value="MR GAMES">MR GAMES (Default)</option>
+  </select>
 
+  <label style="font-size: 1.2rem; margin-top: 15px;">
+    <input type="checkbox" id="cloakToggle" style="transform: scale(1.5); margin-right: 10px;" />
+    Enable Tab Cloak
+  </label>
+
+  <button onclick="saveCloak()">Save Cloak</button>
+</div>
   <audio autoplay loop>
     <source src="https://github.com/davidrobertwriter/davidrobertwriter.github.io/raw/refs/heads/main/Playground%20Rizz.mp3" type="audio/mpeg" />
   </audio>
