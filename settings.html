@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Settings</title>
-  <link id="favicon" rel="icon" href="favicon.ico" />
+  <link id="page-favicon" rel="icon" href="favicon.ico" />
   <style>
+    /* === Your existing styling preserved === */
     body, html {
       margin: 0;
       padding: 0;
@@ -16,7 +17,6 @@
       overflow-x: hidden;
       position: relative;
     }
-
     .container {
       text-align: center;
       padding: 60px 20px;
@@ -30,11 +30,7 @@
       position: relative;
       z-index: 10;
     }
-
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
-
+    @keyframes fadeIn { to { opacity: 1; } }
     h1 {
       font-size: 3rem;
       margin-bottom: 30px;
@@ -42,109 +38,260 @@
       text-shadow: 0 0 10px #f0db4f, 0 0 20px #f0db4f;
       animation: glow 1.5s ease-in-out infinite alternate;
     }
-
-    @keyframes glow {
-      from { text-shadow: 0 0 5px #f0db4f; }
-      to { text-shadow: 0 0 20px #f0db4f, 0 0 30px #f0db4f; }
-    }
-
-    label {
-      display: block;
-      margin-top: 20px;
-      font-size: 1.1rem;
-    }
-
+    @keyframes glow { from { text-shadow: 0 0 5px #f0db4f; } to { text-shadow: 0 0 20px #f0db4f; } }
+    label { display:block; margin-top:18px; font-size:1.05rem; }
     input, select {
-      width: 80%;
-      padding: 12px;
-      margin-top: 10px;
-      background-color: #000;
-      color: #00ffff;
-      border: 2px solid #00ffff;
-      border-radius: 8px;
-      font-size: 1.1rem;
-      box-shadow: 0 0 10px #00ffff;
+      width:80%; padding:12px; margin-top:10px;
+      background:#000; color:#00ffff; border:2px solid #00ffff; border-radius:8px;
+      font-size:1.05rem; box-shadow:0 0 10px #00ffff;
     }
-
     button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #00ffff;
-      color: #0f2027;
-      font-weight: bold;
-      border: none;
-      border-radius: 8px;
-      box-shadow: 0 0 12px #00ffff;
-      cursor: pointer;
+      margin-top:18px; padding:10px 18px; background:#00ffff; color:#0f2027; font-weight:bold;
+      border:none; border-radius:8px; cursor:pointer; box-shadow:0 0 12px #00ffff;
     }
-
-    button:hover {
-      box-shadow: 0 0 20px #00ffff;
+    button:hover { box-shadow:0 0 20px #00ffff; }
+    .inline-row { display:flex; gap:10px; align-items:center; justify-content:center; margin-top:10px; flex-wrap:wrap; }
+    .key-display {
+      min-width:140px; text-align:center; padding:10px; border-radius:8px;
+      border:2px solid rgba(0,255,255,0.2); background:rgba(0,0,0,0.6); color:#00ffff; font-weight:bold;
     }
+    .muted { color: rgba(0,255,255,0.8); font-size:0.95rem; margin-top:8px; }
+    .rain-wrapper { pointer-events:none; position:fixed; top:0; left:0; width:100vw; height:100vh; overflow:visible; z-index:5; }
+    .raindrop { position:absolute; top:-20px; width:2px; background:linear-gradient(180deg,#00ffff,#0077aa); border-radius:50%/40%; opacity:0.6; animation-name:fall; animation-timing-function:linear; animation-iteration-count:infinite; }
+    @keyframes fall { to { transform:translateY(110vh); opacity:0; } }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Settings</h1>
 
-    <label for="tabCloak">Tab Cloak:</label>
-    <select id="tabCloak">
+    <label for="cloakSelect">Tab cloak</label>
+    <select id="cloakSelect" aria-label="Tab cloak select">
       <option value="">None</option>
       <option value="classroom">Google Classroom</option>
       <option value="gmail">Gmail</option>
       <option value="docs">Google Docs</option>
       <option value="slides">Google Slides</option>
     </select>
+    <div class="muted">Choosing a cloak changes your tab title & favicon but keeps this page open.</div>
 
-    <label for="panicKey">Panic Key:</label>
-    <input type="text" id="panicKey" placeholder="Press a key..." readonly>
+    <label style="margin-top:16px;">Panic URL</label>
+    <input id="panicUrl" type="url" placeholder="https://example.com" />
 
-    <label for="panicUrl">Panic URL:</label>
-    <input type="url" id="panicUrl" placeholder="https://example.com">
+    <label style="margin-top:18px;">Panic key</label>
+    <div class="inline-row">
+      <div id="keyDisplay" class="key-display">Not set</div>
+      <button id="setKeyBtn" type="button">Set Panic Key</button>
+      <button id="clearKeyBtn" type="button">Clear Key</button>
+    </div>
+    <div class="muted">Press "Set Panic Key", then press the key you want to use. Modifiers (Shift/Ctrl/Alt/Meta) are ignored.</div>
 
-    <button id="saveSettings">Save Settings</button>
+    <div style="margin-top:16px;">
+      <button id="saveBtn" type="button">Save Settings</button>
+      <button id="testPanicBtn" type="button">Test Panic</button>
+    </div>
   </div>
 
+  <div class="rain-wrapper"></div>
+
   <script>
-    const cloakOptions = {
-      classroom: { title: "Google Classroom", icon: "https://ssl.gstatic.com/classroom/favicon.png" },
-      gmail: { title: "Gmail", icon: "https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico" },
-      docs: { title: "Google Docs", icon: "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png" },
-      slides: { title: "Google Slides", icon: "https://ssl.gstatic.com/docs/presentations/images/favicon5.ico" }
-    };
-
-    // Load saved settings
-    document.addEventListener("DOMContentLoaded", () => {
-      const savedCloak = localStorage.getItem("tabCloak");
-      const savedPanicKey = localStorage.getItem("panicKey");
-      const savedPanicUrl = localStorage.getItem("panicUrl");
-
-      if (savedCloak) document.getElementById("tabCloak").value = savedCloak;
-      if (savedPanicKey) document.getElementById("panicKey").value = savedPanicKey;
-      if (savedPanicUrl) document.getElementById("panicUrl").value = savedPanicUrl;
-    });
-
-    // Detect panic key
-    document.getElementById("panicKey").addEventListener("focus", () => {
-      const listener = (e) => {
-        document.getElementById("panicKey").value = e.key;
-        document.removeEventListener("keydown", listener);
+    (function(){
+      // canonical localStorage keys (used across settings + site-wide script)
+      const LS = {
+        CLOAK: 'settings_cloak_choice',
+        PANIC_KEY: 'settings_panic_key',
+        PANIC_URL: 'settings_panic_url'
       };
-      document.addEventListener("keydown", listener);
-    });
 
-    // Save settings
-    document.getElementById("saveSettings").addEventListener("click", () => {
-      const cloak = document.getElementById("tabCloak").value;
-      const panicKey = document.getElementById("panicKey").value;
-      const panicUrl = document.getElementById("panicUrl").value;
+      const CLOAK_INFO = {
+        classroom: { title: 'Google Classroom', icon: 'https://ssl.gstatic.com/classroom/favicon.ico' },
+        gmail:     { title: 'Gmail',           icon: 'https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico' },
+        docs:      { title: 'Google Docs',     icon: 'https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png' },
+        slides:    { title: 'Google Slides',   icon: 'https://ssl.gstatic.com/docs/presentations/images/favicon5.ico' }
+      };
 
-      localStorage.setItem("tabCloak", cloak);
-      localStorage.setItem("panicKey", panicKey);
-      localStorage.setItem("panicUrl", panicUrl);
+      // keep original page title & favicon so "None" restores them
+      const originalTitle = document.title || 'Settings';
+      const originalFavicon = (function(){
+        const link = document.querySelector("link[rel~='icon']");
+        return link ? link.href : 'favicon.ico';
+      })();
 
-      alert("Settings saved!");
-    });
+      // DOM refs
+      const cloakSelect = document.getElementById('cloakSelect');
+      const panicUrlInput = document.getElementById('panicUrl');
+      const setKeyBtn = document.getElementById('setKeyBtn');
+      const clearKeyBtn = document.getElementById('clearKeyBtn');
+      const saveBtn = document.getElementById('saveBtn');
+      const testPanicBtn = document.getElementById('testPanicBtn');
+      const keyDisplay = document.getElementById('keyDisplay');
+
+      let listeningForKey = false;
+      let panicKey = null;
+
+      // Change favicon helper (adds/updates both rel types)
+      function setFavicon(href) {
+        // add cache-buster so browsers update
+        const hrefWithStamp = href ? (href + '?v=' + Date.now()) : '';
+        let link = document.querySelector("link[rel~='icon']");
+        if (!link) {
+          link = document.createElement('link');
+          link.rel = 'icon';
+          document.head.appendChild(link);
+        }
+        link.href = hrefWithStamp;
+
+        let shortcut = document.querySelector("link[rel='shortcut icon']");
+        if (!shortcut) {
+          shortcut = document.createElement('link');
+          shortcut.rel = 'shortcut icon';
+          document.head.appendChild(shortcut);
+        }
+        shortcut.href = hrefWithStamp;
+      }
+
+      // Apply cloak (or restore original if empty/invalid)
+      function applyCloak(choice) {
+        if (!choice || !CLOAK_INFO[choice]) {
+          document.title = originalTitle;
+          setFavicon(originalFavicon);
+          return;
+        }
+        const info = CLOAK_INFO[choice];
+        document.title = info.title;
+        setFavicon(info.icon);
+      }
+
+      // Panic action
+      function doPanic() {
+        const url = localStorage.getItem(LS.PANIC_URL) || panicUrlInput.value.trim();
+        const target = (url && url.length) ? url : 'https://www.google.com';
+        // same-tab redirect
+        window.location.href = target;
+      }
+
+      // Load saved values into UI
+      function loadSettingsUI() {
+        const storedCloak = localStorage.getItem(LS.CLOAK);
+        const storedKey = localStorage.getItem(LS.PANIC_KEY);
+        const storedUrl = localStorage.getItem(LS.PANIC_URL);
+
+        if (storedCloak) cloakSelect.value = storedCloak;
+        else cloakSelect.value = '';
+
+        if (storedKey) {
+          panicKey = storedKey;
+          keyDisplay.textContent = storedKey;
+        } else {
+          keyDisplay.textContent = 'Not set';
+        }
+
+        panicUrlInput.value = storedUrl || '';
+        // apply cloak preview immediately
+        applyCloak(storedCloak);
+      }
+
+      // Save settings to localStorage
+      function saveSettings() {
+        if (cloakSelect.value) localStorage.setItem(LS.CLOAK, cloakSelect.value);
+        else localStorage.removeItem(LS.CLOAK);
+
+        if (panicKey) localStorage.setItem(LS.PANIC_KEY, panicKey);
+        else localStorage.removeItem(LS.PANIC_KEY);
+
+        const url = panicUrlInput.value.trim();
+        if (url) localStorage.setItem(LS.PANIC_URL, url);
+        else localStorage.removeItem(LS.PANIC_URL);
+
+        // small ui feedback
+        keyDisplay.textContent = panicKey || 'Not set';
+        alert('Settings saved!');
+      }
+
+      // Keydown handler - used both for capturing new key and for global panic trigger
+      window.addEventListener('keydown', function(e) {
+        // If we're currently setting the panic key, capture and stop
+        if (listeningForKey) {
+          // ignore pure modifier keys
+          const forbidden = ['Shift', 'Control', 'Alt', 'Meta'];
+          if (forbidden.includes(e.key)) return; // keep listening
+
+          panicKey = e.key;
+          keyDisplay.textContent = panicKey;
+          listeningForKey = false;
+          // save immediately so the key works on other pages
+          if (panicKey) localStorage.setItem(LS.PANIC_KEY, panicKey);
+          e.preventDefault();
+          e.stopPropagation();
+          return;
+        }
+
+        // otherwise this may be a panic trigger: check saved key and url
+        const storedKey = localStorage.getItem(LS.PANIC_KEY);
+        const storedUrl = localStorage.getItem(LS.PANIC_URL);
+        if (!storedKey || !storedUrl) return;
+
+        // avoid triggering while typing in inputs/textarea/contenteditable
+        const active = document.activeElement;
+        const typing = active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA' || active.isContentEditable);
+        if (typing) return;
+
+        // compare case-insensitive
+        if (e.key && e.key.toLowerCase() === storedKey.toLowerCase()) {
+          doPanic();
+        }
+      }, true);
+
+      // UI events
+      setKeyBtn.addEventListener('click', () => {
+        listeningForKey = true;
+        keyDisplay.textContent = 'Press any key...';
+        // focus window so keydown triggers
+        window.focus();
+      });
+
+      clearKeyBtn.addEventListener('click', () => {
+        listeningForKey = false;
+        panicKey = null;
+        keyDisplay.textContent = 'Not set';
+        localStorage.removeItem(LS.PANIC_KEY);
+      });
+
+      // When cloak selection changes, preview and save right away
+      cloakSelect.addEventListener('change', () => {
+        applyCloak(cloakSelect.value);
+        if (cloakSelect.value) localStorage.setItem(LS.CLOAK, cloakSelect.value);
+        else localStorage.removeItem(LS.CLOAK);
+      });
+
+      saveBtn.addEventListener('click', saveSettings);
+
+      testPanicBtn.addEventListener('click', () => {
+        // save before testing so other pages will read it too
+        if (panicKey) localStorage.setItem(LS.PANIC_KEY, panicKey);
+        const url = panicUrlInput.value.trim();
+        if (url) localStorage.setItem(LS.PANIC_URL, url);
+        doPanic();
+      });
+
+      // rain animation generation
+      (function generateRain(){
+        const rainWrapper = document.querySelector('.rain-wrapper');
+        const numRaindrops = 100;
+        for (let i = 0; i < numRaindrops; i++) {
+          const drop = document.createElement('div');
+          drop.className = 'raindrop';
+          drop.style.left = Math.random() * 100 + 'vw';
+          drop.style.height = (10 + Math.random() * 20) + 'px';
+          drop.style.animationDuration = (2 + Math.random() * 3) + 's';
+          drop.style.animationDelay = (Math.random() * 5) + 's';
+          rainWrapper.appendChild(drop);
+        }
+      })();
+
+      // initialize UI on load
+      loadSettingsUI();
+    })();
   </script>
 </body>
 </html>
