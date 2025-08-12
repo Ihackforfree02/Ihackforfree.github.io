@@ -1,325 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Settings</title>
-  <link rel="icon" href="favicon.ico" />
   <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-      color: #00ffff;
-      overflow-x: hidden;
-      position: relative;
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: white;
+      padding: 20px;
     }
-
-    .container {
-      text-align: center;
-      padding: 60px 20px;
-      max-width: 600px;
-      margin: auto;
-      background-color: rgba(0, 0, 0, 0.7);
-      border-radius: 12px;
-      box-shadow: 0 6px 24px rgba(0,0,0,0.3);
-      animation: fadeIn 2s ease-out forwards;
-      opacity: 0;
-      position: relative;
-      z-index: 10;
-    }
-
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
-
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 30px;
-      color: #f0db4f;
-      text-shadow: 0 0 10px #f0db4f, 0 0 20px #f0db4f;
-      animation: glow 1.5s ease-in-out infinite alternate;
-    }
-
-    @keyframes glow {
-      from { text-shadow: 0 0 5px #f0db4f; }
-      to { text-shadow: 0 0 20px #f0db4f, 0 0 30px #f0db4f; }
-    }
-
     label {
       display: block;
-      margin-top: 20px;
-      font-size: 1.1rem;
-    }
-
-    input, select {
-      width: 80%;
-      padding: 12px;
       margin-top: 10px;
-      background-color: #000;
-      color: #00ffff;
-      border: 2px solid #00ffff;
-      border-radius: 8px;
-      font-size: 1.1rem;
-      box-shadow: 0 0 10px #00ffff;
     }
-
+    select, input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      border: none;
+      border-radius: 4px;
+    }
     button {
       margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #00ffff;
-      color: #0f2027;
-      font-weight: bold;
+      padding: 10px;
+      background: limegreen;
       border: none;
-      border-radius: 8px;
-      box-shadow: 0 0 12px #00ffff;
+      color: white;
+      font-weight: bold;
+      border-radius: 4px;
       cursor: pointer;
     }
-
     button:hover {
-      box-shadow: 0 0 20px #00ffff;
-    }
-
-    .rain-wrapper {
-      pointer-events: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      overflow: visible;
-      z-index: 5;
-    }
-
-    .raindrop {
-      position: absolute;
-      top: -20px;
-      width: 2px;
-      background: linear-gradient(180deg, #00ffff, #0077aa);
-      border-radius: 50% / 40%;
-      opacity: 0.6;
-      animation-name: fall;
-      animation-timing-function: linear;
-      animation-iteration-count: infinite;
-    }
-
-    @keyframes fall {
-      to {
-        transform: translateY(110vh);
-        opacity: 0;
-      }
-    }
-
-    .muted {
-      color: rgba(0,255,255,0.8);
-      font-size: 0.95rem;
-      margin-top: 8px;
-    }
-
-    .inline-row {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .key-display {
-      display: inline-block;
-      min-width: 140px;
-      text-align: center;
-      padding: 10px;
-      border-radius: 8px;
-      border: 2px solid rgba(0,255,255,0.2);
-      background: rgba(0,0,0,0.6);
-      color: #00ffff;
-      box-shadow: 0 0 8px rgba(0,255,255,0.06);
-      font-weight: bold;
+      background: green;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Settings</h1>
+  <h1>Site Settings</h1>
 
-    <!-- Tab Cloak -->
-    <label for="cloakSelect">Tab cloak (choose a Google service)</label>
-    <div class="inline-row">
-      <select id="cloakSelect" aria-label="Tab cloak select">
-        <option value="classroom">Google Classroom</option>
-        <option value="gmail">Gmail</option>
-        <option value="docs">Google Docs</option>
-        <option value="slides">Google Slides</option>
-      </select>
-    </div>
-    <div class="muted">Your tab will look like the selected service without leaving this site.</div>
+  <label for="cloak">Tab Cloak</label>
+  <select id="cloak">
+    <option value="">None</option>
+    <option value="classroom">Google Classroom</option>
+    <option value="gmail">Gmail</option>
+    <option value="docs">Google Docs</option>
+    <option value="slides">Google Slides</option>
+  </select>
 
-    <!-- Panic Button -->
-    <label for="panicUrl">Panic URL</label>
-    <input id="panicUrl" type="url" placeholder="https://www.example.com" />
+  <label for="panicKey">Panic Key (single letter or number)</label>
+  <input type="text" id="panicKey" maxlength="1" placeholder="e.g. P">
 
-    <label style="margin-top:18px;">Panic key</label>
-    <div class="inline-row">
-      <div id="keyDisplay" class="key-display">Not set</div>
-      <button id="setKeyBtn" type="button">Set Panic Key</button>
-      <button id="clearKeyBtn" type="button">Clear Key</button>
-    </div>
-    <div class="muted">When the panic key is pressed, the page will immediately go to your Panic URL.</div>
+  <label for="panicUrl">Panic URL</label>
+  <input type="url" id="panicUrl" placeholder="https://example.com">
 
-    <!-- Extra control -->
-    <div style="margin-top:16px;">
-      <button id="saveBtn" type="button">Save Settings</button>
-      <button id="testPanicBtn" type="button">Test Panic</button>
-    </div>
-  </div>
-
-  <!-- rain wrapper -->
-  <div class="rain-wrapper"></div>
+  <button onclick="saveSettings()">Save Settings</button>
 
   <script>
-    // Rain animation
-    (function generateRain(){
-      const rainWrapper = document.querySelector('.rain-wrapper');
-      const numRaindrops = 100;
-      for (let i = 0; i < numRaindrops; i++) {
-        const drop = document.createElement('div');
-        drop.className = 'raindrop';
-        drop.style.left = Math.random() * 100 + 'vw';
-        drop.style.height = (10 + Math.random() * 20) + 'px';
-        drop.style.animationDuration = (2 + Math.random() * 3) + 's';
-        drop.style.animationDelay = (Math.random() * 5) + 's';
-        rainWrapper.appendChild(drop);
-      }
-    })();
-
-    const LS_KEYS = {
+    const LS = {
+      CLOAK: 'settings_cloak_choice',
       PANIC_KEY: 'settings_panic_key',
-      PANIC_URL: 'settings_panic_url',
-      CLOAK_CHOICE: 'settings_cloak_choice'
+      PANIC_URL: 'settings_panic_url'
     };
-
-    const cloakSelect = document.getElementById('cloakSelect');
-    const panicUrlInput = document.getElementById('panicUrl');
-    const setKeyBtn = document.getElementById('setKeyBtn');
-    const clearKeyBtn = document.getElementById('clearKeyBtn');
-    const saveBtn = document.getElementById('saveBtn');
-    const testPanicBtn = document.getElementById('testPanicBtn');
-    const keyDisplay = document.getElementById('keyDisplay');
-
-    let listeningForKey = false;
-    let panicKey = null;
-
-    // Cloak data
-    const CLOAK_INFO = {
-      classroom: {
-        title: 'Google Classroom',
-        icon: 'https://ssl.gstatic.com/classroom/favicon.ico'
-      },
-      gmail: {
-        title: 'Gmail',
-        icon: 'https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico'
-      },
-      docs: {
-        title: 'Google Docs',
-        icon: 'https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png'
-      },
-      slides: {
-        title: 'Google Slides',
-        icon: 'https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png'
-      }
-    };
-
-    function applyCloak(choice) {
-      const info = CLOAK_INFO[choice];
-      if (!info) return;
-      document.title = info.title;
-      let link = document.querySelector("link[rel*='icon']");
-      if (!link) {
-        link = document.createElement('link');
-        link.rel = 'icon';
-        document.head.appendChild(link);
-      }
-      link.href = info.icon;
-      localStorage.setItem(LS_KEYS.CLOAK_CHOICE, choice);
-    }
-
-    function loadSettings() {
-      const storedKey = localStorage.getItem(LS_KEYS.PANIC_KEY);
-      const storedUrl = localStorage.getItem(LS_KEYS.PANIC_URL);
-      const storedCloak = localStorage.getItem(LS_KEYS.CLOAK_CHOICE);
-
-      if (storedKey) {
-        panicKey = storedKey;
-        keyDisplay.textContent = storedKey;
-      }
-      if (storedUrl) {
-        panicUrlInput.value = storedUrl;
-      }
-      if (storedCloak && CLOAK_INFO[storedCloak]) {
-        cloakSelect.value = storedCloak;
-        applyCloak(storedCloak);
-      }
-    }
 
     function saveSettings() {
-      if (panicKey) localStorage.setItem(LS_KEYS.PANIC_KEY, panicKey);
-      else localStorage.removeItem(LS_KEYS.PANIC_KEY);
+      const cloakChoice = document.getElementById('cloak').value;
+      const panicKey = document.getElementById('panicKey').value.trim();
+      const panicUrl = document.getElementById('panicUrl').value.trim();
 
-      const url = panicUrlInput.value.trim();
-      if (url) localStorage.setItem(LS_KEYS.PANIC_URL, url);
-      else localStorage.removeItem(LS_KEYS.PANIC_URL);
+      localStorage.setItem(LS.CLOAK, cloakChoice);
+      localStorage.setItem(LS.PANIC_KEY, panicKey);
+      localStorage.setItem(LS.PANIC_URL, panicUrl);
+
+      alert('Settings saved!');
     }
 
-    function doPanic() {
-      const storedUrl = localStorage.getItem(LS_KEYS.PANIC_URL) || panicUrlInput.value.trim();
-      const target = storedUrl || 'https://www.google.com';
-      window.location.href = target;
-    }
-
-    cloakSelect.addEventListener('change', (e) => {
-      applyCloak(e.target.value);
+    // Load saved settings into form
+    window.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('cloak').value = localStorage.getItem(LS.CLOAK) || '';
+      document.getElementById('panicKey').value = localStorage.getItem(LS.PANIC_KEY) || '';
+      document.getElementById('panicUrl').value = localStorage.getItem(LS.PANIC_URL) || '';
     });
-
-    setKeyBtn.addEventListener('click', () => {
-      listeningForKey = true;
-      keyDisplay.textContent = 'Press any key...';
-    });
-
-    clearKeyBtn.addEventListener('click', () => {
-      listeningForKey = false;
-      panicKey = null;
-      keyDisplay.textContent = 'Not set';
-      saveSettings();
-    });
-
-    window.addEventListener('keydown', (e) => {
-      if (listeningForKey) {
-        panicKey = e.key;
-        keyDisplay.textContent = panicKey;
-        listeningForKey = false;
-        saveSettings();
-        e.preventDefault();
-        return;
-      }
-      const active = document.activeElement;
-      const isTyping = active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA');
-      if (!isTyping && panicKey && e.key === panicKey) {
-        doPanic();
-      }
-    });
-
-    saveBtn.addEventListener('click', () => {
-      saveSettings();
-    });
-
-    testPanicBtn.addEventListener('click', () => {
-      saveSettings();
-      doPanic();
-    });
-
-    loadSettings();
   </script>
 </body>
 </html>
