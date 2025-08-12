@@ -200,6 +200,7 @@
     }
 
     cloakToggle.addEventListener('change', () => {
+      localStorage.setItem("cloakEnabled", cloakToggle.checked);
       if (cloakToggle.checked) {
         applyCloak(cloakSelector.value);
       } else {
@@ -214,20 +215,18 @@
     });
 
     function saveCloak() {
-      const cloakEnabled = cloakToggle.checked;
-      const cloakName = cloakSelector.value;
-      localStorage.setItem("cloakEnabled", cloakEnabled);
-      localStorage.setItem("cloakName", cloakName);
+      localStorage.setItem("cloakEnabled", cloakToggle.checked);
+      localStorage.setItem("cloakName", cloakSelector.value);
       alert("Cloak settings saved!");
     }
 
     // Panic logic
     function savePanic() {
-      const panicLink = document.getElementById("panicURL").value;
-      const panicKey = document.getElementById("panicKey").value.toLowerCase();
+      const panicLink = document.getElementById("panicURL").value.trim();
+      const panicKey = document.getElementById("panicKey").value.trim().toLowerCase();
 
-      if (!panicLink || !panicKey) {
-        alert("Please enter both a URL and a key.");
+      if (!panicLink || !panicKey || panicKey.length !== 1) {
+        alert("Please enter a valid URL and a single key.");
         return;
       }
 
@@ -239,11 +238,4 @@
     document.addEventListener("keydown", function(e) {
       const savedLink = localStorage.getItem("panicLink");
       const savedKey = localStorage.getItem("panicKey");
-      if (savedLink && savedKey && e.key.toLowerCase() === savedKey) {
-        window.location.href = savedLink;
-      }
-    });
-
-    // Copy to clipboard
-    function copyToClipboard() {
-      const copyInput = document.getElement[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://github.com/szerintedmi/roadmap-radar-chart/tree/45ee5f9f7a1d44100313358e369abb025b935cea/README.md?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "1")[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://github.com/doki-theme/doki-theme-web/tree/e04eae1635888ab138c872e64a91fb36ea2f6eab/firefoxThemes%2Fwaifus%2FthemeLoader.js?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "2")
+      if (savedLink &&[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://github.com/szerintedmi/roadmap-radar-chart/tree/45ee5f9f7a1d44100313358e369abb025b935cea/README.md?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "1")[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://github.com/doki-theme/doki-theme-web/tree/e04eae1635888ab138c872e64a91fb36ea2f6eab/firefoxThemes%2Fwaifus%2FthemeLoader.js?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "2")
