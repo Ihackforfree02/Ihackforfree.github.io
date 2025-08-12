@@ -12,17 +12,17 @@
       height: 100%;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-      color: #ffffff;
+      color: #00ffff;
       overflow-x: hidden;
       position: relative;
     }
 
     .container {
       text-align: center;
-      padding: 80px 20px;
+      padding: 60px 20px;
       max-width: 600px;
       margin: auto;
-      background-color: rgba(0, 0, 0, 0.6);
+      background-color: rgba(0, 0, 0, 0.7);
       border-radius: 12px;
       box-shadow: 0 6px 24px rgba(0,0,0,0.3);
       animation: fadeIn 2s ease-out forwards;
@@ -37,7 +37,7 @@
 
     h1 {
       font-size: 3rem;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
       color: #f0db4f;
       text-shadow: 0 0 10px #f0db4f, 0 0 20px #f0db4f;
       animation: glow 1.5s ease-in-out infinite alternate;
@@ -48,22 +48,32 @@
       to { text-shadow: 0 0 20px #f0db4f, 0 0 30px #f0db4f; }
     }
 
-    label, input, select, button {
-      font-size: 1rem;
-      margin: 10px 0;
-      padding: 8px;
-      border-radius: 8px;
-      border: none;
+    label {
+      display: block;
+      margin-top: 20px;
+      font-size: 1.1rem;
     }
 
     input, select {
       width: 80%;
+      padding: 10px;
+      margin-top: 10px;
+      background-color: #000;
+      color: #00ffff;
+      border: 2px solid #00ffff;
+      border-radius: 8px;
+      font-size: 1rem;
+      box-shadow: 0 0 10px #00ffff;
     }
 
     button {
+      margin-top: 20px;
+      padding: 10px 20px;
       background-color: #00ffff;
       color: #0f2027;
       font-weight: bold;
+      border: none;
+      border-radius: 8px;
       box-shadow: 0 0 12px #00ffff;
       cursor: pointer;
     }
@@ -108,38 +118,28 @@
     <h1>Settings</h1>
 
     <!-- Tab Cloak Controls -->
-    <div>
-      <label>
-        <input type="checkbox" id="cloakToggle" />
-        Enable Tab Cloak
-      </label>
-      <br />
-      <select id="cloakSelector">
-        <option value="">-- Select Tab Cloak --</option>
-        <option value="Google Docs">Google Docs</option>
-        <option value="Google Classroom">Google Classroom</option>
-        <option value="Google Slides">Google Slides</option>
-        <option value="Gmail">Gmail</option>
-        <option value="MR GAMES">MR GAMES (Default)</option>
-      </select>
-    </div>
+    <label>
+      <input type="checkbox" id="cloakToggle" />
+      Enable Tab Cloak
+    </label>
+    <select id="cloakSelector">
+      <option value="">-- Select Tab Cloak --</option>
+      <option value="Google Docs">Google Docs</option>
+      <option value="Google Classroom">Google Classroom</option>
+      <option value="Google Slides">Google Slides</option>
+      <option value="Gmail">Gmail</option>
+      <option value="MR GAMES">MR GAMES (Default)</option>
+    </select>
+    <button onclick="saveCloak()">Save Cloak</button>
 
     <!-- Panic Button Setup -->
-    <div>
-      <h2 style="color:#00ffff;">🚨 Panic Button Setup</h2>
-      <input type="text" id="panicURL" placeholder="Enter panic URL (e.g. https://google.com)" />
-      <br />
-      <select id="panicKey">
-        <option value="">-- Select Panic Key --</option>
-        <option value="KeyQ">Q</option>
-        <option value="KeyP">P</option>
-        <option value="KeyZ">Z</option>
-        <option value="KeyX">X</option>
-        <option value="KeyM">M</option>
-      </select>
-      <br />
-      <button onclick="savePanic()">Save Panic Settings</button>
-    </div>
+    <label for="panicURL">🚨 Panic URL</label>
+    <input type="text" id="panicURL" placeholder="https://example.com" />
+
+    <label for="panicKey">⌨️ Panic Key (type a letter)</label>
+    <input type="text" id="panicKey" maxlength="1" placeholder="e.g. P" />
+
+    <button onclick="savePanic()">Save Panic Settings</button>
   </div>
 
   <div class="rain-wrapper"></div>
@@ -161,7 +161,7 @@
       rainWrapper.appendChild(drop);
     }
 
-    // Tab cloak logic
+    // Cloak logic
     const cloakToggle = document.getElementById('cloakToggle');
     const cloakSelector = document.getElementById('cloakSelector');
 
@@ -172,20 +172,6 @@
       "Gmail": "https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico",
       "MR GAMES": "favicon.ico"
     };
-
-    cloakToggle.addEventListener('change', () => {
-      if (cloakToggle.checked) {
-        applyCloak(cloakSelector.value);
-      } else {
-        resetCloak();
-      }
-    });
-
-    cloakSelector.addEventListener('change', () => {
-      if (cloakToggle.checked) {
-        applyCloak(cloakSelector.value);
-      }
-    });
 
     function applyCloak(name) {
       if (!name) return;
@@ -205,21 +191,58 @@
       if (link) link.href = favicons["MR GAMES"];
     }
 
-    // Panic button logic
+    cloakToggle.addEventListener('change', () => {
+      if (cloakToggle.checked) {
+        applyCloak(cloakSelector.value);
+      } else {
+        resetCloak();
+      }
+    });
+
+    cloakSelector.addEventListener('change', () => {
+      if (cloakToggle.checked) {
+        applyCloak(cloakSelector.value);
+      }
+    });
+
+    function saveCloak() {
+      const cloakEnabled = cloakToggle.checked;
+      const cloakName = cloakSelector.value;
+      localStorage.setItem("cloakEnabled", cloakEnabled);
+      localStorage.setItem("cloakName", cloakName);
+      alert("Cloak settings saved!");
+    }
+
+    // Panic logic
     let panicLink = "";
     let panicKey = "";
 
     function savePanic() {
       panicLink = document.getElementById("panicURL").value;
-      panicKey = document.getElementById("panicKey").value;
-      alert("Panic settings saved! Press your chosen key to activate.");
+      panicKey = document.getElementById("panicKey").value.toLowerCase();
+      localStorage.setItem("panicLink", panicLink);
+      localStorage.setItem("panicKey", panicKey);
+      alert("Panic settings saved!");
     }
 
     document.addEventListener("keydown", function(e) {
-      if (e.code === panicKey && panicLink) {
-        window.location.href = panicLink;
+      const savedLink = localStorage.getItem("panicLink");
+      const savedKey = localStorage.getItem("panicKey");
+      if (e.key.toLowerCase() === savedKey && savedLink) {
+        window.location.href = savedLink;
       }
     });
+
+    // Load saved cloak on page load
+    window.onload = () => {
+      const savedCloak = localStorage.getItem("cloakName");
+      const cloakEnabled = localStorage.getItem("cloakEnabled") === "true";
+      if (cloakEnabled && savedCloak) {
+        cloakToggle.checked = true;
+        cloakSelector.value = savedCloak;
+        applyCloak(savedCloak);
+      }
+    };
   </script>
 </body>
 </html>
