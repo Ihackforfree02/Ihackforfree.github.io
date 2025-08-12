@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Records</title>
+  <link rel="icon" href="favicon.ico" />
   <style>
     body, html {
       margin: 0;
@@ -89,6 +90,14 @@
 
   <div class="trophy-wrapper" aria-hidden="true"></div>
 
+  <!-- Audio background (optional, add if you want) -->
+  <audio autoplay loop>
+    <source src="https://github.com/davidrobertwriter/davidrobertwriter.github.io/raw/refs/heads/main/Playground%20Rizz.mp3" type="audio/mpeg" />
+  </audio>
+
+  <!-- Load cloak + panic logic script -->
+  <script src="cloak_panic.js"></script>
+
   <script>
     // Create falling trophies animation
     const wrapper = document.querySelector('.trophy-wrapper');
@@ -105,7 +114,7 @@
       wrapper.appendChild(trophy);
     }
 
-    // Populate record list
+    // Populate record list dynamically
     const records = [
       { name: "Owner: Cameron", score: "For being the best owner" },
       { name: "Jimmy", score: "Best at gunspin" },
@@ -113,8 +122,6 @@
       { name: "Zac", score: "Good at stuff I guess" },
       { name: "Louie", score: "Because he asked" }
     ];
-
-    <script src="cloak_panic.js"></script>
 
     const listContainer = document.getElementById('record-list');
     records.forEach(record => {
