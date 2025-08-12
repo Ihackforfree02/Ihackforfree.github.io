@@ -154,21 +154,31 @@
   <div class="container">
     <h1>MR GAMES</h1>
 
-    <div class="cloak-controls">
-      <label>
-        <input type="checkbox" id="cloakToggle" />
-        Enable Tab Cloak
-      </label>
-      <br />
-      <select id="cloakSelector">
-        <option value="">-- Select Tab Cloak --</option>
-        <option value="Google Docs">Google Docs</option>
-        <option value="Google Classroom">Google Classroom</option>
-        <option value="Google Slides">Google Slides</option>
-        <option value="Gmail">Gmail</option>
-        <option value="MR GAMES">MR GAMES (Default)</option>
-      </select>
-    </div>
+<script>
+  const favicons = {
+    "Google Docs": "https://ssl.gstatic.com/docs/doclist/images/mediatype/icon_1_document_x32.png",
+    "Google Classroom": "https://ssl.gstatic.com/classroom/favicon.png",
+    "Google Slides": "https://ssl.gstatic.com/docs/doclist/images/mediatype/icon_10_presentation_x32.png",
+    "Gmail": "https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico",
+    "MR GAMES": "favicon.ico"
+  };
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const cloakEnabled = localStorage.getItem("cloakEnabled") === "true";
+    const cloakName = localStorage.getItem("cloakName");
+
+    if (cloakEnabled && cloakName) {
+      document.title = cloakName;
+      let link = document.querySelector("link[rel~='icon']");
+      if (!link) {
+        link = document.createElement("link");
+        link.rel = "icon";
+        document.head.appendChild(link);
+      }
+      link.href = favicons[cloakName] || favicons["MR GAMES"];
+    }
+  });
+</script>
 
     <nav>
       <a href="Games.html">Play</a>
