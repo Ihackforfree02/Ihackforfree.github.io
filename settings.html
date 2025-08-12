@@ -1,86 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Settings</title>
+  <link id="favicon" rel="icon" href="favicon.ico" />
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #111;
-      color: white;
-      padding: 20px;
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: #00ffff;
+      overflow-x: hidden;
+      position: relative;
     }
+
+    .container {
+      text-align: center;
+      padding: 60px 20px;
+      max-width: 600px;
+      margin: auto;
+      background-color: rgba(0, 0, 0, 0.7);
+      border-radius: 12px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.3);
+      animation: fadeIn 2s ease-out forwards;
+      opacity: 0;
+      position: relative;
+      z-index: 10;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 30px;
+      color: #f0db4f;
+      text-shadow: 0 0 10px #f0db4f, 0 0 20px #f0db4f;
+      animation: glow 1.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 5px #f0db4f; }
+      to { text-shadow: 0 0 20px #f0db4f, 0 0 30px #f0db4f; }
+    }
+
     label {
       display: block;
+      margin-top: 20px;
+      font-size: 1.1rem;
+    }
+
+    input, select {
+      width: 80%;
+      padding: 12px;
       margin-top: 10px;
+      background-color: #000;
+      color: #00ffff;
+      border: 2px solid #00ffff;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      box-shadow: 0 0 10px #00ffff;
     }
-    select, input {
-      width: 100%;
-      padding: 8px;
-      margin-top: 4px;
-      border: none;
-      border-radius: 4px;
-    }
+
     button {
       margin-top: 20px;
-      padding: 10px;
-      background: limegreen;
-      border: none;
-      color: white;
+      padding: 10px 20px;
+      background-color: #00ffff;
+      color: #0f2027;
       font-weight: bold;
-      border-radius: 4px;
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0 0 12px #00ffff;
       cursor: pointer;
     }
+
     button:hover {
-      background: green;
+      box-shadow: 0 0 20px #00ffff;
     }
   </style>
 </head>
 <body>
-  <h1>Site Settings</h1>
+  <div class="container">
+    <h1>Settings</h1>
 
-  <label for="cloak">Tab Cloak</label>
-  <select id="cloak">
-    <option value="">None</option>
-    <option value="classroom">Google Classroom</option>
-    <option value="gmail">Gmail</option>
-    <option value="docs">Google Docs</option>
-    <option value="slides">Google Slides</option>
-  </select>
+    <label for="tabCloak">Tab Cloak:</label>
+    <select id="tabCloak">
+      <option value="">None</option>
+      <option value="classroom">Google Classroom</option>
+      <option value="gmail">Gmail</option>
+      <option value="docs">Google Docs</option>
+      <option value="slides">Google Slides</option>
+    </select>
 
-  <label for="panicKey">Panic Key (single letter or number)</label>
-  <input type="text" id="panicKey" maxlength="1" placeholder="e.g. P">
+    <label for="panicKey">Panic Key:</label>
+    <input type="text" id="panicKey" placeholder="Press a key..." readonly>
 
-  <label for="panicUrl">Panic URL</label>
-  <input type="url" id="panicUrl" placeholder="https://example.com">
+    <label for="panicUrl">Panic URL:</label>
+    <input type="url" id="panicUrl" placeholder="https://example.com">
 
-  <button onclick="saveSettings()">Save Settings</button>
+    <button id="saveSettings">Save Settings</button>
+  </div>
 
   <script>
-    const LS = {
-      CLOAK: 'settings_cloak_choice',
-      PANIC_KEY: 'settings_panic_key',
-      PANIC_URL: 'settings_panic_url'
+    const cloakOptions = {
+      classroom: { title: "Google Classroom", icon: "https://ssl.gstatic.com/classroom/favicon.png" },
+      gmail: { title: "Gmail", icon: "https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico" },
+      docs: { title: "Google Docs", icon: "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png" },
+      slides: { title: "Google Slides", icon: "https://ssl.gstatic.com/docs/presentations/images/favicon5.ico" }
     };
 
-    function saveSettings() {
-      const cloakChoice = document.getElementById('cloak').value;
-      const panicKey = document.getElementById('panicKey').value.trim();
-      const panicUrl = document.getElementById('panicUrl').value.trim();
+    // Load saved settings
+    document.addEventListener("DOMContentLoaded", () => {
+      const savedCloak = localStorage.getItem("tabCloak");
+      const savedPanicKey = localStorage.getItem("panicKey");
+      const savedPanicUrl = localStorage.getItem("panicUrl");
 
-      localStorage.setItem(LS.CLOAK, cloakChoice);
-      localStorage.setItem(LS.PANIC_KEY, panicKey);
-      localStorage.setItem(LS.PANIC_URL, panicUrl);
+      if (savedCloak) document.getElementById("tabCloak").value = savedCloak;
+      if (savedPanicKey) document.getElementById("panicKey").value = savedPanicKey;
+      if (savedPanicUrl) document.getElementById("panicUrl").value = savedPanicUrl;
+    });
 
-      alert('Settings saved!');
-    }
+    // Detect panic key
+    document.getElementById("panicKey").addEventListener("focus", () => {
+      const listener = (e) => {
+        document.getElementById("panicKey").value = e.key;
+        document.removeEventListener("keydown", listener);
+      };
+      document.addEventListener("keydown", listener);
+    });
 
-    // Load saved settings into form
-    window.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('cloak').value = localStorage.getItem(LS.CLOAK) || '';
-      document.getElementById('panicKey').value = localStorage.getItem(LS.PANIC_KEY) || '';
-      document.getElementById('panicUrl').value = localStorage.getItem(LS.PANIC_URL) || '';
+    // Save settings
+    document.getElementById("saveSettings").addEventListener("click", () => {
+      const cloak = document.getElementById("tabCloak").value;
+      const panicKey = document.getElementById("panicKey").value;
+      const panicUrl = document.getElementById("panicUrl").value;
+
+      localStorage.setItem("tabCloak", cloak);
+      localStorage.setItem("panicKey", panicKey);
+      localStorage.setItem("panicUrl", panicUrl);
+
+      alert("Settings saved!");
     });
   </script>
 </body>
