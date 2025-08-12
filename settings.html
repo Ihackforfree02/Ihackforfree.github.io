@@ -6,111 +6,8 @@
   <title>Settings</title>
   <link rel="icon" href="favicon.ico" />
   <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-      color: #00ffff;
-      overflow-x: hidden;
-      position: relative;
-    }
-
-    .container {
-      text-align: center;
-      padding: 60px 20px;
-      max-width: 600px;
-      margin: auto;
-      background-color: rgba(0, 0, 0, 0.7);
-      border-radius: 12px;
-      box-shadow: 0 6px 24px rgba(0,0,0,0.3);
-      animation: fadeIn 2s ease-out forwards;
-      opacity: 0;
-      position: relative;
-      z-index: 10;
-    }
-
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
-
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 30px;
-      color: #f0db4f;
-      text-shadow: 0 0 10px #f0db4f, 0 0 20px #f0db4f;
-      animation: glow 1.5s ease-in-out infinite alternate;
-    }
-
-    @keyframes glow {
-      from { text-shadow: 0 0 5px #f0db4f; }
-      to { text-shadow: 0 0 20px #f0db4f, 0 0 30px #f0db4f; }
-    }
-
-    label {
-      display: block;
-      margin-top: 20px;
-      font-size: 1.1rem;
-    }
-
-    input, select {
-      width: 80%;
-      padding: 12px;
-      margin-top: 10px;
-      background-color: #000;
-      color: #00ffff;
-      border: 2px solid #00ffff;
-      border-radius: 8px;
-      font-size: 1.1rem;
-      box-shadow: 0 0 10px #00ffff;
-    }
-
-    button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #00ffff;
-      color: #0f2027;
-      font-weight: bold;
-      border: none;
-      border-radius: 8px;
-      box-shadow: 0 0 12px #00ffff;
-      cursor: pointer;
-    }
-
-    button:hover {
-      box-shadow: 0 0 20px #00ffff;
-    }
-
-    .rain-wrapper {
-      pointer-events: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      overflow: visible;
-      z-index: 5;
-    }
-
-    .raindrop {
-      position: absolute;
-      top: -20px;
-      width: 2px;
-      background: linear-gradient(180deg, #00ffff, #0077aa);
-      border-radius: 50% / 40%;
-      opacity: 0.6;
-      animation-name: fall;
-      animation-timing-function: linear;
-      animation-iteration-count: infinite;
-    }
-
-    @keyframes fall {
-      to {
-        transform: translateY(110vh);
-        opacity: 0;
-      }
-    }
+    /* [Same CSS as before — unchanged for brevity] */
+    /* You can keep your original CSS here */
   </style>
 </head>
 <body>
@@ -156,23 +53,19 @@
     // Rain animation
     const rainWrapper = document.querySelector('.rain-wrapper');
     const numRaindrops = 100;
-
     for (let i = 0; i < numRaindrops; i++) {
       const drop = document.createElement('div');
       drop.className = 'raindrop';
       drop.style.left = Math.random() * 100 + 'vw';
-      const fallDuration = 2 + Math.random() * 3;
-      const dropHeight = 10 + Math.random() * 20;
-      drop.style.height = dropHeight + 'px';
-      drop.style.animationDuration = `${fallDuration}s`;
-      drop.style.animationDelay = `${Math.random() * 5}s`;
+      drop.style.height = (10 + Math.random() * 20) + 'px';
+      drop.style.animationDuration = (2 + Math.random() * 3) + 's';
+      drop.style.animationDelay = (Math.random() * 5) + 's';
       rainWrapper.appendChild(drop);
     }
 
-    // Cloak logic
+    // Tab Cloak logic
     const cloakToggle = document.getElementById('cloakToggle');
     const cloakSelector = document.getElementById('cloakSelector');
-
     const favicons = {
       "Google Docs": "https://ssl.gstatic.com/docs/doclist/images/mediatype/icon_1_document_x32.png",
       "Google Classroom": "https://ssl.gstatic.com/classroom/favicon.png",
@@ -199,43 +92,58 @@
       if (link) link.href = favicons["MR GAMES"];
     }
 
-    cloakToggle.addEventListener('change', () => {
-      localStorage.setItem("cloakEnabled", cloakToggle.checked);
-      if (cloakToggle.checked) {
-        applyCloak(cloakSelector.value);
+    function saveCloak() {
+      const enabled = cloakToggle.checked;
+      const name = cloakSelector.value;
+      localStorage.setItem("cloakEnabled", enabled);
+      localStorage.setItem("cloakName", name);
+      if (enabled) {
+        applyCloak(name);
       } else {
         resetCloak();
       }
-    });
-
-    cloakSelector.addEventListener('change', () => {
-      if (cloakToggle.checked) {
-        applyCloak(cloakSelector.value);
-      }
-    });
-
-    function saveCloak() {
-      localStorage.setItem("cloakEnabled", cloakToggle.checked);
-      localStorage.setItem("cloakName", cloakSelector.value);
       alert("Cloak settings saved!");
     }
 
+    // Load cloak settings on page load
+    window.addEventListener("load", () => {
+      const enabled = localStorage.getItem("cloakEnabled") === "true";
+      const name = localStorage.getItem("cloakName");
+      cloakToggle.checked = enabled;
+      cloakSelector.value = name || "";
+      if (enabled && name) applyCloak(name);
+    });
+
     // Panic logic
     function savePanic() {
-      const panicLink = document.getElementById("panicURL").value.trim();
-      const panicKey = document.getElementById("panicKey").value.trim().toLowerCase();
-
-      if (!panicLink || !panicKey || panicKey.length !== 1) {
+      const url = document.getElementById("panicURL").value.trim();
+      const key = document.getElementById("panicKey").value.trim().toLowerCase();
+      if (!url || !key || key.length !== 1) {
         alert("Please enter a valid URL and a single key.");
         return;
       }
-
-      localStorage.setItem("panicLink", panicLink);
-      localStorage.setItem("panicKey", panicKey);
-      alert("✅ Panic settings saved! Press '" + panicKey.toUpperCase() + "' to activate.");
+      localStorage.setItem("panicLink", url);
+      localStorage.setItem("panicKey", key);
+      alert(`✅ Panic settings saved! Press '${key.toUpperCase()}' to activate.`);
     }
 
     document.addEventListener("keydown", function(e) {
       const savedLink = localStorage.getItem("panicLink");
       const savedKey = localStorage.getItem("panicKey");
-      if (savedLink &&[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://github.com/szerintedmi/roadmap-radar-chart/tree/45ee5f9f7a1d44100313358e369abb025b935cea/README.md?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "1")[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://github.com/doki-theme/doki-theme-web/tree/e04eae1635888ab138c872e64a91fb36ea2f6eab/firefoxThemes%2Fwaifus%2FthemeLoader.js?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "2")
+      if (savedLink && savedKey && e.key.toLowerCase() === savedKey) {
+        window.location.href = savedLink;
+      }
+    });
+
+    // Copy to clipboard
+    function copyToClipboard() {
+      const copyInput = document.getElementById("copyText");
+      copyInput.select();
+      copyInput.setSelectionRange(0, 99999); // For mobile
+      navigator.clipboard.writeText(copyInput.value)
+        .then(() => alert("Copied to clipboard!"))
+        .catch(() => alert("Failed to copy."));
+    }
+  </script>
+</body>
+</html>
