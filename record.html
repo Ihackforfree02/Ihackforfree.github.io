@@ -114,36 +114,13 @@
       { name: "Louie", score: "Because he asked" }
     ];
 
+    <script src="cloak_panic.js"></script>
+
     const listContainer = document.getElementById('record-list');
     records.forEach(record => {
       const p = document.createElement('p');
       p.textContent = `${record.name} – ${record.score}`;
       listContainer.appendChild(p);
-    });
-
-    // Favicon and cloak tab title logic
-    const favicons = {
-      "Google Docs": "https://ssl.gstatic.com/docs/doclist/images/mediatype/icon_1_document_x32.png",
-      "Google Classroom": "https://ssl.gstatic.com/classroom/favicon.png",
-      "Google Slides": "https://ssl.gstatic.com/docs/doclist/images/mediatype/icon_10_presentation_x32.png",
-      "Gmail": "https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico",
-      "MR GAMES": "favicon.ico"
-    };
-
-    window.addEventListener("DOMContentLoaded", () => {
-      const cloakEnabled = localStorage.getItem("cloakEnabled") === "true";
-      const cloakName = localStorage.getItem("cloakName");
-
-      if (cloakEnabled && cloakName) {
-        document.title = cloakName;
-        let link = document.querySelector("link[rel~='icon']");
-        if (!link) {
-          link = document.createElement("link");
-          link.rel = "icon";
-          document.head.appendChild(link);
-        }
-        link.href = favicons[cloakName] || favicons["MR GAMES"];
-      }
     });
   </script>
 </body>
