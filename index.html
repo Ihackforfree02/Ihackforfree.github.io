@@ -112,20 +112,6 @@
       }
     }
 
-    .cloak-controls {
-      margin-bottom: 30px;
-      font-size: 1.2rem;
-      color: #00ffff;
-    }
-
-    .cloak-controls select {
-      margin-top: 10px;
-      padding: 8px;
-      font-size: 1rem;
-      border-radius: 8px;
-      border: none;
-    }
-
     .settings-button {
       position: fixed;
       top: 15px;
@@ -154,34 +140,6 @@
   <div class="container">
     <h1>MR GAMES</h1>
 
-    <script src="cloak_panic.js"></script>
-
-<script>
-  const favicons = {
-    "Google Docs": "https://ssl.gstatic.com/docs/doclist/images/mediatype/icon_1_document_x32.png",
-    "Google Classroom": "https://ssl.gstatic.com/classroom/favicon.png",
-    "Google Slides": "https://ssl.gstatic.com/docs/doclist/images/mediatype/icon_10_presentation_x32.png",
-    "Gmail": "https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico",
-    "MR GAMES": "favicon.ico"
-  };
-
-  window.addEventListener("DOMContentLoaded", () => {
-    const cloakEnabled = localStorage.getItem("cloakEnabled") === "true";
-    const cloakName = localStorage.getItem("cloakName");
-
-    if (cloakEnabled && cloakName) {
-      document.title = cloakName;
-      let link = document.querySelector("link[rel~='icon']");
-      if (!link) {
-        link = document.createElement("link");
-        link.rel = "icon";
-        document.head.appendChild(link);
-      }
-      link.href = favicons[cloakName] || favicons["MR GAMES"];
-    }
-  });
-</script>
-
     <nav>
       <a href="Games.html">Play</a>
       <a href="leaderboard.html">Leaderboard</a>
@@ -199,6 +157,8 @@
 
   <div class="rain-wrapper"></div>
 
+  <script src="cloak_panic.js"></script>
+
   <script>
     const rainWrapper = document.querySelector('.rain-wrapper');
     const numRaindrops = 100;
@@ -213,49 +173,6 @@
       drop.style.animationDuration = `${fallDuration}s`;
       drop.style.animationDelay = `${Math.random() * 5}s`;
       rainWrapper.appendChild(drop);
-    }
-
-    const cloakToggle = document.getElementById('cloakToggle');
-    const cloakSelector = document.getElementById('cloakSelector');
-
-    const favicons = {
-      "Google Docs": "https://ssl.gstatic.com/docs/doclist/images/mediatype/icon_1_document_x32.png",
-      "Google Classroom": "https://ssl.gstatic.com/classroom/favicon.png",
-      "Google Slides": "https://ssl.gstatic.com/docs/doclist/images/mediatype/icon_10_presentation_x32.png",
-      "Gmail": "https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico",
-      "MR GAMES": "favicon.ico"
-    };
-
-    cloakToggle.addEventListener('change', () => {
-      if (cloakToggle.checked) {
-        applyCloak(cloakSelector.value);
-      } else {
-        resetCloak();
-      }
-    });
-
-    cloakSelector.addEventListener('change', () => {
-      if (cloakToggle.checked) {
-        applyCloak(cloakSelector.value);
-      }
-    });
-
-    function applyCloak(name) {
-      if (!name) return;
-      document.title = name;
-      let link = document.querySelector("link[rel~='icon']");
-      if (!link) {
-        link = document.createElement('link');
-        link.rel = 'icon';
-        document.head.appendChild(link);
-      }
-      link.href = favicons[name] || favicons["MR GAMES"];
-    }
-
-    function resetCloak() {
-      document.title = "MR GAMES";
-      let link = document.querySelector("link[rel~='icon']");
-      if (link) link.href = favicons["MR GAMES"];
     }
   </script>
 </body>
