@@ -188,30 +188,52 @@
     <source src="https://github.com/davidrobertwriter/davidrobertwriter.github.io/raw/refs/heads/main/Playground%20Rizz.mp3" type="audio/mpeg" />
   </audio>
 <script>
-  const favicons = {
-    "Google Docs": "https://ssl.gstatic.com/docs/doclist/images/mediatype/icon_1_document_x32.png",
-    "Google Classroom": "https://ssl.gstatic.com/classroom/favicon.png",
-    "Google Slides": "https://ssl.gstatic.com/docs/doclist/images/mediatype/icon_10_presentation_x32.png",
-    "Gmail": "https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico",
-    "MR GAMES": "favicon.ico"
+// === Load Saved Tab Cloak ===
+(function() {
+  const cloakOption = localStorage.getItem('tabCloakOption');
+  const cloakMap = {
+    'classroom': {
+      title: 'Google Classroom',
+      icon: 'https://ssl.gstatic.com/classroom/favicon.png'
+    },
+    'gmail': {
+      title: 'Gmail',
+      icon: 'https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico'
+    },
+    'docs': {
+      title: 'Google Docs',
+      icon: 'https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png'
+    },
+    'slides': {
+      title: 'Google Slides',
+      icon: 'https://ssl.gstatic.com/docs/presentations/images/favicon5.ico'
+    }
   };
 
-  window.addEventListener("DOMContentLoaded", () => {
-    const cloakEnabled = localStorage.getItem("cloakEnabled") === "true";
-    const cloakName = localStorage.getItem("cloakName");
+  if (cloakOption && cloakMap[cloakOption]) {
+    document.title = cloakMap[cloakOption].title;
+    const link = document.querySelector("link[rel~='icon']") || document.createElement('link');
+    link.rel = 'icon';
+    link.href = cloakMap[cloakOption].icon;
+    document.head.appendChild(link);
+  }
+})();
 
-    if (cloakEnabled && cloakName) {
-      document.title = cloakName;
-      let link = document.querySelector("link[rel~='icon']");
-      if (!link) {
-        link = document.createElement("link");
-        link.rel = "icon";
-        document.head.appendChild(link);
+// === Panic Button Logic ===
+(function() {
+  const panicKey = localStorage.getItem('panicKey');
+  const panicUrl = localStorage.getItem('panicUrl');
+
+  if (panicKey && panicUrl) {
+    document.addEventListener('keydown', function(e) {
+      if (e.key.toLowerCase() === panicKey.toLowerCase()) {
+        window.location.href = panicUrl;
       }
-      link.href = favicons[cloakName] || favicons["MR GAMES"];
-    }
-  });
+    });
+  }
+})();
 </script>
+
   <!-- 🎮 Controller Rain Script (FIXED) -->
   <script>
     const createController = () => {
