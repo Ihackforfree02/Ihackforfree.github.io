@@ -65,6 +65,8 @@
       animation-name: fall;
       animation-timing-function: linear;
       animation-iteration-count: infinite;
+      color: gold;
+      filter: drop-shadow(0 0 5px gold);
     }
 
     @keyframes fall {
@@ -80,14 +82,15 @@
   </style>
 </head>
 <body>
-  <div class="container">
+  <main class="container" role="main">
     <h1>Records</h1>
     <div id="record-list"></div>
-  </div>
+  </main>
 
   <div class="trophy-wrapper" aria-hidden="true"></div>
 
   <script>
+    // Create falling trophies animation
     const wrapper = document.querySelector('.trophy-wrapper');
     const trophyCount = 50;
 
@@ -102,6 +105,7 @@
       wrapper.appendChild(trophy);
     }
 
+    // Populate record list
     const records = [
       { name: "Owner: Cameron", score: "For being the best owner" },
       { name: "Jimmy", score: "Best at gunspin" },
@@ -116,31 +120,33 @@
       p.textContent = `${record.name} – ${record.score}`;
       listContainer.appendChild(p);
     });
-    <script>
-  const favicons = {
-    "Google Docs": "https://ssl.gstatic.com/docs/doclist/images/mediatype/icon_1_document_x32.png",
-    "Google Classroom": "https://ssl.gstatic.com/classroom/favicon.png",
-    "Google Slides": "https://ssl.gstatic.com/docs/doclist/images/mediatype/icon_10_presentation_x32.png",
-    "Gmail": "https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico",
-    "MR GAMES": "favicon.ico"
-  };
+  </script>
 
-  window.addEventListener("DOMContentLoaded", () => {
-    const cloakEnabled = localStorage.getItem("cloakEnabled") === "true";
-    const cloakName = localStorage.getItem("cloakName");
+  <script>
+    // Favicon and cloak tab title logic
+    const favicons = {
+      "Google Docs": "https://ssl.gstatic.com/docs/doclist/images/mediatype/icon_1_document_x32.png",
+      "Google Classroom": "https://ssl.gstatic.com/classroom/favicon.png",
+      "Google Slides": "https://ssl.gstatic.com/docs/doclist/images/mediatype/icon_10_presentation_x32.png",
+      "Gmail": "https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico",
+      "MR GAMES": "favicon.ico"
+    };
 
-    if (cloakEnabled && cloakName) {
-      document.title = cloakName;
-      let link = document.querySelector("link[rel~='icon']");
-      if (!link) {
-        link = document.createElement("link");
-        link.rel = "icon";
-        document.head.appendChild(link);
+    window.addEventListener("DOMContentLoaded", () => {
+      const cloakEnabled = localStorage.getItem("cloakEnabled") === "true";
+      const cloakName = localStorage.getItem("cloakName");
+
+      if (cloakEnabled && cloakName) {
+        document.title = cloakName;
+        let link = document.querySelector("link[rel~='icon']");
+        if (!link) {
+          link = document.createElement("link");
+          link.rel = "icon";
+          document.head.appendChild(link);
+        }
+        link.href = favicons[cloakName] || favicons["MR GAMES"];
       }
-      link.href = favicons[cloakName] || favicons["MR GAMES"];
-    }
-  });
-</script>
+    });
   </script>
 </body>
 </html>
