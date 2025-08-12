@@ -79,13 +79,13 @@
       z-index: 9999;
       background: linear-gradient(90deg, transparent, #00ffff, transparent);
       animation: technoGlow 3s linear infinite;
+      box-shadow: 0 0 10px #00ffff;
     }
 
     .border-top {
       top: 0; left: 0;
       width: 100vw; height: 4px;
       animation-delay: 0s;
-      box-shadow: 0 0 10px #00ffff;
     }
 
     .border-right {
@@ -93,14 +93,12 @@
       width: 4px; height: 100vh;
       animation-delay: 0.75s;
       background: linear-gradient(180deg, transparent, #00ffff, transparent);
-      box-shadow: 0 0 10px #00ffff;
     }
 
     .border-bottom {
       bottom: 0; left: 0;
       width: 100vw; height: 4px;
       animation-delay: 1.5s;
-      box-shadow: 0 0 10px #00ffff;
     }
 
     .border-left {
@@ -108,7 +106,6 @@
       width: 4px; height: 100vh;
       animation-delay: 2.25s;
       background: linear-gradient(0deg, transparent, #00ffff, transparent);
-      box-shadow: 0 0 10px #00ffff;
     }
 
     @keyframes technoGlow {
@@ -140,6 +137,7 @@
   <div class="container" role="main">
     <h1>Games</h1>
     <div class="button-grid" role="list">
+      <!-- Games list -->
       <a href="https://ihackforfree02.github.io/Precision-Client-For-EaglerCraft/" role="listitem">Minecraft</a>
       <a href="https://schoolaccountforme.github.io/Time-Shooter-3-SWAT/" role="listitem">Time Shooter</a>
       <a href="https://ihackforfree02.github.io/1v1.lol/" role="listitem">1v1.LOL</a>
@@ -160,23 +158,23 @@
       <a href="https://amazingwebsitesupersigma.github.io/basketrandom/" role="listitem">Basket Random</a>
       <a href="https://amazingwebsitesupersigma.github.io/tunnelrush/" role="listitem">Tunnel Rush</a>
       <a href="https://amazingwebsitesupersigma.github.io/basketballstars/" role="listitem">Basketball Stars</a>
-       <a href="https://quiz-50.github.io/driving-games/drift-boss/" role="listitem">Drift Boss</a>
-       <a href="https://quiz-50.github.io/action-games/gun-mayhem-2/" role="listitem">Gun Mayhem 2</a>
-       <a href="https://quiz-50.github.io/strategy-games/ballistic/" role="listitem">Ballistic</a>
+      <a href="https://quiz-50.github.io/driving-games/drift-boss/" role="listitem">Drift Boss</a>
+      <a href="https://quiz-50.github.io/action-games/gun-mayhem-2/" role="listitem">Gun Mayhem 2</a>
+      <a href="https://quiz-50.github.io/strategy-games/ballistic/" role="listitem">Ballistic</a>
       <a href="https://sigmasigmapd2mods.github.io/subwaysurfers/" role="listitem">Subway Surfers</a>
       <a href="https://amazingwebsitesupersigma.github.io/geodash/" role="listitem">Geometry Dash</a>
-       <a href="https://irv77.github.io/hd_fnaf/1/" role="listitem">FNAF</a>
-       <a href="https://irv77.github.io/hd_fnaf/2/" role="listitem">FNAF 2</a>
-       <a href="https://irv77.github.io/hd_fnaf/3/" role="listitem">FNAF 3</a>
-       <a href="https://irv77.github.io/hd_fnaf/4/" role="listitem">FNAF 4</a>
-       <a href="https://irv77.github.io/hd_fnaf/w/" role="listitem">FNAF World</a>
-       <a href="https://irv77.github.io/hd_fnaf/sl/" role="listitem">FNAF Sister Location</a>
-       <a href="https://irv77.github.io/hd_fnaf/ps/" role="listitem">FNAF Pizzaria</a>
-       <a href="https://irv77.github.io/hd_fnaf/ucn/" role="listitem">FNAF Custom Night</a>
-       <a href="https://amazingwebsitesupersigma.github.io/hd_fnaf/1/" role="listitem">5 Night at Diddys</a>
-
-      </div>
+      <a href="https://irv77.github.io/hd_fnaf/1/" role="listitem">FNAF</a>
+      <a href="https://irv77.github.io/hd_fnaf/2/" role="listitem">FNAF 2</a>
+      <a href="https://irv77.github.io/hd_fnaf/3/" role="listitem">FNAF 3</a>
+      <a href="https://irv77.github.io/hd_fnaf/4/" role="listitem">FNAF 4</a>
+      <a href="https://irv77.github.io/hd_fnaf/w/" role="listitem">FNAF World</a>
+      <a href="https://irv77.github.io/hd_fnaf/sl/" role="listitem">FNAF Sister Location</a>
+      <a href="https://irv77.github.io/hd_fnaf/ps/" role="listitem">FNAF Pizzaria</a>
+      <a href="https://irv77.github.io/hd_fnaf/ucn/" role="listitem">FNAF Custom Night</a>
+      <a href="https://amazingwebsitesupersigma.github.io/hd_fnaf/1/" role="listitem">5 Night at Diddys</a>
+    </div>
   </div>
+
   <!-- Techno border elements -->
   <div class="border-top"></div>
   <div class="border-right"></div>
@@ -187,56 +185,11 @@
   <audio autoplay loop>
     <source src="https://github.com/davidrobertwriter/davidrobertwriter.github.io/raw/refs/heads/main/Playground%20Rizz.mp3" type="audio/mpeg" />
   </audio>
-<script>
-// === Load Saved Tab Cloak ===
-(function() {
-  const cloakOption = localStorage.getItem('tabCloakOption');
-  const cloakMap = {
-    'classroom': {
-      title: 'Google Classroom',
-      icon: 'https://ssl.gstatic.com/classroom/favicon.png'
-    },
-    'gmail': {
-      title: 'Gmail',
-      icon: 'https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico'
-    },
-    'docs': {
-      title: 'Google Docs',
-      icon: 'https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png'
-    },
-    'slides': {
-      title: 'Google Slides',
-      icon: 'https://ssl.gstatic.com/docs/presentations/images/favicon5.ico'
-    }
-  };
 
-  if (cloakOption && cloakMap[cloakOption]) {
-    document.title = cloakMap[cloakOption].title;
-    const link = document.querySelector("link[rel~='icon']") || document.createElement('link');
-    link.rel = 'icon';
-    link.href = cloakMap[cloakOption].icon;
-    document.head.appendChild(link);
-  }
-})();
-
-// === Panic Button Logic ===
-(function() {
-  const panicKey = localStorage.getItem('panicKey');
-  const panicUrl = localStorage.getItem('panicUrl');
-
-  if (panicKey && panicUrl) {
-    document.addEventListener('keydown', function(e) {
-      if (e.key.toLowerCase() === panicKey.toLowerCase()) {
-        window.location.href = panicUrl;
-      }
-    });
-  }
-})();
-</script>
-
+  <!-- Load cloak & panic logic (centralized) -->
   <script src="cloak_panic.js"></script>
 
-  <!-- 🎮 Controller Rain Script (FIXED) -->
+  <!-- Controller Rain Animation -->
   <script>
     const createController = () => {
       const controller = document.createElement('div');
