@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Leaderboard</title>
+  <link rel="icon" href="favicon.ico" />
   <style>
     body, html {
       margin: 0;
@@ -117,6 +118,7 @@
   <div class="confetti-wrapper" aria-hidden="true"></div>
   <div class="tetris-wrapper" aria-hidden="true"></div>
 
+  <!-- Load shared cloak + panic script -->
   <script src="cloak_panic.js"></script>
 
   <div class="container">
@@ -134,32 +136,7 @@
       </tbody>
     </table>
   </div>
-<script>
-  const favicons = {
-    "Google Docs": "https://ssl.gstatic.com/docs/doclist/images/mediatype/icon_1_document_x32.png",
-    "Google Classroom": "https://ssl.gstatic.com/classroom/favicon.png",
-    "Google Slides": "https://ssl.gstatic.com/docs/doclist/images/mediatype/icon_10_presentation_x32.png",
-    "Gmail": "https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico",
-    "MR GAMES": "favicon.ico"
-  };
 
-  window.addEventListener("DOMContentLoaded", () => {
-    const cloakEnabled = localStorage.getItem("cloakEnabled") === "true";
-    const cloakName = localStorage.getItem("cloakName");
-
-    if (cloakEnabled && cloakName) {
-      document.title = cloakName;
-      let link = document.querySelector("link[rel~='icon']");
-      if (!link) {
-        link = document.createElement("link");
-        link.rel = "icon";
-        document.head.appendChild(link);
-      }
-      link.href = favicons[cloakName] || favicons["MR GAMES"];
-    }
-  });
-</script>
-</div>
   <audio autoplay loop>
     <source src="https://github.com/davidrobertwriter/davidrobertwriter.github.io/raw/refs/heads/main/Playground%20Rizz.mp3" type="audio/mpeg" />
   </audio>
@@ -200,7 +177,6 @@
       const shape = shapes[keys[Math.floor(Math.random() * keys.length)]];
       const color = colors[Math.floor(Math.random() * colors.length)];
 
-      // Populate blocks
       for (let i = 0; i < 16; i++) {
         const block = document.createElement('div');
         block.className = 'block';
@@ -209,10 +185,7 @@
         piece.appendChild(block);
       }
 
-      const leftEdge = 50;
-      const rightEdge = window.innerWidth - 100;
-
-      // Avoid leaderboard middle section
+      // Avoid leaderboard center area
       let left;
       do {
         left = Math.random() * window.innerWidth;
