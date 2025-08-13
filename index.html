@@ -2,138 +2,31 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MR GAMES</title>
-  <link rel="icon" href="favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Site with NettleWeb Chat</title>
   <style>
-    body, html {
+    body {
       margin: 0;
-      padding: 0;
-      height: 100%;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-      color: #ffffff;
-      overflow-x: hidden;
-      position: relative;
-    }
-
-    .container {
-      text-align: center;
-      padding: 80px 20px;
-      max-width: 600px;
-      margin: auto;
-      background-color: rgba(0, 0, 0, 0.6);
-      border-radius: 12px;
-      box-shadow: 0 6px 24px rgba(0,0,0,0.3);
-      animation: fadeIn 2s ease-out forwards;
-      opacity: 0;
-      position: relative;
-      z-index: 10;
-    }
-
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
-
-    h1 {
-      font-size: 3.5rem;
-      margin-bottom: 20px;
-      color: #f0db4f;
-      text-shadow: 0 0 10px #f0db4f, 0 0 20px #f0db4f;
-      animation: glow 1.5s ease-in-out infinite alternate;
-    }
-
-    p.subtitle {
-      margin-top: -20px;
-      font-size: 1.4rem;
-      color: #00ffff;
-    }
-
-    @keyframes glow {
-      from { text-shadow: 0 0 5px #f0db4f; }
-      to { text-shadow: 0 0 20px #f0db4f, 0 0 30px #f0db4f; }
-    }
-
-    nav {
-      display: flex;
-      justify-content: space-evenly;
-      flex-wrap: wrap;
-      gap: 15px;
-      padding: 0 10px;
-    }
-
-    nav a {
-      display: inline-block;
-      padding: 12px 28px;
-      font-size: 1.4rem;
-      color: #00ffff;
-      text-decoration: none;
-      border: 2px solid #00ffff;
-      border-radius: 30px;
-      box-shadow: 0 0 8px #00ffff;
-      transition: all 0.3s ease;
-      user-select: none;
-    }
-
-    nav a:hover {
-      background: #00ffff;
-      color: #0f2027;
-      box-shadow: 0 0 20px #00ffff;
-      cursor: pointer;
-    }
-
-    .rain-wrapper {
-      pointer-events: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
+      font-family: sans-serif;
+      background: linear-gradient(to bottom right, #1e1e2f, #3a3a5c);
+      color: white;
       height: 100vh;
-      overflow: visible;
-      z-index: 5;
+      overflow: hidden;
     }
 
-    .raindrop {
-      position: absolute;
-      top: -20px;
-      width: 2px;
-      background: linear-gradient(180deg, #00ffff, #0077aa);
-      border-radius: 50% / 40%;
-      opacity: 0.6;
-      animation-name: fall;
-      animation-timing-function: linear;
-      animation-iteration-count: infinite;
-    }
-
-    @keyframes fall {
-      to {
-        transform: translateY(110vh);
-        opacity: 0;
-      }
-    }
-
-    .settings-button {
-      position: fixed;
-      top: 15px;
-      right: 15px;
-      background-color: #00ffff;
-      color: #0f2027;
-      border: none;
-      border-radius: 50px;
-      padding: 10px 20px;
-      font-size: 1rem;
+    header {
+      padding: 20px;
+      text-align: center;
+      background-color: #2c2c44;
+      font-size: 2em;
       font-weight: bold;
-      box-shadow: 0 0 12px #00ffff;
-      cursor: pointer;
-      z-index: 20;
-      text-decoration: none;
     }
 
-    .settings-button:hover {
-      box-shadow: 0 0 20px #00ffff;
+    main {
+      padding: 40px;
+      text-align: center;
     }
 
-    /* Chat Widget Styles */
     #chat-toggle {
       position: fixed;
       bottom: 20px;
@@ -141,36 +34,38 @@
       background-color: #0078D7;
       color: white;
       padding: 10px 15px;
-      border-radius: 20px;
+      border-radius: 8px;
       cursor: pointer;
       z-index: 1000;
-      font-family: sans-serif;
+      font-weight: bold;
     }
 
     #chat-window {
       position: fixed;
       bottom: 70px;
       left: 20px;
-      width: 350px;
+      width: 400px;
+      height: 400px;
       background-color: #f1f1f1;
       border: 1px solid #ccc;
       border-radius: 10px;
       display: none;
       flex-direction: column;
       z-index: 999;
-      font-family: sans-serif;
+      resize: both;
+      overflow: hidden;
     }
 
     #chat-header {
       background-color: #0078D7;
       color: white;
       padding: 10px;
-      border-top-left-radius: 10px;
-      border-top-right-radius: 10px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       cursor: move;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
     }
 
     #chat-header button {
@@ -182,39 +77,37 @@
     }
 
     #chat-body {
+      flex: 1;
       padding: 0;
-      max-height: 300px;
-      overflow: hidden;
+    }
+
+    #chat-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
     }
   </style>
 </head>
 <body>
-  <a href="settings.html" class="settings-button">⚙️ Settings</a>
 
-  <div class="container">
-    <h1>MR GAMES</h1>
-    <nav>
-      <a href="Games.html">Play</a>
-      <a href="leaderboard.html">Leaderboard</a>
-      <a href="about_us.html">About</a>
-      <a href="record.html">Records</a>
-      <a href="use_full_links.html">Useful Links</a>
-      <a href="https://hentai.com">Szvy Central V2 not working</a>
-      <a href="https://sigmasigmatoiletedge.github.io/">Nettle Web</a>
-    </nav>
-  </div>
+  <header>Welcome to Your Cool Site 😎</header>
+
+  <main>
+    <p>This is your homepage. Everything looks awesome.</p>
+    <p>Click the chat button to open NettleWeb chat!</p>
+  </main>
 
   <!-- Chat Toggle Button -->
   <div id="chat-toggle" onclick="toggleChat()">💬 Chat</div>
 
-  <!-- Chat Window with NettleWeb -->
+  <!-- Chat Window -->
   <div id="chat-window">
     <div id="chat-header">
       <span>Nettle Chat</span>
       <button onclick="toggleChat()">✖</button>
     </div>
     <div id="chat-body">
-      <iframe src="https://sigmasigmatoiletedge.github.io/chat" width="100%" height="300" style="border:none;"></iframe>
+      <iframe src="https://sigmasigmatoiletedge.github.io/chat" id="chat-iframe"></iframe>
     </div>
   </div>
 
@@ -224,7 +117,7 @@
       chatWindow.style.display = chatWindow.style.display === 'none' ? 'flex' : 'none';
     }
 
-    // Make chat draggable
+    // Dragging logic
     const chatWindow = document.getElementById('chat-window');
     const chatHeader = document.getElementById('chat-header');
     let isDragging = false, offsetX, offsetY;
@@ -233,36 +126,20 @@
       isDragging = true;
       offsetX = e.clientX - chatWindow.offsetLeft;
       offsetY = e.clientY - chatWindow.offsetTop;
+      chatWindow.style.bottom = 'auto';
     });
 
     document.addEventListener('mousemove', (e) => {
       if (isDragging) {
         chatWindow.style.left = `${e.clientX - offsetX}px`;
         chatWindow.style.top = `${e.clientY - offsetY}px`;
-        chatWindow.style.bottom = 'auto';
       }
     });
 
     document.addEventListener('mouseup', () => {
       isDragging = false;
     });
-
-    // Rain effect
-    const rainWrapper = document.querySelector('.rain-wrapper');
-    const numRaindrops = 100;
-
-    for (let i = 0; i < numRaindrops; i++) {
-      const drop = document.createElement('div');
-      drop.className = 'raindrop';
-      drop.style.left = Math.random() * 100 + 'vw';
-      const fallDuration = 2 + Math.random() * 3;
-      const dropHeight = 10 + Math.random() * 20;
-      drop.style.height = dropHeight + 'px';
-      drop.style.animationDuration = `${fallDuration}s`;
-      drop.style.animationDelay = `${Math.random() * 5}s`;
-      rainWrapper.appendChild(drop);
-    }
   </script>
-
-  <audio autoplay loop>
-    <source src="https://github.com/davidrobertwriter/davidrobertwriter.github.io/raw[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://github.com/szerintedmi/roadmap-radar-chart/tree/45ee5f9f7a1d44100313358e369abb025b935cea/README.md?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "1")
+<script src="cloak_panic.js"></script>
+</body>
+</html>
