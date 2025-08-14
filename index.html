@@ -133,7 +133,6 @@
       box-shadow: 0 0 20px #00ffff;
     }
 
-    /* Chat Widget Styles */
     #chat-toggle {
       position: fixed;
       bottom: 20px;
@@ -214,10 +213,8 @@
 
   <script src="cloak_panic.js"></script>
 
-  <!-- Chat Toggle Button -->
   <div id="chat-toggle" onclick="toggleChat()">💬 Chat</div>
 
-  <!-- Chat Window -->
   <div id="chat-window">
     <div id="chat-header">
       <span>Nettle Chat</span>
@@ -229,12 +226,10 @@
   </div>
 
   <script>
-    // Redirect to main page if not already there
     if (!location.pathname.includes('index.html') && location.pathname === '/') {
       window.location.href = 'index.html';
     }
 
-    // Check for Wi-Fi / internet connectivity
     function checkConnectivity() {
       if (!navigator.onLine) {
         alert("You're offline. Please connect to Wi-Fi or mobile data to use chat.");
@@ -250,7 +245,6 @@
       chatWindow.style.display = chatWindow.style.display === 'none' ? 'flex' : 'none';
     }
 
-    // Make chat draggable
     const chatWindow = document.getElementById('chat-window');
     const chatHeader = document.getElementById('chat-header');
     let isDragging = false, offsetX, offsetY;
@@ -264,6 +258,4 @@
     document.addEventListener('mousemove', (e) => {
       if (isDragging) {
         chatWindow.style.left = `${e.clientX - offsetX}px`;
-        chatWindow.style.top = `${e.clientY - offsetY}px`;
-        chatWindow.style.bottom = 'auto';
-[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://github.com/szerintedmi/roadmap-radar-chart/tree/45ee5f9f7a1d44100313358e369abb025b935cea/README.md?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "1")
+        chatWindow.style.top = `${e.clientY -[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://github.com/szerintedmi/roadmap-radar-chart/tree/45ee5f9f7a1d44100313358e369abb025b935cea/README.md?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "1")
