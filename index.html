@@ -151,7 +151,8 @@
       position: fixed;
       bottom: 70px;
       left: 20px;
-      width: 350px;
+      width: 400px;
+      height: 500px;
       background-color: #f1f1f1;
       border: 1px solid #ccc;
       border-radius: 10px;
@@ -159,6 +160,8 @@
       flex-direction: column;
       z-index: 999;
       font-family: sans-serif;
+      resize: both;
+      overflow: auto;
     }
 
     #chat-header {
@@ -183,8 +186,13 @@
 
     #chat-body {
       padding: 0;
-      max-height: 300px;
-      overflow: hidden;
+      flex-grow: 1;
+    }
+
+    #chat-body iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
     }
   </style>
 </head>
@@ -203,23 +211,40 @@
       <a href="https://sigmasigmatoiletedge.github.io/">Nettle Web</a>
     </nav>
   </div>
+
   <script src="cloak_panic.js"></script>
 
   <!-- Chat Toggle Button -->
   <div id="chat-toggle" onclick="toggleChat()">💬 Chat</div>
 
-  <!-- Chat Window with NettleWeb -->
+  <!-- Chat Window -->
   <div id="chat-window">
     <div id="chat-header">
       <span>Nettle Chat</span>
       <button onclick="toggleChat()">✖</button>
     </div>
     <div id="chat-body">
-      <iframe src="https://sigmasigmatoiletedge.github.io/chat" width="100%" height="300" style="border:none;"></iframe>
+      <iframe src="https://sigmasigmatoiletedge.github.io/chat"></iframe>
     </div>
   </div>
 
   <script>
+    // Redirect to main page if not already there
+    if (!location.pathname.includes('index.html') && location.pathname === '/') {
+      window.location.href = 'index.html';
+    }
+
+    // Check for Wi-Fi / internet connectivity
+    function checkConnectivity() {
+      if (!navigator.onLine) {
+        alert("You're offline. Please connect to Wi-Fi or mobile data to use chat.");
+      }
+    }
+
+    window.addEventListener('load', checkConnectivity);
+    window.addEventListener('online', () => alert("You're back online!"));
+    window.addEventListener('offline', () => alert("You've lost connection."));
+
     function toggleChat() {
       const chatWindow = document.getElementById('chat-window');
       chatWindow.style.display = chatWindow.style.display === 'none' ? 'flex' : 'none';
@@ -249,21 +274,8 @@
     });
 
     // Rain effect
-    const rainWrapper = document.querySelector('.rain-wrapper');
-    const numRaindrops = 100;
+    const rainWrapper = document.createElement('div');
+    rainWrapper.className = 'rain-wrapper';
+    document.body.appendChild(rainWrapper);
 
-    for (let i = 0; i < numRaindrops; i++) {
-      const drop = document.createElement('div');
-      drop.className = 'raindrop';
-      drop.style.left = Math.random() * 100 + 'vw';
-      const fallDuration = 2 + Math.random() * 3;
-      const dropHeight = 10 + Math.random() * 20;
-      drop.style.height = dropHeight + 'px';
-      drop.style.animationDuration = `${fallDuration}s`;
-      drop.style.animationDelay = `${Math.random() * 5}s`;
-      rainWrapper.appendChild(drop);
-    }
-  </script>
-
-  <audio autoplay loop>
-    <source src="https://github.com/davidrobertwriter/davidrobertwriter.github.io/raw[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://github.com/szerintedmi/roadmap-radar-chart/tree/45ee5f9f7a1d44100313358e369abb025b935cea/README.md?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "1")
+    const numRaindrops =[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://github.com/szerintedmi/roadmap-radar-chart/tree/45ee5f9f7a1d44100313358e369abb025b935cea/README.md?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "1")
