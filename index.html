@@ -6,6 +6,7 @@
   <title>MR GAMES</title>
   <link rel="icon" href="favicon.ico" />
   <style>
+    /* Your existing styles (background, layout, nav, etc.) */
     body, html {
       margin: 0;
       padding: 0;
@@ -16,124 +17,10 @@
       overflow-x: hidden;
       position: relative;
     }
+    .container { /* ... your existing container styles ... */ }
+    /* Add any other existing CSS here */
 
-    .container {
-      text-align: center;
-      padding: 80px 20px;
-      max-width: 600px;
-      margin: auto;
-      background-color: rgba(0, 0, 0, 0.6);
-      border-radius: 12px;
-      box-shadow: 0 6px 24px rgba(0,0,0,0.3);
-      animation: fadeIn 2s ease-out forwards;
-      opacity: 0;
-      position: relative;
-      z-index: 10;
-    }
-
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
-
-    h1 {
-      font-size: 3.5rem;
-      margin-bottom: 20px;
-      color: #f0db4f;
-      text-shadow: 0 0 10px #f0db4f, 0 0 20px #f0db4f;
-      animation: glow 1.5s ease-in-out infinite alternate;
-    }
-
-    p.subtitle {
-      margin-top: -20px;
-      font-size: 1.4rem;
-      color: #00ffff;
-    }
-
-    @keyframes glow {
-      from { text-shadow: 0 0 5px #f0db4f; }
-      to { text-shadow: 0 0 20px #f0db4f, 0 0 30px #f0db4f; }
-    }
-
-    nav {
-      display: flex;
-      justify-content: space-evenly;
-      flex-wrap: wrap;
-      gap: 15px;
-      padding: 0 10px;
-    }
-
-    nav a {
-      display: inline-block;
-      padding: 12px 28px;
-      font-size: 1.4rem;
-      color: #00ffff;
-      text-decoration: none;
-      border: 2px solid #00ffff;
-      border-radius: 30px;
-      box-shadow: 0 0 8px #00ffff;
-      transition: all 0.3s ease;
-      user-select: none;
-    }
-
-    nav a:hover {
-      background: #00ffff;
-      color: #0f2027;
-      box-shadow: 0 0 20px #00ffff;
-      cursor: pointer;
-    }
-
-    .rain-wrapper {
-      pointer-events: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      overflow: visible;
-      z-index: 5;
-    }
-
-    .raindrop {
-      position: absolute;
-      top: -20px;
-      width: 2px;
-      background: linear-gradient(180deg, #00ffff, #0077aa);
-      border-radius: 50% / 40%;
-      opacity: 0.6;
-      animation-name: fall;
-      animation-timing-function: linear;
-      animation-iteration-count: infinite;
-    }
-
-    @keyframes fall {
-      to {
-        transform: translateY(110vh);
-        opacity: 0;
-      }
-    }
-
-    .settings-button {
-      position: fixed;
-      top: 15px;
-      right: 15px;
-      background-color: #00ffff;
-      color: #0f2027;
-      border: none;
-      border-radius: 50px;
-      padding: 10px 20px;
-      font-size: 1rem;
-      font-weight: bold;
-      box-shadow: 0 0 12px #00ffff;
-      cursor: pointer;
-      z-index: 20;
-      text-decoration: none;
-    }
-
-    .settings-button:hover {
-      box-shadow: 0 0 20px #00ffff;
-    }
-
-    /* CHAT STYLES */
+    /* Chat Button Styling */
     #chat-toggle {
       position: fixed;
       bottom: 20px;
@@ -146,85 +33,14 @@
       z-index: 1000;
       font-family: sans-serif;
       box-shadow: 0 0 10px #0078D7;
-    }
-
-    #chat-window {
-      position: fixed;
-      top: 0;
-      left: -420px; /* Hidden by default */
-      width: 400px;
-      height: 100%;
-      background-color: #f1f1f1;
-      border-right: 2px solid #0078D7;
-      border-radius: 0 10px 10px 0;
-      display: flex;
-      flex-direction: column;
-      z-index: 999;
-      font-family: sans-serif;
-      box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
-      transition: left 0.3s ease-in-out;
-    }
-
-    #chat-window.open {
-      left: 0;
-    }
-
-    #chat-header {
-      background-color: #0078D7;
-      color: white;
-      padding: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-top-left-radius: 0;
-      border-top-right-radius: 10px;
-    }
-
-    #chat-header button {
-      background: none;
-      border: none;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    #chat-body {
-      flex-grow: 1;
-    }
-
-    #chat-body iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-
-    .partner-badge {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: linear-gradient(135deg, #00ffff, #0078D7);
-      color: #0f2027;
-      padding: 10px 20px;
-      border-radius: 30px;
-      font-size: 1rem;
-      font-weight: bold;
-      text-decoration: none;
-      box-shadow: 0 0 15px #00ffff;
-      z-index: 1000;
-      transition: all 0.3s ease;
-    }
-
-    .partner-badge:hover {
-      box-shadow: 0 0 25px #00ffff;
-      transform: scale(1.05);
-      color: #ffffff;
+      user-select: none;
     }
   </style>
 </head>
 <body>
+  <!-- Your existing HTML content (settings button, nav, rain, etc.) -->
   <a href="settings.html" class="settings-button">⚙️ Settings</a>
-  <div class="rain-wrapper" id="rain-wrapper"></div>
-
+  <div class="rain-wrapper"></div>
   <div class="container">
     <h1>MR GAMES</h1>
     <p class="subtitle">Welcome to the ultimate arcade experience</p>
@@ -241,17 +57,6 @@
   <!-- Chat Toggle Button -->
   <div id="chat-toggle" onclick="toggleChat()">💬 Chat</div>
 
-  <!-- Chat Panel -->
-  <div id="chat-window">
-    <div id="chat-header">
-      <span>Nettle Chat</span>
-      <button onclick="toggleChat()">✖</button>
-    </div>
-    <div id="chat-body">
-      <iframe src="https://forum.whatthesigma.site/home" allow="clipboard-write" sandbox="allow-scripts allow-same-origin allow-popups" title="Nettle Chat"></iframe>
-    </div>
-  </div>
-
   <!-- Partner Badge -->
   <a href="https://ezunblocktheopps.github.io/" class="partner-badge" target="_blank">🤝 Partnered with Sigmi</a>
 
@@ -263,4 +68,28 @@
 
     function checkConnectivity() {
       if (!navigator.onLine) {
-       
+        alert("You're offline. Chat may not work.");
+      }
+    }
+    window.addEventListener('load', checkConnectivity);
+    window.addEventListener('online', () => alert("You're back online!"));
+    window.addEventListener('offline', () => alert("You've lost connection."));
+
+    // Popup Chat Functionality
+    function toggleChat() {
+      if (window.chatWindow && !window.chatWindow.closed) {
+        window.chatWindow.focus();
+      } else {
+        window.chatWindow = window.open(
+          'https://forum.whatthesigma.site/home',
+          'ChatWindow',
+          'width=400,height=600'
+        );
+        if (!window.chatWindow) {
+          alert("Popup blocked! Please allow popups to use chat.");
+        }
+      }
+    }
+  </script>
+</body>
+</html>
