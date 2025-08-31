@@ -140,6 +140,40 @@
   <audio autoplay loop>
     <source src="https://github.com/davidrobertwriter/davidrobertwriter.github.io/raw/refs/heads/main/Playground%20Rizz.mp3" type="audio/mpeg" />
   </audio>
+<!-- 💬 Chat Button -->
+<div id="chat-toggle" onclick="toggleChat()" style="
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background-color: #0078D7;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  z-index: 1000;
+  font-family: sans-serif;
+  box-shadow: 0 0 10px #0078D7;
+  user-select: none;
+">
+  💬 Chat
+</div>
+
+<script>
+  function toggleChat() {
+    if (window.chatWindow && !window.chatWindow.closed) {
+      window.chatWindow.focus();
+    } else {
+      window.chatWindow = window.open(
+        'https://forum.whatthesigma.site/home',
+        'ChatWindow',
+        'width=400,height=600'
+      );
+      if (!window.chatWindow) {
+        alert("Popup blocked! Please allow popups to use chat.");
+      }
+    }
+  }
+</script>
 
   <script>
     const wrapper = document.querySelector('.confetti-wrapper');
