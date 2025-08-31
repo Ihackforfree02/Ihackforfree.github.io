@@ -133,6 +133,7 @@
       box-shadow: 0 0 20px #00ffff;
     }
 
+    /* CHAT STYLES */
     #chat-toggle {
       position: fixed;
       bottom: 20px;
@@ -144,35 +145,39 @@
       cursor: pointer;
       z-index: 1000;
       font-family: sans-serif;
+      box-shadow: 0 0 10px #0078D7;
     }
 
     #chat-window {
       position: fixed;
-      bottom: 70px;
-      left: 20px;
+      top: 0;
+      left: -420px; /* Hidden by default */
       width: 400px;
-      height: 500px;
+      height: 100%;
       background-color: #f1f1f1;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      display: none;
+      border-right: 2px solid #0078D7;
+      border-radius: 0 10px 10px 0;
+      display: flex;
       flex-direction: column;
       z-index: 999;
       font-family: sans-serif;
-      resize: both;
-      overflow: auto;
+      box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
+      transition: left 0.3s ease-in-out;
+    }
+
+    #chat-window.open {
+      left: 0;
     }
 
     #chat-header {
       background-color: #0078D7;
       color: white;
       padding: 10px;
-      border-top-left-radius: 10px;
-      border-top-right-radius: 10px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      cursor: move;
+      border-top-left-radius: 0;
+      border-top-right-radius: 10px;
     }
 
     #chat-header button {
@@ -184,7 +189,6 @@
     }
 
     #chat-body {
-      padding: 0;
       flex-grow: 1;
     }
 
@@ -234,18 +238,21 @@
     </nav>
   </div>
 
+  <!-- Chat Toggle Button -->
   <div id="chat-toggle" onclick="toggleChat()">💬 Chat</div>
 
+  <!-- Chat Panel -->
   <div id="chat-window">
     <div id="chat-header">
       <span>Nettle Chat</span>
       <button onclick="toggleChat()">✖</button>
     </div>
     <div id="chat-body">
-      <iframe src="https://sigmasigmatoiletedge.github.io/" allow="clipboard-write" sandbox="allow-scripts allow-same-origin allow-popups" title="Nettle Chat"></iframe>
+      <iframe src="https://forum.whatthesigma.site/home" allow="clipboard-write" sandbox="allow-scripts allow-same-origin allow-popups" title="Nettle Chat"></iframe>
     </div>
   </div>
 
+  <!-- Partner Badge -->
   <a href="https://ezunblocktheopps.github.io/" class="partner-badge" target="_blank">🤝 Partnered with Sigmi</a>
 
   <script src="cloak_panic.js"></script>
@@ -256,13 +263,4 @@
 
     function checkConnectivity() {
       if (!navigator.onLine) {
-        alert("You're offline. Please connect to Wi-Fi or mobile data to use chat.");
-      }
-    }
-
-    window.addEventListener('load', checkConnectivity);
-    window.addEventListener('online', () => alert("You're back online!"));
-    window.addEventListener('offline', () => alert("You've lost connection."));
-
-    function toggleChat() {
-      const chatWindow = document[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://github.com/szerintedmi/roadmap-radar-chart/tree/45ee5f9f7a1d44100313358e369abb025b935cea/README.md?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "1")
+       
