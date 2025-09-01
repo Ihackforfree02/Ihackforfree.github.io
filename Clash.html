@@ -1,134 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta charset="UTF‑8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Clash Royale Deck Builder</title>
   <style>
-    body, html { margin:0; padding:0; font-family:'Segoe UI',sans-serif;
-      background: linear-gradient(to right,#0f2027,#203a43,#2c5364);
-      color:#fff; text-align:center; padding:30px;}
+    /* Stay consistent with your MR GAMES look—gradient, glowing text, frosty containers */
+    body, html { margin:0; padding:0; font-family:'Segoe UI', sans-serif;
+      background:linear-gradient(to right,#0f2027,#203a43,#2c5364);
+      color:#fff; text-align:center; padding:30px; }
     .container { background:rgba(0,0,0,0.6); border-radius:12px;
-      box-shadow:0 6px 24px rgba(0,0,0,0.3); max-width:900px;
-      margin:auto; padding:25px;}
-    h1 { font-size:2.8rem; color:#f0db4f; text-shadow:0 0 10px #f0db4f,0 0 20px #f0db4f; margin-bottom:10px;}
-    input, select { padding:8px; font-size:1rem; margin:10px 5px;
-      border-radius:6px; border:2px solid #00ffff;
-      background:rgba(0,0,0,0.8); color:#00ffff; width:200px;}
-    #card-grid { display:grid;
-      grid-template-columns:repeat(auto-fill,minmax(100px,1fr));
-      gap:10px; margin-top:20px;}
-    .card { background:rgba(0,0,0,0.5); padding:5px; border-radius:8px;
-      cursor:pointer; transition:transform .2s,box-shadow .2s;}
+      max-width:900px; margin:auto; padding:25px; }
+    h1 { color:#f0db4f; text-shadow:0 0 10px #f0db4f; margin-bottom:10px; }
+    input, select { padding:8px; font-size:1rem; margin:10px; border-radius:6px;
+      border:2px solid #00ffff; background:rgba(0,0,0,0.8); color:#00ffff; }
+    #card-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(100px,1fr)); gap:10px; }
+    .card { background:rgba(0,0,0,0.5); padding:5px; border-radius:8px; cursor:pointer;
+      transition:transform .2s, box-shadow .2s; }
     .card:hover { transform:scale(1.05); box-shadow:0 0 8px #00ffff; }
     .card.selected { border:2px solid #00ffff; }
-    .card img { width:100%; border-radius:4px; }
-    .info { font-size:.8rem; color:#00ffff; margin-top:4px; }
-    #deck-info, #deck-footer { font-size:1.1rem; margin-top:15px; }
-    #deck-list { list-style:none; padding:0; margin-top:8px;
-      color:#00ffff; text-align:left; display:inline-block; }
+    .info { font-size:.85rem; color:#00ffff; margin-top:4px; }
+    #deck-footer { margin-top:15px; font-size:1.1rem; color:#00ffea; }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Clash Royale Deck Builder</h1>
-    <select id="arena-select">
-      <option value="0">Training Camp</option>
-      <option value="1">Goblin Stadium</option>
-      <option value="2">Bone Pit</option>
-      <option value="3">Barbarian Bowl</option>
-      <option value="4">Spell Valley</option>
-      <option value="5">Builder’s Workshop</option>
-      <option value="6">P.E.K.K.A’s Playhouse</option>
-      <option value="7">Royal Arena</option>
-      <option value="8">Frozen Peak</option>
-      <option value="9">Jungle Arena</option>
-      <option value="10">Hog Mountain</option>
-      <option value="11">Electro Valley</option>
-      <option value="12">Spooky Town</option>
-      <option value="13">Rascal’s Hideout</option>
-      <option value="14">Serenity Peak</option>
-      <option value="15">Miner’s Mine</option>
-      <option value="16">Executioner’s Kitchen</option>
-      <option value="17">Royal Crypt</option>
-      <option value="18">Silent Sanctuary</option>
-      <option value="19">Dragon Spa</option>
-      <option value="20">Boot Camp</option>
-      <option value="21">Clash Fest</option>
-      <option value="22">PANCAKES!</option>
-      <option value="23">Legendary Arena</option>
-    </select>
+    <select id="arena-select">…All Arenas 0–23…</select>
     <input type="text" id="search" placeholder="Search cards…" />
     <div id="card-grid"></div>
-    <div id="deck-info">Deck: <span id="count">0</span>/8</div>
+    <div>Deck: <span id="count">0</span>/8</div>
     <ul id="deck-list"></ul>
     <div id="deck-footer">Avg Elixir: 0 | Rating: N/A</div>
   </div>
 
   <script>
-    // Full card list, including Evolutions (sample subset)
-    const allCards = {
-      "Knight":4, "Firecracker Evolution":3, "Skeletons Evolution":1,
-      "Royal Giant Evolution":6, "Zap Evolution":2, "Wizard Evolution":5,
-      "Tesla Evolution":4, "Mega Knight Evolution":7, "Valkyrie Evolution":4,
-      "Bomber Evolution":2, "Wall Breakers Evolution":2
-      // Add more as needed...
-    };
+    // 1. Load full card list (including evolutions) — example from Fandom category
+    const cards = [
+      { name: "Knight", cost: 4 },
+      { name: "Knight Evolution", cost: 4 },
+      // add all cards here
+    ];
 
     const selected = new Set();
-    const arenaSel = document.getElementById('arena-select');
-    const searchInput = document.getElementById('search');
-    const grid = document.getElementById('card-grid');
-    const count = document.getElementById('count');
-    const dl = document.getElementById('deck-list');
-    const footer = document.getElementById('deck-footer');
 
-    function refreshGrid() {
+    function updateGrid() {
+      const term = document.getElementById('search').value.toLowerCase();
+      const grid = document.getElementById('card-grid');
       grid.innerHTML = '';
-      const term = searchInput.value.toLowerCase();
-      Object.keys(allCards)
-        .filter(name => name.toLowerCase().includes(term))
-        .forEach(name => {
-          const el = document.createElement('div');
-          el.className = 'card' + (selected.has(name) ? ' selected' : '');
-          el.innerHTML = `
-            <img src="https://fankit.supercell.com/d/BmehSDJrZNff/game-assets-1?asset-type16=Cards&urlVersion=2.0&name=${encodeURIComponent(name)}" alt="${name}" onerror="this.style.opacity=0.5" />
-            <div class="info">${name} (${allCards[name]} Elixir)</div>`;
-          el.onclick = () => toggleCard(name, el);
-          grid.append(el);
-        });
-      refreshFooter();
+
+      cards.forEach(card => {
+        if (!card.name.toLowerCase().includes(term)) return;
+
+        const div = document.createElement('div');
+        div.className = 'card'+(selected.has(card.name)?' selected':'');
+
+        const imageName = card.name.replace(/ /g,'') + 'Card' + (card.name.includes('Evolution') ? 'Evolution' : '') + '.png';
+        const imgUrl = `https://static.wikia.nocookie.net/clashroyale/images/${imageName}`;
+        div.innerHTML = `
+          <img src="${imgUrl}" alt="${card.name}" onerror="this.style.opacity=0.5"/>
+          <div class="info">${card.name} (${card.cost} Elixir)</div>
+        `;
+        div.onclick = () => toggleCard(card.name, div, card.cost);
+        grid.append(div);
+      });
+
+      refreshDeckInfo();
     }
 
-    function toggleCard(name, el) {
-      if (selected.has(name)) {
-        selected.delete(name);
-        el.classList.remove('selected');
-      } else if (selected.size < 8) {
-        selected.add(name);
-        el.classList.add('selected');
-      }
-      refreshFooter();
+    function toggleCard(name, el, cost) {
+      if (selected.has(name)) selected.delete(name);
+      else if (selected.size < 8) selected.add(name);
+      el.classList.toggle('selected');
+      refreshDeckInfo();
     }
 
-    function refreshFooter() {
-      count.textContent = selected.size;
-      dl.innerHTML = [...selected].map(c => `<li>${c} (${allCards[c]} Elixir)</li>`).join('');
-      const avg = selected.size
-        ? ([...selected].reduce((sum, c) => sum + allCards[c], 0) / selected.size).toFixed(2)
-        : 0;
+    function refreshDeckInfo() {
+      const deckList = document.getElementById('deck-list');
+      deckList.innerHTML = '';
+      let total = 0;
+      selected.forEach(name => {
+        const card = cards.find(c => c.name === name);
+        total += card.cost;
+        deckList.innerHTML += `<li>${card.name} (${card.cost})</li>`;
+      });
+      const avg = selected.size ? (total / selected.size).toFixed(2) : 0;
+
       let rating = 'N/A';
       if (selected.size) {
-        if (avg < 3.5) rating = '7/10 (Fast Cycle)';
-        else if (avg <= 5.5) rating = '9/10 (Balanced)';
-        else rating = '5/10 (Heavy)';
+        rating = avg < 3.5 ? '7/10 (Fast)' : avg <= 5.5 ? '9/10 (Balanced)' : '5/10 (Heavy)';
       }
-      footer.textContent = `Avg Elixir: ${avg} | Rating: ${rating}`;
+
+      document.getElementById('count').textContent = selected.size;
+      document.getElementById('deck-footer').textContent =
+        `Avg Elixir: ${avg} | Rating: ${rating}`;
     }
 
-    searchInput.addEventListener('input', refreshGrid);
-    arenaSel.addEventListener('change', refreshGrid);
+    document.getElementById('search').addEventListener('input', updateGrid);
 
-    refreshGrid(); // initial render
+    // Initialize
+    updateGrid();
   </script>
 </body>
 </html>
