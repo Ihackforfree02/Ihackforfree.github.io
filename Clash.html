@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF‑8" /><meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Clash Royale Deck Builder</title>
   <style>
     body, html { margin:0; padding:0; font-family:'Segoe UI',sans-serif;
       background: linear-gradient(to right,#0f2027,#203a43,#2c5364);
-      color:#fff; text-align:center; padding:30px;}
+      color:#fff; text-align:center; padding:30px; }
     .container { background:rgba(0,0,0,0.6); padding:25px; border-radius:12px;
-      box-shadow:0 6px 24px rgba(0,0,0,0.3); max-width:900px; margin:auto;}
-    h1 { font-size:2.8rem; color:#f0db4f; text-shadow:0 0 10px #f0db4f; }
+      box-shadow:0 6px 24px rgba(0,0,0,0.3); max-width:900px; margin:auto; }
+    h1 { font-size:2.8rem; color:#f0db4f; text-shadow:0 0 10px #f0db4f; margin-bottom:10px; }
     select, input { padding:10px; font-size:1rem; margin:10px 5px;
       border-radius:6px; border:2px solid #00ffff; background:rgba(0,0,0,0.8);
       color:#00ffff; width:240px; }
@@ -70,7 +70,7 @@
       3:["Cannon","Barbarians","Mega Minion","Battle Ram"],
       4:["Electro Spirit","Skeleton Dragons","Fire Spirit","Bomb Tower","Inferno Tower","Wizard"],
       5:["Zap","Mortar","Bats","Rocket","Flying Machine","Hog Rider"],
-      6:["Goblin Barrel","Guards","Skeleton Army","Dragon","Witch","P.E.K.K.A"],
+      6:["Goblin Barrel","Guards","Skeleton Army","Baby Dragon","Witch","P.E.K.K.A"],
       7:["Royal Guards","Royal Giant","Royal Hogs","Three Musketeers","Dark Prince","Prince","Balloon"],
       8:["Giant Snowball","Ice Spirit","Healer","Ice Golem","Freeze","Lightning","Giant Skeleton","Cannoneer"],
       9:["Skeleton Barrel","Goblin Gang","Barbarian Hut","Dart Goblin","Barbarian Barrel","Poison","Goblin Giant"],
@@ -86,11 +86,7 @@
       19:[],20:[],21:[],22:[],23:[]
     };
 
-    const allCards = {};
-    Object.entries(arenaCards).forEach(([arena, list]) => list.forEach(name => {
-      allCards[name]=null; // cost to fill later
-      allCards[name+" Evolution"]=null;
-    }));
+    const elixirCosts = { "Knight":3 /* example costs pulled from Fandom stats pages like Knight page noting 3 elixir :contentReference[oaicite:3]{index=3} */ };
 
     const selected = new Set();
     const arenaSel = document.getElementById("arena-select");
@@ -101,38 +97,54 @@
     const footer = document.getElementById("deck-footer");
 
     function showCards() {
-      grid.innerHTML="";
+      grid.innerHTML = "";
       const term = searchInput.value.toLowerCase();
-      const arenaVal = parseInt(arenaSel.value);
+      const arenaVal = +arenaSel.value;
       const available = new Set();
-      for(let i=0; i<=arenaVal; i++) arenaCards[i]?.forEach(name=>{
-        available.add(name);
-        available.add(name+" Evolution");
-      });
+      for (let i = 0; i <= arenaVal; i++) {
+        arenaCards[i]?.forEach(name => {
+          available.add(name);
+          available.add(name + " Evolution");
+        });
+      }
 
-      Array.from(available).filter(name=>name.toLowerCase().includes(term)).forEach(name=>{
+      available.forEach(name => {
+        if (!name.toLowerCase().includes(term)) return;
         const el = document.createElement("div");
-        el.className="card"+(selected.has(name)?" selected":"");
-        const imgName = name.replace(/ /g,"")+"Card"+(name.endsWith("Evolution")?"Evolution":"")+".png";
+        el.className = "card" + (selected.has(name) ? " selected" : "");
+        const imgName = name.replace(/ /g, "") + "Card" + (name.endsWith("Evolution") ? "Evolution" : "") + ".png";
         const imgUrl = `https://static.wikia.nocookie.net/clashroyale/images/${imgName}`;
-        el.innerHTML=`<img src="${imgUrl}" alt="${name}" onerror="this.style.opacity=.5"><div class="info">${name}</div>`;
-        el.onclick = ()=> toggleCard(name, el);
+        el.innerHTML = `<img src="${imgUrl}" alt="${name}" onerror="this.style.opacity=.5"><div class="info">${name}</div>`;
+        el.onclick = () => toggleCard(name, el);
         grid.append(el);
       });
-
       updateFooter();
     }
 
     function toggleCard(name, el) {
-      if(selected.has(name)) { selected.delete(name); el.classList.remove("selected"); }
-      else if(selected.size<8) { selected.add(name); el.classList.add("selected"); }
+      if (selected.has(name)) {
+        selected.delete(name);
+        el.classList.remove("selected");
+      } else if (selected.size < 8) {
+        selected.add(name);
+        el.classList.add("selected");
+      }
       updateFooter();
     }
 
     function updateFooter() {
       count.textContent = selected.size;
-      dl.innerHTML = [...selected].map(c=>`<li>${c}</li>`).join("");
-      footer.textContent = `Avg Elixir: N/A | Rating: N/A`;
+      dl.innerHTML = [...selected].map(c => `<li>${c} (${elixirCosts[c] ?? '?'} Elixir)</li>`).join("");
+      const avg = selected.size
+        ? ([...selected].reduce((sum, c) => sum + (elixirCosts[c] || 0), 0) / selected.size).toFixed(2)
+        : 0;
+      let rating = "N/A";
+      if (selected.size) {
+        if (avg < 3.5) rating = "7/10 (Fast Cycle)";
+        else if (avg <= 5.5) rating = "9/10 (Balanced)";
+        else rating = "5/10 (Heavy)";
+      }
+      footer.textContent = `Avg Elixir: ${avg} | Rating: ${rating}`;
     }
 
     arenaSel.onchange = showCards;
