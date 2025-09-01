@@ -1,124 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Clash Royale Deck Builder</title>
-  <style>
-    body { font-family: sans-serif; padding: 20px; }
-    #card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-      gap: 10px;
-    }
-    .card {
-      text-align: center;
-      cursor: pointer;
-      border: 2px solid transparent;
-      transition: border-color 0.2s;
-    }
-    .card.selected { border-color: gold; }
-    .card img { width: 100px; height: auto; }
-    #deck { margin-top: 20px; }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Clash Royale Deck Builder</title>
+<style>
+  body { font-family: sans-serif; background: #2c5364; color: white; text-align: center; padding: 20px; }
+  select, button { padding: 10px; font-size: 1rem; margin: 10px; }
+  #card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px,1fr)); gap: 10px; margin-top: 20px; }
+  .card { background: rgba(0,0,0,0.6); padding: 5px; border-radius: 8px; cursor: pointer; transition: transform 0.2s; }
+  .card.selected { border: 2px solid #00ffea; }
+  .card img { width: 100%; border-radius: 4px; }
+  .card .info { margin-top: 5px; font-size: 0.9rem; }
+</style>
 </head>
 <body>
-
-<h2>Build Your Deck</h2>
-<label for="arena-select">Select Your Arena:</label>
+<h1>Clash Royale Deck Builder</h1>
 <select id="arena-select">
-  <option value="5">Arena 5 – Builder’s Workshop</option>
-  <option value="6">Arena 6 – P.E.K.K.A’s Playhouse</option>
-  <!-- Continue up to highest Arena -->
+  <option value="0">Training Camp</option>
+  <option value="1">Goblin Stadium</option>
+  <option value="2">Bone Pit</option>
+  <option value="3">Barbarian Bowl</option>
+  <option value="4">Spell Valley</option>
+  <option value="5">Builder’s Workshop</option>
+  <option value="6">P.E.K.K.A’s Playhouse</option>
+  <!-- Add arenas 7–23 similarly -->
 </select>
 
 <div id="card-grid"></div>
 
-<div id="deck">
-  <h3>Your Deck (0/8)</h3>
-  <ul id="selected-cards"></ul>
-  <button id="clear-deck">Clear Deck</button>
-</div>
+<h2>Your Deck: <span id="count">0</span>/8</h2>
+<ul id="deck-list"></ul>
 
 <script>
-  const cardsByArena = {
-    5: ["Zap", "Mortar", "Bats", "Rocket", "Flying Machine", "Hog Rider"],
-    6: ["Goblin Barrel", "Guards", "Skeleton Army", "Night Witch", "PEKKA", "Baby Dragon"] // sample
-    // Add more arenas...
+// Arena unlock data
+const cardsByArena = {
+  0: ["Knight","Archers","Minions","Arrows","Musketeer","Mini P.E.K.K.A","Fireball","Giant"],
+  1: ["Goblins","Spear Goblins","Goblin Cage","Goblin Hut"],
+  2: ["Skeletons","Bomber","Tombstone","Valkyrie"],
+  3: ["Cannon","Barbarians","Mega Minion","Battle Ram"],
+  4: ["Electro Spirit","Skeleton Dragons","Fire Spirit","Bomb Tower","Inferno Tower","Wizard"],
+  5: ["Zap","Bats","Rocket","Flying Machine","Hog Rider","Mortar"],
+  6: ["Goblin Barrel","Guards","Skeleton Army","Baby Dragon","Witch","P.E.K.K.A"]
+  // Continue for arenas 7-23...
+};
+
+// Minimal dummy data for image & cost (should map to real image links)
+const cardData = {};
+Object.values(cardsByArena).flat().forEach(name => {
+  cardData[name] = {
+    image: `https://static.wikia.nocookie.net/clashroyale/images/${name.replace(/ /g,'')}Card.png`,
+    cost: Math.floor(Math.random()*8)+1
   };
+});
 
-  const cardData = {
-    "Hog Rider": { image: "https://static.wikia.nocookie.net/clashroyale/images/a/af/HogRiderCard.png", cost: 4 },
-    "Zap": { image: "https://static.wikia.nocookie.net/clashroyale/images/7/7f/ZapCard.png", cost: 2 },
-    "Mortar": { image: "https://static.wikia.nocookie.net/clashroyale/images/6/6a/MortarCard.png", cost: 4 },
-    "Bats": { image: "https://static.wikia.nocookie.net/clashroyale/images/7/78/BatsCard.png", cost: 2 },
-    "Rocket": { image: "https://static.wikia.nocookie.net/clashroyale/images/1/13/RocketCard.png", cost: 6 },
-    "Flying Machine": { image: "https://static.wikia.nocookie.net/clashroyale/images/4/4e/FlyingMachineCard.png", cost: 4 },
-    "Goblin Barrel": { image: "https://static.wikia.nocookie.net/clashroyale/images/6/6d/GoblinBarrelCard.png", cost: 3 },
-    "Guards": { image: "https://static.wikia.nocookie.net/clashroyale/images/5/5d/GuardsCard.png", cost: 3 },
-    "Skeleton Army": { image: "https://static.wikia.nocookie.net/clashroyale/images/2/2d/SkeletonArmyCard.png", cost: 3 },
-    "Night Witch": { image: "https://static.wikia.nocookie.net/clashroyale/images/8/83/NightWitchCard.png", cost: 4 },
-    "PEKKA": { image: "https://static.wikia.nocookie.net/clashroyale/images/9/99/PEKKACard.png", cost: 7 },
-    "Baby Dragon": { image: "https://static.wikia.nocookie.net/clashroyale/images/3/3f/BabyDragonCard.png", cost: 4 }
-    // Add more card entries...
-  };
+const selected = new Set();
+const grid = document.getElementById("card-grid");
+const count = document.getElementById("count");
+const deckList = document.getElementById("deck-list");
+const arenaSelect = document.getElementById("arena-select");
 
-  const selected = [];
-  const grid = document.getElementById("card-grid");
-  const deckUl = document.getElementById("selected-cards");
-  const header = document.querySelector("#deck h3");
-
-  document.getElementById("arena-select").addEventListener("change", () => {
-    const arena = parseInt(event.target.value);
-    const available = [];
-    for (let i = 5; i <= arena; i++) {
-      if (cardsByArena[i]) available.push(...cardsByArena[i]);
-    }
-    renderCards([...new Set(available)]);
+arenaSelect.addEventListener("change", updateGrid);
+function updateGrid(){
+  const arena = +arenaSelect.value;
+  const available = new Set();
+  for(let i=0;i<=arena;i++) if(cardsByArena[i]) cardsByArena[i].forEach(c=>available.add(c));
+  grid.innerHTML = "";
+  available.forEach(name => {
+    const div = document.createElement("div");
+    div.className = "card";
+    div.innerHTML = `<img src="${cardData[name]?.image}" alt="${name}"><div class="info">${name} (${cardData[name]?.cost} Elixir)</div>`;
+    div.onclick = () => toggleCard(name, div);
+    grid.append(div);
   });
+  refreshDeck();  
+}
 
-  function renderCards(cards) {
-    grid.innerHTML = "";
-    cards.forEach(name => {
-      const div = document.createElement("div");
-      div.className = "card";
-      const img = document.createElement("img");
-      img.src = cardData[name]?.image || "";
-      img.alt = name;
-      const cost = document.createElement("div");
-      cost.textContent = `Elixir: ${cardData[name]?.cost ?? "?"}`;
-      const label = document.createElement("div");
-      label.textContent = name;
-      div.append(img, cost, label);
+function toggleCard(name, el){
+  if(selected.has(name)) { selected.delete(name); el.classList.remove("selected"); }
+  else if(selected.size < 8) { selected.add(name); el.classList.add("selected"); }
+  refreshDeck();
+}
 
-      div.addEventListener("click", () => {
-        if (selected.includes(name)) {
-          selected.splice(selected.indexOf(name), 1);
-          div.classList.remove("selected");
-        } else if (selected.length < 8) {
-          selected.push(name);
-          div.classList.add("selected");
-        }
-        updateDeck();
-      });
+function refreshDeck(){
+  count.textContent = selected.size;
+  deckList.innerHTML = Array.from(selected).map(c => `<li>${c}</li>`).join('');
+}
 
-      grid.append(div);
-    });
-    updateDeck();
-  }
-
-  function updateDeck() {
-    deckUl.innerHTML = selected.map(c => `<li>${c}</li>`).join("");
-    header.textContent = `Your Deck (${selected.length}/8)`;
-  }
-
-  document.getElementById("clear-deck").addEventListener("click", () => {
-    selected.length = 0;
-    document.querySelectorAll(".card.selected").forEach(el => el.classList.remove("selected"));
-    updateDeck();
-  });
-
-  // initial render
-  document.getElementById("arena-select").dispatchEvent(new Event("change"));
+// Initial grid
+updateGrid();
 </script>
 </body>
 </html>
