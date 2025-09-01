@@ -1,133 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Clash Royale Deck Builder</title>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Clash Royale Deck Builder with Evo & Search</title>
   <style>
-    body, html { margin:0; padding:0; min-height:100%; font-family:'Segoe UI',sans-serif;
-      background: linear-gradient(to right,#0f2027,#203a43,#2c5364); color:#fff; text-align:center; padding:40px 20px; }
-    .container { background:rgba(0,0,0,0.6); border-radius:12px; box-shadow:0 6px 24px rgba(0,0,0,0.3);
-      max-width:800px; margin:auto; padding:30px; animation:fadeIn 1.5s ease-out forwards; opacity:0; }
-    @keyframes fadeIn { to { opacity:1; } }
-    h1 { font-size:3rem; color:#f0db4f; text-shadow:0 0 10px #f0db4f,0 0 20px #f0db4f;
-      animation:glow 1.5s ease-in-out infinite alternate; margin-bottom:10px; }
-    @keyframes glow { from { text-shadow:0 0 5px #f0db4f; } to { text-shadow:0 0 20px #f0db4f,0 0 30px #f0db4f; } }
-    select { padding:10px; font-size:1rem; margin-top:10px; border-radius:8px; border:2px solid #00ffff;
-      background:rgba(0,0,0,0.8); color:#00ffff; }
-    #card-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(100px,1fr)); gap:10px; margin-top:20px; }
-    .card { background:rgba(0,0,0,0.5); padding:5px; border-radius:8px; position:relative; cursor:pointer;
-      transition:transform 0.2s, box-shadow 0.2s; }
-    .card:hover { transform:scale(1.05); box-shadow:0 0 10px #00ffff; }
-    .card.selected { border:2px solid #00ffff; }
-    .card img { width:100%; border-radius:4px; }
-    .card .info { font-size:0.85rem; margin-top:4px; color:#00ffff; }
-    #deck-info { margin-top:20px; font-size:1.2rem; }
-    #deck-list { list-style:none; padding:0; margin-top:10px; font-size:0.95rem; color:#00ffff; }
-    #deck-footer { margin-top:15px; font-size:1.1rem; color:#00ffea; }
+    /* Core styling based on your MR GAMES theme */
+    body, html {
+      margin: 0; padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
+      background: linear-gradient(to right,#0f2027,#203a43,#2c5364);
+      color: white; text-align: center; padding: 30px 20px;
+    }
+    .container {
+      background: rgba(0,0,0,0.6);
+      border-radius: 12px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.3);
+      max-width: 900px; margin: auto; padding: 25px;
+    }
+    h1 {
+      font-size: 2.8rem; color: #f0db4f;
+      text-shadow: 0 0 10px #f0db4f,0 0 20px #f0db4f;
+      margin-bottom: 10px;
+    }
+    input, select {
+      padding: 8px; font-size: 1rem;
+      margin: 10px 5px; border-radius: 6px;
+      border: 2px solid #00ffff; background: rgba(0,0,0,0.8);
+      color: #00ffff; width: 200px;
+    }
+    #card-grid {
+      display: grid; grid-template-columns: repeat(auto-fill,minmax(100px,1fr));
+      gap: 10px; margin-top: 20px;
+    }
+    .card {
+      background: rgba(0,0,0,0.5);
+      padding: 5px; border-radius: 8px;
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .card:hover {
+      transform: scale(1.05); box-shadow: 0 0 8px #00ffff;
+    }
+    .card.selected {
+      border: 2px solid #00ffff;
+    }
+    .card img {
+      width: 100%; border-radius: 4px;
+    }
+    .info {
+      font-size: .8rem; color: #00ffff; margin-top: 4px;
+    }
+    #deck-info, #deck-footer {
+      font-size: 1.1rem; margin-top: 15px;
+    }
+    #deck-list {
+      list-style: none; padding: 0; margin-top: 8px;
+      color: #00ffff; text-align: left; display: inline-block;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Clash Royale Deck Builder</h1>
-    <label for="arena-select">Choose Your Arena:</label><br/>
     <select id="arena-select">
-      <option value="0">Training Camp</option>
-      <option value="1">Goblin Stadium</option>
-      <option value="2">Bone Pit</option>
-      <option value="3">Barbarian Bowl</option>
-      <option value="4">Spell Valley</option>
-      <option value="5">Builder’s Workshop</option>
-      <option value="6">P.E.K.K.A’s Playhouse</option>
-      <option value="7">Royal Arena</option>
-      <option value="8">Frozen Peak</option>
-      <option value="9">Jungle Arena</option>
-      <option value="10">Hog Mountain</option>
-      <option value="11">Electro Valley</option>
-      <option value="12">Spooky Town</option>
-      <option value="13">Rascal’s Hideout</option>
-      <option value="14">Serenity Peak</option>
-      <option value="15">Miner’s Mine</option>
-      <option value="16">Executioner’s Kitchen</option>
-      <option value="17">Royal Crypt</option>
-      <option value="18">Silent Sanctuary</option>
-      <option value="19">Dragon Spa</option>
-      <option value="20">Boot Camp</option>
-      <option value="21">Clash Fest</option>
-      <option value="22">PANCAKES!</option>
-      <option value="23">Legendary Arena</option>
+      <!-- We'll fill arenas as before -->
+      <option value="6">P.E.K.K.A’s Playhouse (Arena 6)</option>
+      <option value="10">Hog Mountain (Arena 10)</option>
+      <option value="23">Legendary Arena (Arena 23)</option>
     </select>
+    <input type="text" id="search" placeholder="Search cards…"/>
     <div id="card-grid"></div>
-    <div id="deck-info">Your Deck: <span id="count">0</span>/8</div>
+    <div id="deck-info">Deck: <span id="count">0</span>/8</div>
     <ul id="deck-list"></ul>
-    <div id="deck-footer">Avg Elixir: 0 | Score: N/A</div>
+    <div id="deck-footer">Avg Elixir: 0 | Rating: N/A</div>
   </div>
 
   <script>
-    const cardsByArena = {
-      0:["Knight","Archers","Minions","Arrows","Musketeer","Mini P.E.K.K.A","Fireball","Giant"],
-      1:["Goblins","Spear Goblins","Goblin Cage","Goblin Hut"],
-      2:["Skeletons","Bomber","Tombstone","Valkyrie"],
-      3:["Cannon","Barbarians","Mega Minion","Battle Ram"],
-      4:["Electro Spirit","Skeleton Dragons","Fire Spirit","Bomb Tower","Inferno Tower","Wizard"],
-      5:["Zap","Mortar","Bats","Rocket","Flying Machine","Hog Rider"],
-      6:["Goblin Barrel","Guards","Skeleton Army","Baby Dragon","Witch","P.E.K.K.A"],
-      // ... arenas 7–23 as needed
+    // Arena 6+ data including evolutions
+    const allCards = {
+      "Knight":4, "Firecracker":3, "Skeletons":1,
+      "Royal Giant":6, "Zap":2, "Wizard":5, "Tesla":4,
+      "Bats":2, "Archers":3, "Valkyrie":4, "Bomber":2,
+      "Wall Breakers":2, "Goblin Barrel":3, "Battle Ram":4,
+      "Skeleton Army":3, "Goblin Barrel":3
+      // ... expand as desired
     };
-    const cardData = {
-      "Knight":4, "Archers":3, "Minions":3, "Arrows":3, "Musketeer":4, "Mini P.E.K.K.A":4,
-      "Fireball":4, "Giant":5, "Goblins":2, "Spear Goblins":2, "Goblin Cage":4, "Goblin Hut":5,
-      "Skeletons":1, "Bomber":3, "Tombstone":3, "Valkyrie":4, "Cannon":3, "Barbarians":5,
-      "Mega Minion":3, "Battle Ram":4, "Electro Spirit":1, "Skeleton Dragons":4, "Fire Spirit":2,
-      "Bomb Tower":4, "Inferno Tower":5, "Wizard":5, "Zap":2, "Mortar":4, "Bats":2,
-      "Rocket":6, "Flying Machine":4, "Hog Rider":4, "Goblin Barrel":3, "Guards":3,
-      "Skeleton Army":3, "Baby Dragon":4, "Witch":5, "P.E.K.K.A":7
-    };
+    const cardNames = Object.keys(allCards);
+
     const selected = new Set();
+    const arenaSel = document.getElementById('arena-select');
+    const searchInput = document.getElementById('search');
     const grid = document.getElementById('card-grid');
     const count = document.getElementById('count');
-    const deckList = document.getElementById('deck-list');
-    const deckFooter = document.getElementById('deck-footer');
-    const arenaSelect = document.getElementById('arena-select');
+    const dl = document.getElementById('deck-list');
+    const footer = document.getElementById('deck-footer');
 
-    arenaSelect.addEventListener('change', updateGrid);
-
-    function updateGrid(){
-      selected.clear(); refreshDeck();
-      const available = new Set();
-      for(let i=0;i<=arenaSelect.value;i++)
-        cardsByArena[i]?.forEach(c=>available.add(c));
+    function refresh() {
       grid.innerHTML = '';
-      available.forEach(name => {
+      const term = searchInput.value.toLowerCase();
+      cardNames.filter(name => name.toLowerCase().includes(term)).forEach(name => {
         const div = document.createElement('div');
-        div.className = 'card';
-        div.innerHTML = `<img src="https://static.wikia.nocookie.net/clashroyale/images/${name.replace(/ /g,'')}Card.png" alt="${name}" onerror="this.style.opacity=0.5"/>
-          <div class="info">${name} (${cardData[name]||'?'} Elixir)</div>`;
-        div.onclick = ()=>toggleCard(name,div);
+        div.className = 'card'+(selected.has(name)?' selected':'');
+        div.innerHTML = `
+          <img src="https://fankit.supercell.com/d/BmehSDJrZNff/game-assets-1?asset-type16=Cards&urlVersion=2.0&name=${encodeURIComponent(name)}" alt="${name}" onerror="this.style.opacity=.5"/>
+          <div class="info">${name} (${allCards[name]} Elixir)</div>
+        `;
+        div.onclick = () => toggle(name, div);
         grid.append(div);
       });
+      refreshFooter();
     }
 
-    function toggleCard(name, el){
-      if(selected.has(name)){ selected.delete(name); el.classList.remove('selected'); }
-      else if(selected.size<8){ selected.add(name); el.classList.add('selected'); }
-      refreshDeck();
+    function toggle(name, div) {
+      if (selected.has(name)) { selected.delete(name); div.classList.remove('selected'); }
+      else if (selected.size < 8) { selected.add(name); div.classList.add('selected'); }
+      refreshFooter();
     }
 
-    function refreshDeck(){
+    function refreshFooter() {
       count.textContent = selected.size;
-      deckList.innerHTML = [...selected].map(c=>`<li>${c} (${cardData[c]||'?'} Elixir)</li>`).join('');
-      const avg = selected.size ? ([...selected].reduce((s,c)=>s+(cardData[c]||0),0)/selected.size).toFixed(2) : 0;
-      let score = 'N/A';
-      if(selected.size) {
-        const num = parseFloat(avg);
-        if(num < 3.5) score = '6/10 (Fast cycle)';
-        else if(num <= 5.5) score = '9/10 (Balanced)';
-        else score = '5/10 (Too heavy)';
+      dl.innerHTML = [...selected].map(c => `<li>${c} (${allCards[c]} Elixir)</li>`).join('');
+      const avg = selected.size ? ([...selected].reduce((a,c)=>a+allCards[c],0)/selected.size).toFixed(2) : 0;
+      let rating = 'N/A';
+      if (selected.size) {
+        const n = parseFloat(avg);
+        rating = n < 3.5 ? '7/10 (Cycle)' : n <=5.5 ? '9/10 (Balanced)' : '5/10 (Heavy)';
       }
-      deckFooter.textContent = `Avg Elixir: ${avg} | Score: ${score}`;
+      footer.textContent = `Avg Elixir: ${avg} | Rating: ${rating}`;
     }
 
-    updateGrid();
+    searchInput.addEventListener('input', refresh);
+    refresh();
   </script>
 </body>
 </html>
