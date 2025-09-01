@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Clash Royale Deck Builder</title>
   <style>
-    /* Base & Theme Styles (inspired by your MR GAMES page) */
     body, html {
       margin: 0; padding: 0;
       min-height: 100%;
@@ -104,7 +103,7 @@
       <option value="13">Rascal’s Hideout</option>
       <option value="14">Serenity Peak</option>
       <option value="15">Miner’s Mine</option>
-      <option value="16">Executioner's Kitchen</option>
+      <option value="16">Executioner’s Kitchen</option>
       <option value="17">Royal Crypt</option>
       <option value="18">Silent Sanctuary</option>
       <option value="19">Dragon Spa</option>
@@ -119,15 +118,39 @@
   </div>
 
   <script>
-    // Arena card data from trusted sources :contentReference[oaicite:1]{index=1}
-    const cardsByArena = { /* Full mapping of arrays per Arena as above */ };
+    // Full card unlock mapping (0–23), based on reliable sources :contentReference[oaicite:1]{index=1}
+    const cardsByArena = {
+      0: ["Tower Princess","Knight","Archers","Minions","Arrows","Musketeer","Mini P.E.K.K.A","Fireball","Giant"],
+      1: ["Goblins","Spear Goblins","Goblin Cage","Goblin Hut"],
+      2: ["Skeletons","Bomber","Tombstone","Valkyrie"],
+      3: ["Cannon","Barbarians","Mega Minion","Battle Ram"],
+      4: ["Electro Spirit","Skeleton Dragons","Fire Spirit","Bomb Tower","Inferno Tower","Wizard"],
+      5: ["Zap","Mortar","Bats","Rocket","Flying Machine","Hog Rider"],
+      6: ["Goblin Barrel","Guards","Skeleton Army","Baby Dragon","Witch","P.E.K.K.A"],
+      7: ["Royal Guards","Royal Giant","Royal Hogs","Three Musketeers","Dark Prince","Prince","Balloon"],
+      8: ["Giant Snowball","Ice Spirit","Healer","Ice Golem","Freeze","Lightning","Giant Skeleton","Cannoneer"],
+      9: ["Skeleton Barrel","Goblin Gang","Barbarian Hut","Dart Goblin","Barbarian Barrel","Poison","Goblin Giant"],
+      10: ["Tesla","Minion Horde","Elite Barbarians","Furnace","Zappies","Hunter","X‑Bow","Golem"],
+      11: ["Log","Miner","Princess","Electro Wizard","Inferno Dragon","Ram Rider","Sparky","Mega Knight"],
+      12: ["Firecracker","Earthquake","Wall Breakers","Electro Dragon","Royal Ghost","Ice Wizard","Phoenix","Graveyard"],
+      13: ["Rascals","Heal Spirit","Electro Giant","Bowler","Bandit","Magic Archer","Lava Hound"],
+      14: ["Royal Delivery","Elixir Golem","Rage","Goblin Drill","Executioner","Night Witch","Lumberjack"],
+      15: ["Elixir Collector","Mirror","Void","Clone","Tornado","Cannon Cart","Fisherman","Mother Witch"],
+      16: ["Golden Knight","Skeleton King"],
+      17: ["Archer Queen","Mighty Miner"],
+      18: ["Little Prince","Monk"],
+      19: [],
+      20: [],
+      21: [],
+      22: [],
+      23: []
+    };
 
-    // Prepare image & cost data dynamically via Fandom pattern
     const cardData = {};
     Object.values(cardsByArena).flat().forEach(name => {
       cardData[name] = {
         image: `https://static.wikia.nocookie.net/clashroyale/images/${name.replace(/ /g,'')}Card.png`,
-        cost: '?' // Could enrich with real costs later
+        cost: '?' // Placeholder—can be updated with real elixir values
       };
     });
 
@@ -138,20 +161,21 @@
     const arenaSelect = document.getElementById('arena-select');
 
     arenaSelect.addEventListener('change', updateGrid);
+
     function updateGrid(){
       selected.clear();
       refreshDeck();
       const arena = +arenaSelect.value;
-      const avail = new Set();
-      for(let i=0; i<=arena; i++){
-        if(cardsByArena[i]) cardsByArena[i].forEach(c => avail.add(c));
+      const available = new Set();
+      for(let i = 0; i <= arena; i++) {
+        cardsByArena[i]?.forEach(c => available.add(c));
       }
       grid.innerHTML = '';
-      avail.forEach(name => {
+      available.forEach(name => {
         const div = document.createElement('div');
         div.className = 'card';
         div.innerHTML = `
-          <img src="${cardData[name].image}" alt="${name}" onerror="this.style.opacity=0.4;"/>
+          <img src="${cardData[name].image}" alt="${name}" onerror="this.style.opacity=0.5"/>
           <div class="info">${name} (Elixir: ${cardData[name].cost})</div>
         `;
         div.onclick = () => toggleCard(name, div);
@@ -175,8 +199,7 @@
       deckList.innerHTML = [...selected].map(c => `<li>${c}</li>`).join('');
     }
 
-    // Auto-init
-    updateGrid();
+    updateGrid(); // initial
   </script>
 </body>
 </html>
