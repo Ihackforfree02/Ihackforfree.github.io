@@ -3,12 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MR GAMES+ BETA</title>
+    <h1 class="neon">MR GAMES+ BETA</h1>
+
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
     <link rel="apple-touch-icon" href="/favicon.png">
-  
+
+    <!-- Panic Cloak -->
     <script src="cloak_panic.js"></script>
+
+    <!-- Leave Warning -->
     <script>
         window.addEventListener('beforeunload', function (event) {
             event.preventDefault();
@@ -17,55 +22,17 @@
         });
     </script>
 
+    <!-- Header Styling -->
     <style>
-        /* Background style (gradient + dark mode look) */
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-            color: #ffffff;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* Neon yellow glow for MR GAMES+ BETA */
-        .logo {
+        /* Neon yellow border/glow for header title */
+        .header-content .logo {
             color: #000000; /* black text */
-            text-shadow:
-                0 0 5px #f0db4f,
-                0 0 10px #f0db4f,
-                0 0 20px #f0db4f,
-                0 0 40px #f0db4f;
-            font-size: 2rem;
+            text-shadow: 0 0 5px #f0db4f,
+                         0 0 10px #f0db4f,
+                         0 0 20px #f0db4f,
+                         0 0 40px #f0db4f;
+            font-size: 2rem; /* adjust size to fit header */
             font-weight: bold;
-        }
-
-        /* Rain effect */
-        .rain-wrapper {
-            pointer-events: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
-            z-index: 5;
-        }
-
-        .raindrop {
-            position: absolute;
-            top: -20px;
-            width: 2px;
-            background: linear-gradient(180deg, #00ffff, #0077aa);
-            border-radius: 50% / 40%;
-            opacity: 0.6;
-            animation: fall linear infinite;
-        }
-
-        @keyframes fall {
-            to { transform: translateY(110vh); opacity: 0; }
         }
     </style>
 
@@ -73,6 +40,7 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5521219086088837" crossorigin="anonymous"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WX5VS54ZDW"></script>
     <meta name="google-adsense-account" content="ca-pub-5521219086088837">
+
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
@@ -80,9 +48,10 @@
         gtag('config', 'G-WX5VS54ZDW');
     </script>
 
+    <!-- Google Funding Choices -->
     <script async src="https://fundingchoicesmessages.google.com/i/pub-5521219086088837?ers=1"></script>
     <script>
-        (function() {
+        (function () {
             function signalGooglefcPresent() {
                 if (!window.frames['googlefcPresent']) {
                     if (document.body) {
@@ -100,9 +69,10 @@
         })();
     </script>
 
+    <!-- GN-Math Script -->
     <script src="https://cdn.jsdelivr.net/gh/gn-math/gn-math.github.io@main/gnmath.js"></script>
 
-    <!-- SEO / Meta -->
+    <!-- SEO Meta -->
     <meta name="title" content="GN-Math">
     <meta name="description" content="Play unbl*cked games like Crazy Cattle 3D and DriveMad on GN-Math. Fast, free, no downloads—perfect for school or home.">
     <meta property="og:type" content="website">
@@ -114,15 +84,14 @@
     <meta name="twitter:title" content="GN-Math">
     <meta name="twitter:description" content="Play unbl*cked games like Crazy Cattle 3D and DriveMad on GN-Math. Fast, free, no downloads—perfect for school or home.">
 
+    <!-- External Stylesheet -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="dark-mode">
-    <!-- Rain overlay -->
-    <div class="rain-wrapper" id="rain-wrapper"></div>
-
+    <!-- Header -->
     <header>
         <div class="header-content">
-            <div class="logo">MR GAMES+ BETA</div>
+            <div class="logo">MR GAMES</div>
             <div class="search-container">
                 <input type="text" id="searchBar" placeholder="Search zones..." oninput="filterZones()">
                 <select id="sortOptions" onchange="sortZones()">
@@ -132,34 +101,44 @@
                 </select>
             </div>
             <div class="control-buttons">
-                <button id="settings" style="background-color: var(--primary-color); color: white; border: none; border-radius: 4px; padding: 0.5rem 1rem; font-size: 16px; cursor: pointer;">Settings</button>
+                <button id="settings"
+                    style="background-color: var(--primary-color); color: white; border: none; border-radius: 4px; padding: 0.5rem 1rem; font-size: 16px; cursor: pointer;">
+                    Settings
+                </button>
             </div>
         </div>
     </header>
 
-    <!-- Ad block -->
+    <!-- Google Ad -->
     <ins class="adsbygoogle"
-        style="display:block; text-align:center;"
-        data-ad-client="ca-pub-5521219086088837"
-        data-ad-slot="5549138288"
-        data-ad-format="auto"
-        data-full-width-responsive="true"></ins>
+         style="display:block; text-align:center;"
+         data-ad-client="ca-pub-5521219086088837"
+         data-ad-slot="5549138288"
+         data-ad-format="auto"
+         data-full-width-responsive="true">
+    </ins>
     <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 
+    <!-- Main Content -->
     <main>
         <details id="featuredZonesWrapper" open>
-            <summary id="allZonesSummary" style="font-size: 1.2rem; font-weight: bold; cursor: pointer;">Featured Zones</summary>
+            <summary id="allZonesSummary" style="font-size: 1.2rem; font-weight: bold; cursor: pointer;">
+                Featured Zones
+            </summary>
             <div id="featuredZones" class="zone-container"></div>
         </details>
 
         <br><hr><br>
 
         <details id="allZonesWrapper" open>
-            <summary id="allSummary" style="font-size: 1.2rem; font-weight: bold; cursor: pointer;">All Zones</summary>
+            <summary id="allSummary" style="font-size: 1.2rem; font-weight: bold; cursor: pointer;">
+                All Zones
+            </summary>
             <div id="container">Loading...</div>
         </details>
     </main>
 
+    <!-- Zone Viewer -->
     <div id="zoneViewer">
         <div class="zone-header">
             <div class="zone-title">
@@ -177,25 +156,30 @@
         <iframe id="zoneFrame"></iframe>
     </div>
 
+    <!-- Popup -->
     <div id="popupOverlay">
         <div class="popup">
             <div class="popup-header">
                 <h3 id="popupTitle">Title</h3>
                 <button id="popupClose" onclick="closePopup()">×</button>
             </div>
-            <div id="popupBody">Content will be here</div>
+            <div id="popupBody">
+                Content will be here
+            </div>
         </div>
     </div>
 
-    <!-- Ad block -->
+    <!-- Google Ad -->
     <ins class="adsbygoogle"
-        style="display:block; text-align:center;"
-        data-ad-client="ca-pub-5521219086088837"
-        data-ad-slot="5549138288"
-        data-ad-format="auto"
-        data-full-width-responsive="true"></ins>
+         style="display:block; text-align:center;"
+         data-ad-client="ca-pub-5521219086088837"
+         data-ad-slot="5549138288"
+         data-ad-format="auto"
+         data-full-width-responsive="true">
+    </ins>
     <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 
+    <!-- Footer -->
     <footer>
         <div class="footer-links">
             <a href="#" onclick="showContact(); return false;">Contact</a>
@@ -206,31 +190,13 @@
         </div>
     </footer>
 
+    <!-- Scripts -->
     <script src="script.js"></script>
     <script>
         const search = new URLSearchParams(window.location.search);
         const privacy = search.get('privacy');
-        if (privacy) { loadPrivacy(); }
-
-        // 🌧️ Generate Rain
-        const rainWrapper = document.getElementById('rain-wrapper');
-        const numDrops = 120;
-
-        for (let i = 0; i < numDrops; i++) {
-            const drop = document.createElement('div');
-            drop.classList.add('raindrop');
-            const delay = Math.random() * 10; // seconds
-            const duration = 2 + Math.random() * 3; // seconds
-            const left = Math.random() * 100; // vw
-            const size = 1 + Math.random() * 2; // px
-
-            drop.style.left = `${left}vw`;
-            drop.style.width = `${size}px`;
-            drop.style.height = `${8 + size * 6}px`;
-            drop.style.animationDuration = `${duration}s`;
-            drop.style.animationDelay = `${delay}s`;
-
-            rainWrapper.appendChild(drop);
+        if (privacy) {
+            loadPrivacy();
         }
     </script>
 </body>
