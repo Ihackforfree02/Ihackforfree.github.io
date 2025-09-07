@@ -8,7 +8,6 @@
   <meta name="keywords" content="Mr Games, unblocked games, free games online, play games at school, HTML5 games, browser games, MrGames unblocked">
   <link rel="icon" href="favicon.ico" />
   <style>
-    /* Layout & Visual Styles */
     body, html {
       margin: 0;
       padding: 0;
@@ -78,7 +77,6 @@
       cursor: pointer;
     }
 
-    /* Rain Layer */
     .rain-wrapper {
       pointer-events: none;
       position: fixed;
@@ -97,21 +95,24 @@
       background: linear-gradient(180deg, #00ffff, #0077aa);
       border-radius: 50% / 40%;
       opacity: 0.6;
-      animation-name: fall, sway;
-      animation-timing-function: linear;
-      animation-iteration-count: infinite;
+      animation: fallAndSway linear infinite;
       will-change: transform, opacity;
       filter: drop-shadow(0 0 3px rgba(0, 255, 255, 0.6));
     }
 
-    @keyframes fall {
-      to { transform: translateY(110vh); opacity: 0; }
-    }
-
-    @keyframes sway {
-      0%   { transform: translateX(0); }
-      50%  { transform: translateX(6px); }
-      100% { transform: translateX(0); }
+    @keyframes fallAndSway {
+      0% {
+        transform: translate(0, 0);
+        opacity: 0.6;
+      }
+      50% {
+        transform: translate(5px, 50vh);
+        opacity: 0.4;
+      }
+      100% {
+        transform: translate(-5px, 110vh);
+        opacity: 0;
+      }
     }
 
     .settings-button {
@@ -157,7 +158,6 @@
       color: #ffffff;
     }
 
-    /* Chat Button Style */
     #chat-toggle {
       position: fixed;
       bottom: 20px;
@@ -175,7 +175,6 @@
   </style>
 </head>
 <body>
-  <!-- UI Elements -->
   <a href="settings.html" class="settings-button">⚙️ Settings</a>
   <div class="rain-wrapper" id="rain-wrapper"></div>
 
@@ -194,23 +193,18 @@
     </nav>
   </div>
 
-  <!-- Chat Button -->
   <div id="chat-toggle" onclick="toggleChat()">💬 Chat</div>
 
-  <!-- Partner Badge -->
   <a href="https://ezunblocktheopps.github.io/" class="partner-badge" target="_blank">
     🤝 Partnered with Sigmi
   </a>
 
-  <!-- Scripts -->
   <script src="cloak_panic.js"></script>
   <script>
-    // Redirect safeguard
     if (!location.pathname.includes('index.html') && location.pathname === '/') {
       window.location.href = 'index.html';
     }
 
-    // Offline checker
     function checkConnectivity() {
       if (!navigator.onLine) {
         alert("You're offline. Chat may not work.");
@@ -220,7 +214,6 @@
     window.addEventListener('online', () => alert("You're back online!"));
     window.addEventListener('offline', () => alert("You've lost connection."));
 
-    // Chat popup
     function toggleChat() {
       if (window.chatWindow && !window.chatWindow.closed) {
         window.chatWindow.focus();
@@ -236,60 +229,20 @@
       }
     }
 
-    // 🌧️ Generate Rain (fixed)
+    // 🌧️ Rain Generator
     const rainWrapper = document.getElementById('rain-wrapper');
-    const numDrops = 160; // bump up a bit for fuller effect
+    const numDrops = 120;
 
     for (let i = 0; i < numDrops; i++) {
       const drop = document.createElement('div');
       drop.classList.add('raindrop');
 
-      // Randomize properties
-      const delay = Math.random() * 6;           // s
-      const fallDuration = 1.8 + Math.random() * 2.8; // s
-      const swayDuration = 1.2 + Math.random() * 1.6; // s
-      const left = Math.random() * 100;          // vw
-      const size = 1 + Math.random() * 2;        // px
-      const height = 10 + size * 7;              // px
+      const delay = Math.random() * 5;
+      const duration = 2 + Math.random() * 3;
+      const left = Math.random() * 100;
+      const size = 1 + Math.random() * 2;
+      const height = 10 + size * 7;
 
-      // Apply styles (fixed string building)
       drop.style.left = left + 'vw';
       drop.style.width = size + 'px';
-      drop.style.height = height + 'px';
-      drop.style.animationDuration = fallDuration + 's, ' + swayDuration + 's';
-      drop.style.animationDelay = delay + 's, ' + (delay / 2).toFixed(2) + 's';
-
-      rainWrapper.appendChild(drop);
-    }
-
-    // Resize safety: regenerate on big viewport changes to keep density consistent
-    let resizeTimer;
-    window.addEventListener('resize', () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => {
-        if (!rainWrapper) return;
-        rainWrapper.innerHTML = '';
-        for (let i = 0; i < numDrops; i++) {
-          const drop = document.createElement('div');
-          drop.classList.add('raindrop');
-
-          const delay = Math.random() * 6;
-          const fallDuration = 1.8 + Math.random() * 2.8;
-          const swayDuration = 1.2 + Math.random() * 1.6;
-          const left = Math.random() * 100;
-          const size = 1 + Math.random() * 2;
-          const height = 10 + size * 7;
-
-          drop.style.left = left + 'vw';
-          drop.style.width = size + 'px';
-          drop.style.height = height + 'px';
-          drop.style.animationDuration = fallDuration + 's, ' + swayDuration + 's';
-          drop.style.animationDelay = delay + 's, ' + (delay / 2).toFixed(2) + 's';
-
-          rainWrapper.appendChild(drop);
-        }
-      }, 200);
-    });
-  </script>
-</body>
-</html>
+      drop.style.height = height +[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://github.com/szerintedmi/roadmap-radar-chart/tree/45ee5f9f7a1d44100313358e369abb025b935cea/README.md?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "1")
