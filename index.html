@@ -84,7 +84,7 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      overflow: visible;
+      overflow: hidden;
       z-index: 5;
     }
 
@@ -95,22 +95,12 @@
       background: linear-gradient(180deg, #00ffff, #0077aa);
       border-radius: 50% / 40%;
       opacity: 0.6;
-      animation: fallAndSway linear infinite;
-      will-change: transform, opacity;
-      filter: drop-shadow(0 0 3px rgba(0, 255, 255, 0.6));
+      animation: fall linear infinite;
     }
 
-    @keyframes fallAndSway {
-      0% {
-        transform: translate(0, 0);
-        opacity: 0.6;
-      }
-      50% {
-        transform: translate(5px, 50vh);
-        opacity: 0.4;
-      }
-      100% {
-        transform: translate(-5px, 110vh);
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
         opacity: 0;
       }
     }
@@ -231,7 +221,7 @@
 
     // 🌧️ Rain Generator
     const rainWrapper = document.getElementById('rain-wrapper');
-    const numDrops = 120;
+    const numDrops = 100;
 
     for (let i = 0; i < numDrops; i++) {
       const drop = document.createElement('div');
@@ -245,4 +235,12 @@
 
       drop.style.left = left + 'vw';
       drop.style.width = size + 'px';
-      drop.style.height = height +[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://github.com/szerintedmi/roadmap-radar-chart/tree/45ee5f9f7a1d44100313358e369abb025b935cea/README.md?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "1")
+      drop.style.height = height + 'px';
+      drop.style.animationDuration = duration + 's';
+      drop.style.animationDelay = delay + 's';
+
+      rainWrapper.appendChild(drop);
+    }
+  </script>
+</body>
+</html>
