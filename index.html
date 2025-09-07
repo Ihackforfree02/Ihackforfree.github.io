@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Mr Games | Unblocked Online Games</title>
-<meta name="description" content="Play free unblocked games at Mr Games. No downloads, just fun—perfect for school, work, or home!">
-<meta name="keywords" content="Mr Games, unblocked games, free games online, play games at school, HTML5 games, browser games, MrGames unblocked">
+  <meta name="description" content="Play free unblocked games at Mr Games. No downloads, just fun—perfect for school, work, or home!">
+  <meta name="keywords" content="Mr Games, unblocked games, free games online, play games at school, HTML5 games, browser games, MrGames unblocked">
   <link rel="icon" href="favicon.ico" />
   <style>
     /* Layout & Visual Styles */
@@ -78,6 +78,7 @@
       cursor: pointer;
     }
 
+    /* Rain Layer */
     .rain-wrapper {
       pointer-events: none;
       position: fixed;
@@ -96,11 +97,21 @@
       background: linear-gradient(180deg, #00ffff, #0077aa);
       border-radius: 50% / 40%;
       opacity: 0.6;
-      animation: fall linear infinite;
+      animation-name: fall, sway;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      will-change: transform, opacity;
+      filter: drop-shadow(0 0 3px rgba(0, 255, 255, 0.6));
     }
 
     @keyframes fall {
       to { transform: translateY(110vh); opacity: 0; }
+    }
+
+    @keyframes sway {
+      0%   { transform: translateX(0); }
+      50%  { transform: translateX(6px); }
+      100% { transform: translateX(0); }
     }
 
     .settings-button {
@@ -225,25 +236,60 @@
       }
     }
 
-// 🌧️ Generate Rain
-const rainWrapper = document.getElementById('rain-wrapper');
-const numDrops = 120;
+    // 🌧️ Generate Rain (fixed)
+    const rainWrapper = document.getElementById('rain-wrapper');
+    const numDrops = 160; // bump up a bit for fuller effect
 
-for (let i = 0; i < numDrops; i++) {
-  const drop = document.createElement('div');
-  drop.classList.add('raindrop');
-  const delay = Math.random() * 10; // seconds
-  const duration = 2 + Math.random() * 3; // seconds
-  const left = Math.random() * 100; // vw
-  const size = 1 + Math.random() * 2; // px
+    for (let i = 0; i < numDrops; i++) {
+      const drop = document.createElement('div');
+      drop.classList.add('raindrop');
 
-  drop.style.left = left + 'vw';
-  drop.style.width = size + 'px';
-  drop.style.height = (8 + size * 6) + 'px';
-  drop.style.animationDuration = duration + 's';
-  drop.style.animationDelay = delay + 's';
+      // Randomize properties
+      const delay = Math.random() * 6;           // s
+      const fallDuration = 1.8 + Math.random() * 2.8; // s
+      const swayDuration = 1.2 + Math.random() * 1.6; // s
+      const left = Math.random() * 100;          // vw
+      const size = 1 + Math.random() * 2;        // px
+      const height = 10 + size * 7;              // px
 
-  rainWrapper.appendChild(drop);
-}
+      // Apply styles (fixed string building)
+      drop.style.left = left + 'vw';
+      drop.style.width = size + 'px';
+      drop.style.height = height + 'px';
+      drop.style.animationDuration = fallDuration + 's, ' + swayDuration + 's';
+      drop.style.animationDelay = delay + 's, ' + (delay / 2).toFixed(2) + 's';
+
+      rainWrapper.appendChild(drop);
+    }
+
+    // Resize safety: regenerate on big viewport changes to keep density consistent
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        if (!rainWrapper) return;
+        rainWrapper.innerHTML = '';
+        for (let i = 0; i < numDrops; i++) {
+          const drop = document.createElement('div');
+          drop.classList.add('raindrop');
+
+          const delay = Math.random() * 6;
+          const fallDuration = 1.8 + Math.random() * 2.8;
+          const swayDuration = 1.2 + Math.random() * 1.6;
+          const left = Math.random() * 100;
+          const size = 1 + Math.random() * 2;
+          const height = 10 + size * 7;
+
+          drop.style.left = left + 'vw';
+          drop.style.width = size + 'px';
+          drop.style.height = height + 'px';
+          drop.style.animationDuration = fallDuration + 's, ' + swayDuration + 's';
+          drop.style.animationDelay = delay + 's, ' + (delay / 2).toFixed(2) + 's';
+
+          rainWrapper.appendChild(drop);
+        }
+      }, 200);
+    });
+  </script>
 </body>
 </html>
