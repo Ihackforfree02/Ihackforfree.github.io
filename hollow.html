@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mr Games | Hollow Knight Sigma</title>
+  <link rel="icon" href="favicon.ico" />
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: #ffffff;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .iframe-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    iframe {
+      width: 90%;
+      height: 90%;
+      border: 3px solid #00ffff;
+      border-radius: 12px;
+      box-shadow: 0 0 20px #00ffff;
+    }
+
+    /* Rain effect */
+    .rain-wrapper {
+      pointer-events: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .raindrop {
+      position: absolute;
+      top: -20px;
+      width: 2px;
+      background: linear-gradient(180deg, #00ffff, #0077aa);
+      border-radius: 50% / 40%;
+      opacity: 0.6;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="rain-wrapper" id="rain-wrapper"></div>
+
+  <div class="iframe-container">
+    <iframe src="https://ihackforfree02.github.io/hollownight-sigma/" 
+            frameborder="0" 
+            allowfullscreen>
+    </iframe>
+  </div>
+
+  <script src="cloak_panic.js"></script>
+  <script>
+    // 🌧️ Rain Generator
+    const rainWrapper = document.getElementById('rain-wrapper');
+    const numDrops = 100;
+
+    for (let i = 0; i < numDrops; i++) {
+      const drop = document.createElement('div');
+      drop.classList.add('raindrop');
+
+      const delay = Math.random() * 5;
+      const duration = 2 + Math.random() * 3;
+      const left = Math.random() * 100;
+      const size = 1 + Math.random() * 2;
+      const height = 10 + size * 7;
+
+      drop.style.left = left + 'vw';
+      drop.style.width = size + 'px';
+      drop.style.height = height + 'px';
+      drop.style.animationDuration = duration + 's';
+      drop.style.animationDelay = delay + 's';
+
+      rainWrapper.appendChild(drop);
+    }
+  </script>
+</body>
+</html>
